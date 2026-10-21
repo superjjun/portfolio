@@ -8,7 +8,7 @@
 <title>KIM JUNSEO — DIGITAL LOOKBOOK 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700&family=Italiana&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700;800;900&family=Italiana&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#08070a;--bg2:#0e0b13;--panel:#131017;--ink:#f2f0eb;--muted:#8f8997;
@@ -313,18 +313,128 @@ footer{padding:24px var(--pad);border-top:1px solid var(--line);display:flex;jus
 }
 </style>
 
+<style id="streetwear-home-v2">
+/* thisisneverthat-inspired split campaign homepage */
+:root{--site-white:#ffffff}
+html,body{background:#fff}
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:90;height:62px;
+  padding:0 23px;display:flex;align-items:center;gap:0;
+  background:#fff!important;color:#080808!important;border:0!important;
+  backdrop-filter:none;box-shadow:none
+}
+.brand{
+  display:inline-flex;align-items:flex-start;justify-self:auto;
+  border:2px solid #111;border-radius:3px;padding:1px 3px 0;
+  font-family:Inter,Arial,sans-serif;font-size:19px;font-weight:900;
+  letter-spacing:-.09em;white-space:nowrap;line-height:1.05;color:#111
+}
+.brand sup{font:800 9px Inter,Arial,sans-serif;letter-spacing:0;margin:0 0 0 2px;vertical-align:top;color:#111}
+.header-primary{display:flex;align-items:center;gap:clamp(16px,1.5vw,31px);margin-left:clamp(38px,7.6vw,155px)}
+.header-primary a,.header-right a,.header-right button{
+  font-family:Inter,Arial,sans-serif;font-size:13px;letter-spacing:-.035em;
+  font-weight:800;white-space:nowrap;color:#101010;padding:8px 0;line-height:1.1
+}
+.header-right{margin-left:auto;justify-self:auto;gap:clamp(13px,1.6vw,32px)}
+.header-primary a:hover,.header-right a:hover,.header-right button:hover{opacity:.52}
+.header-right a:after,.header-right button:after{display:none}
+.availability{display:none}
+.progress{background:#111;height:2px}
+.hero{
+  position:relative!important;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:20px!important;margin:0;align-items:stretch!important;
+  min-height:100svh!important;height:100svh!important;
+  padding:62px 23px 0!important;overflow:hidden;
+  background:#fff!important;color:#111!important;isolation:auto!important
+}
+.hero .hero-copy{
+  position:relative!important;z-index:1!important;
+  width:auto!important;height:100%!important;min-height:0!important;
+  display:flex!important;align-items:stretch!important;justify-content:flex-end!important;
+  flex-direction:column!important;padding:3.5% 4.1% 2.8%!important;
+  background:#000!important;color:#fff!important;overflow:hidden;
+  container-type:inline-size
+}
+.type-poster{
+  display:block;width:100%;padding:0;max-width:100%;
+  margin:auto 0 8%;color:#fff;white-space:nowrap
+}
+.poster-mark{font:900 clamp(38px,10.8cqw,112px)/1 Inter,Arial,sans-serif;letter-spacing:-.093em;white-space:nowrap;margin-bottom:2.4%}
+.poster-mark sup{font-size:.25em;vertical-align:top;letter-spacing:0;margin-left:4px}
+.poster-line{display:block;font-family:Inter,Arial Black,Arial,sans-serif;color:#fff;font-weight:900;white-space:nowrap;text-transform:uppercase;letter-spacing:-.072em}
+.poster-line-one{font-size:clamp(65px,18.5cqw,190px);line-height:.89}
+.poster-line-two{font-size:clamp(65px,18.5cqw,190px);line-height:.89;letter-spacing:-.09em}
+.poster-line-three{font-size:clamp(57px,14.5cqw,150px);line-height:.99;letter-spacing:-.061em}
+.poster-line-three sup{font-size:.23em;vertical-align:top;letter-spacing:0;margin-left:5px}
+.poster-enter{
+  position:absolute;left:4.2%;right:4.2%;bottom:2.8%;
+  display:flex;justify-content:space-between;align-items:center;
+  border-top:1px solid rgba(255,255,255,.52);padding-top:12px;
+  color:#fff;font:600 10px 'DM Mono',monospace;letter-spacing:.09em
+}
+.poster-enter span{font-size:20px;line-height:1}
+.hero .fashion-campaign{
+  position:relative!important;inset:auto!important;z-index:1!important;
+  display:block;width:100%!important;height:100%!important;min-height:0!important;
+  overflow:hidden;margin:0!important;border:0!important;background:#d5d2ce!important
+}
+.hero .fashion-campaign:after{display:none!important}
+.hero .campaign-art{
+  display:block;position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center 27%;transform:none!important;filter:brightness(1.07) saturate(.87)
+}
+.hero .fashion-campaign:hover .campaign-art{transform:none!important}
+.campaign-meta,.campaign-stamp{display:none!important}
+.hero .browser,.hero .stage,.pager{display:none!important}
+.works{background:#08070a}
+@media(max-width:1050px){
+ .header{padding:0 16px}
+ .header-primary{gap:15px;margin-left:30px}
+ .header-primary a,.header-right a,.header-right button{font-size:12px}
+ .header-right{gap:15px}
+ .hero{gap:12px!important;padding:62px 14px 0!important}
+}
+@media(max-width:760px){
+ .header{height:58px!important;padding:0 14px!important;grid-template-columns:none}
+ .brand{font-size:17px}
+ .header-primary{display:none}
+ .header-right{display:flex;gap:17px}
+ .header-right .works-link{display:inline!important}
+ .hero{
+   display:grid!important;grid-template-columns:1fr!important;grid-template-rows:minmax(360px,52svh) minmax(380px,58svh)!important;
+   height:auto!important;min-height:0!important;gap:10px!important;padding:68px 10px 10px!important
+ }
+ .hero .hero-copy{height:auto!important;padding:16px 5% 24px!important}
+ .hero .fashion-campaign{height:auto!important;min-height:380px!important}
+ .type-poster{margin:auto 0 52px}
+ .poster-mark{font-size:clamp(34px,10.6cqw,80px)}
+ .poster-line-one,.poster-line-two{font-size:18cqw}
+ .poster-line-three{font-size:14.7cqw}
+ .poster-enter{bottom:14px}
+}
+@media(max-width:390px){
+ .brand{font-size:15px}
+ .header-right{gap:10px}
+ .header-right a,.header-right button{font-size:11px}
+}
+</style>
 </head>
 <body>
 <div class="site-bg"></div>
 <div class="cursor" id="cursor"></div>
 
 <header class="header">
-  <a href="#home" class="brand">KIM JUNSEO<sup>®</sup></a>
-  <div class="availability"><i></i><span>VISUAL DESIGN / PORTFOLIO 2026</span></div>
-  <nav class="header-right">
-    <a href="#works" class="works-link">WORKS [07]</a>
-    <a href="#info">INFO</a>
-    <button id="contactBtn">CONTACT ↗</button>
+  <a href="#home" class="brand" aria-label="KIM JUNSEO home">kimjunseo<sup>®</sup></a>
+  <nav class="header-primary" aria-label="Main navigation">
+    <a href="#works">Works</a>
+    <a href="#runway">Features</a>
+    <a href="#info">Information</a>
+    <a href="#works">Archive</a>
+  </nav>
+  <nav class="header-right" aria-label="Portfolio navigation">
+    <a href="#works" class="works-link">Projects</a>
+    <a href="#info">About</a>
+    <button id="contactBtn" type="button">Contact</button>
   </nav>
   <div class="progress" id="progress"></div>
 </header>
@@ -333,13 +443,14 @@ footer{padding:24px var(--pad);border-top:1px solid var(--line);display:flex;jus
 
 <main>
 <section class="hero" id="home">
-  <div class="hero-copy reveal">
-    <p class="eyebrow">VISUAL DESIGN / WEB / UI·UX — SEOUL 2026</p>
-    <h1><span>KIM</span><span>JUNSEO<em>®</em></span></h1>
-    <p class="hero-kor">VISUAL DESIGN PORTFOLIO / 2026</p>
-    <p class="hero-desc">웹과 UI를 중심으로 이미지, 구조, 인터랙션을 다루는 김준서의 작업 아카이브입니다.</p>
-    <a class="home-scroll" href="#works">VIEW COLLECTION <span>↓</span></a>
-
+  <div class="hero-copy">
+    <div class="type-poster" aria-label="KIM JUNSEO VISUAL DESIGN ARCHIVE">
+      <div class="poster-mark">kimjunseo<sup>®</sup></div>
+      <div class="poster-line poster-line-one">VISUAL</div>
+      <div class="poster-line poster-line-two">DESIGN</div>
+      <div class="poster-line poster-line-three">ARCHIVE<sup>®</sup></div>
+    </div>
+    <a class="poster-enter" href="#works">EXPLORE COLLECTION <span aria-hidden="true">↗</span></a>
     <div class="browser">
       <div class="browser-label"><span>SLIDE TO BROWSE</span><span id="browserLabel">LOOK 01 / 07</span></div>
       <div class="slider" id="slider">
@@ -350,61 +461,8 @@ footer{padding:24px var(--pad);border-top:1px solid var(--line);display:flex;jus
     </div>
   </div>
 
-  <figure class="fashion-campaign reveal" aria-label="KIM JUNSEO 2026 fashion campaign artwork">
-    <svg class="campaign-art" viewBox="0 0 900 1120" role="img" aria-label="Oversized streetwear editorial illustration">
-      <defs>
-        <linearGradient id="studioBg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#e4e2dc"/>
-          <stop offset=".58" stop-color="#c9c7c0"/>
-          <stop offset="1" stop-color="#a5a4a0"/>
-        </linearGradient>
-        <linearGradient id="jacket" x1=".15" y1="0" x2=".86" y2="1">
-          <stop offset="0" stop-color="#161616"/>
-          <stop offset=".46" stop-color="#343336"/>
-          <stop offset="1" stop-color="#070708"/>
-        </linearGradient>
-        <linearGradient id="pants" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#4d4d4f"/>
-          <stop offset="1" stop-color="#1a1a1c"/>
-        </linearGradient>
-        <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="23"/>
-        </filter>
-        <filter id="grain">
-          <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="8"/>
-          <feColorMatrix type="saturate" values="0"/>
-          <feComponentTransfer><feFuncA type="table" tableValues="0 .055"/></feComponentTransfer>
-        </filter>
-      </defs>
-      <rect width="900" height="1120" fill="url(#studioBg)"/>
-      <path d="M70 0h110v1120H70z" fill="#efede7" opacity=".38"/>
-      <path d="M741 0h159v1120H741z" fill="#83827f" opacity=".14"/>
-      <ellipse cx="500" cy="1040" rx="280" ry="42" fill="#111" opacity=".22" filter="url(#softShadow)"/>
-      <path d="M651 103 746 183 706 395 764 546 677 631 616 487 593 298Z" fill="#b2afa8" opacity=".72"/>
-      <path d="M156 211 273 134 358 313 275 462 132 401Z" fill="#f0efea" opacity=".72"/>
-      <circle cx="476" cy="202" r="80" fill="#aa8570"/>
-      <path d="M404 198c14-84 119-106 172-34 21 29 20 64 2 95-25-22-56-35-91-39-31-3-59-11-83-22Z" fill="#171717"/>
-      <path d="M439 261c17 19 49 26 73 6l8 61h-93Z" fill="#96725f"/>
-      <path d="M309 323c34-48 86-73 154-75 79-2 145 29 181 90l64 217-96 41-47-139 14 251-291 3 18-252-56 140-96-44Z" fill="url(#jacket)"/>
-      <path d="M303 372c56 23 115 35 180 37 65 1 122-10 173-34" fill="none" stroke="#636166" stroke-width="5" opacity=".58"/>
-      <path d="M464 286v382" stroke="#7e7a80" stroke-width="3" opacity=".66"/>
-      <path d="M381 347c27 13 54 20 83 20 31 0 59-8 88-22" fill="none" stroke="#d2cfca" stroke-width="2" opacity=".42"/>
-      <rect x="394" y="426" width="139" height="59" rx="5" fill="#0f0f10" stroke="#68666a"/>
-      <text x="463.5" y="452" text-anchor="middle" fill="#f3f1ec" font-family="Arial,Helvetica,sans-serif" font-size="15" letter-spacing="4">KJ STUDIO</text>
-      <text x="463.5" y="473" text-anchor="middle" fill="#b6a5ff" font-family="Arial,Helvetica,sans-serif" font-size="9" letter-spacing="3">VISUAL ARCHIVE 2026</text>
-      <path d="M329 682 459 677 439 1024 302 1023Z" fill="url(#pants)"/>
-      <path d="M459 677 588 680 645 1022 505 1023Z" fill="#242426"/>
-      <path d="M308 1015h138l-8 50-163 2c-18 0-24-20-10-31Z" fill="#101011"/>
-      <path d="M507 1016h141l39 31c13 11 5 31-12 31H507Z" fill="#0c0c0d"/>
-      <path d="M284 440c-29 82-56 154-72 236" fill="none" stroke="#111" stroke-width="40" stroke-linecap="round"/>
-      <path d="M642 440c31 73 58 146 76 221" fill="none" stroke="#151515" stroke-width="41" stroke-linecap="round"/>
-      <circle cx="208" cy="690" r="29" fill="#9f7964"/>
-      <circle cx="725" cy="675" r="29" fill="#9f7964"/>
-      <path d="M696 541 748 510 794 693 741 705Z" fill="#101011"/>
-      <path d="M748 511 789 503 818 689 794 693Z" fill="#a28cff"/>
-      <text x="764" y="592" transform="rotate(80 764 592)" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="12" letter-spacing="4">2026</text>
-      <rect width="900" height="1120" filter="url(#grain)" opacity=".58"/>
-    </svg>
+  <figure class="fashion-campaign" aria-label="Streetwear editorial portrait">
+    <img class="campaign-art" src="https://images.asos-media.com/products/carhartt-wip-active-hooded-jacket-in-brown/206638796-1-brown?fit=crop&amp;wid=1400&amp;hei=1600" alt="Brown hooded workwear jacket — streetwear editorial visual" fetchpriority="high" decoding="async">
     <div class="campaign-meta campaign-top"><span>CAMPAIGN 001</span><span>JUNSEO KIM®</span></div>
     <div class="campaign-meta campaign-bottom"><span>VISUAL ARCHIVE / 2026</span><span>SEOUL, KR</span></div>
     <div class="campaign-stamp">KJ<br><small>26</small></div>
