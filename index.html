@@ -5,6 +5,25 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#08070a">
 <meta name="description" content="김준서 웹 포트폴리오 — UI/UX, Web, Visual, Digital Content">
+<link rel="canonical" href="https://superjjun.github.io/portfolio/">
+<script>
+/* Keep shared portfolio links free of referral query parameters. */
+(function(){
+  try {
+    const url=new URL(window.location.href);
+    let changed=false;
+    for(const key of Array.from(url.searchParams.keys())){
+      if(/^utm_/i.test(key)){
+        url.searchParams.delete(key);
+        changed=true;
+      }
+    }
+    if(changed){
+      window.history.replaceState(window.history.state,"",url.pathname+url.search+url.hash);
+    }
+  }catch(_){}
+})();
+</script>
 <title>KIM JUNSEO — DIGITAL LOOKBOOK 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
