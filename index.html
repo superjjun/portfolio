@@ -18,7 +18,7 @@
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,"Noto Sans KR",sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-button,a,input{font:inherit;color:inherit}button{border:0}a{text-decoration:none}::selection{background:var(--accent);color:#fff}
+button,a,input{font:inherit;color:inherit}button{border:0;background:transparent}a{text-decoration:none}::selection{background:var(--accent);color:#fff}
 .mono{font-family:"DM Mono","Courier New",monospace}
 .serif{font-family:Italiana,Georgia,serif}
 
@@ -79,7 +79,7 @@ button,a,input{font:inherit;color:inherit}button{border:0}a{text-decoration:none
 .cap-list{border-top:1px solid var(--line)}.cap{display:grid;grid-template-columns:minmax(190px,.62fr) 1fr;gap:26px;padding:19px 0;border-bottom:1px solid var(--line)}.cap b{font-family:Italiana,serif;font-size:clamp(30px,2.8vw,49px);font-weight:400;line-height:1}.cap span{font-size:14px;line-height:1.65;color:#918b96}.contact-row{display:flex;gap:12px;margin-top:27px;flex-wrap:wrap}.contact-row button,.contact-row a{background:transparent;border:1px solid #3b3541;border-radius:999px;padding:13px 18px;cursor:pointer;font-size:10px;font-weight:600;letter-spacing:.05em}.contact-row button:hover,.contact-row a:hover{background:#fff;color:#111;border-color:#fff}
 
 /* contact overlay */
-.contact-panel{position:fixed;z-index:120;inset:0;background:radial-gradient(circle at 76% 24%,rgba(139,92,246,.32),transparent 28%),linear-gradient(135deg,#150d20,#08070a 62%);color:#fff;opacity:0;visibility:hidden;transition:.4s}.contact-panel.open{opacity:1;visibility:visible}.contact-inner{height:100%;padding:110px var(--pad) 48px;display:grid;grid-template-columns:1fr .75fr;gap:7vw;align-items:center}.contact-close{position:absolute;right:var(--pad);top:26px;background:transparent;color:#fff;border-bottom:1px solid #655d6c;padding:8px 0;cursor:pointer;font-size:11px;letter-spacing:.08em}.contact-panel .eyebrow{color:#8c8592}.contact-panel h2{font-family:Italiana,serif;font-size:clamp(76px,8.8vw,156px);font-weight:400;line-height:.78;letter-spacing:-.06em;margin:0}.contact-panel h2 em{font-family:Georgia,serif;font-style:italic;color:var(--accent2)}.contact-panel p{max-width:570px;color:#938c99;font-size:16px;line-height:1.75;margin:30px 0}.contact-links{display:flex;gap:12px;flex-wrap:wrap}.contact-links a{border:1px solid #4d4555;border-radius:999px;padding:13px 18px;font-size:10px;font-weight:600}.contact-art{position:relative;aspect-ratio:1;display:grid;place-items:center}.contact-art .sphere{width:62%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 34% 28%,#d7ceff,#8b72ea 34%,#39245f 70%,#120d18);box-shadow:0 0 110px rgba(154,131,255,.34)}.contact-art:before,.contact-art:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.14)}.contact-art:before{width:84%;aspect-ratio:1}.contact-art:after{width:103%;aspect-ratio:1;border-style:dashed;animation:spin 22s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.contact-panel{position:fixed;z-index:120;inset:0;background:radial-gradient(circle at 76% 24%,rgba(139,92,246,.32),transparent 28%),linear-gradient(135deg,#150d20,#08070a 62%);color:#fff;opacity:0;visibility:hidden;transition:.4s}.contact-panel.open{opacity:1;visibility:visible}.contact-inner{height:100%;padding:110px var(--pad) 48px;display:grid;grid-template-columns:1fr .75fr;gap:7vw;align-items:center}.contact-close{position:absolute;right:var(--pad);top:26px;background:transparent;color:#fff;border-bottom:1px solid #655d6c;padding:8px 0;cursor:pointer;font-size:11px;letter-spacing:.08em}.contact-panel .eyebrow{color:#8c8592}.contact-panel h2{font-family:Italiana,serif;font-size:clamp(76px,8.8vw,156px);font-weight:400;line-height:.78;letter-spacing:-.06em;margin:0}.contact-panel h2 em{font-family:Georgia,serif;font-style:italic;color:var(--accent2)}.contact-panel p{max-width:570px;color:#938c99;font-size:16px;line-height:1.75;margin:30px 0 34px}.contact-details{max-width:650px;border-top:1px solid rgba(255,255,255,.18)}.contact-line{display:grid;grid-template-columns:110px 1fr;gap:24px;align-items:center;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.18)}.contact-line span{font:9px "DM Mono",monospace;letter-spacing:.12em;color:#7f7887}.contact-line a{font-size:clamp(16px,1.5vw,23px);letter-spacing:-.02em;color:#f2eff5;transition:.2s}.contact-line a:hover{color:var(--accent2);transform:translateX(4px)}.contact-art{position:relative;aspect-ratio:1;display:grid;place-items:center}.contact-art .sphere{width:62%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 34% 28%,#d7ceff,#8b72ea 34%,#39245f 70%,#120d18);box-shadow:0 0 110px rgba(154,131,255,.34)}.contact-art:before,.contact-art:after{content:"";position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.14)}.contact-art:before{width:84%;aspect-ratio:1}.contact-art:after{width:103%;aspect-ratio:1;border-style:dashed;animation:spin 22s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 
 /* detail */
 .dialog{width:100vw;height:100svh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#09090b;color:#f5f3ef}.dialog::backdrop{background:#000}.dialog-close{position:fixed;z-index:140;right:var(--pad);top:24px;background:transparent;color:#fff;border-bottom:1px solid #665e6d;padding:8px 0;cursor:pointer;font-size:11px;letter-spacing:.08em}
@@ -87,7 +87,7 @@ button,a,input{font:inherit;color:inherit}button{border:0}a{text-decoration:none
 .detail-copy{padding:9vh 5vw 7vh;display:flex;flex-direction:column;justify-content:center}.detail-kicker{font:9px "DM Mono",monospace;letter-spacing:.12em;color:#746e79}.detail-copy h2{font-family:Italiana,serif;font-size:clamp(72px,8vw,142px);font-weight:400;line-height:.82;letter-spacing:-.06em;margin:22px 0}.detail-cat{font:10px "DM Mono",monospace;letter-spacing:.08em;color:#817a87}.detail-desc{font-size:17px;line-height:1.78;color:#9d97a2;max-width:620px;margin:30px 0}.detail-focus{display:grid;grid-template-columns:130px 1fr;gap:20px;padding:19px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.detail-focus b{font:9px "DM Mono",monospace;letter-spacing:.1em;color:#756e7b}.detail-nav{display:flex;justify-content:space-between;gap:20px;margin-top:30px}.detail-nav button{background:transparent;color:#fff;border-bottom:1px solid #5d5663;padding:11px 0;cursor:pointer;font-size:11px}
 
 /* cursor */
-.cursor{position:fixed;z-index:200;width:28px;height:28px;border:1px solid rgba(255,255,255,.55);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .18s,height .18s,border-color .18s,background .18s;mix-blend-mode:difference}.cursor.view{width:58px;height:58px;background:rgba(255,255,255,.09);border-color:#fff}.cursor:after{content:"";position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;left:50%;top:50%;transform:translate(-50%,-50%)}
+.cursor{display:none!important}
 
 /* footer */
 footer{padding:24px var(--pad);border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:25px;color:#6e6873;font:9px "DM Mono",monospace;letter-spacing:.1em}
@@ -99,6 +99,7 @@ footer{padding:24px var(--pad);border-top:1px solid var(--line);display:flex;jus
  .hero{grid-template-columns:1fr;padding-top:120px}.stage{height:720px}.section-head{grid-template-columns:1fr}.section-head .eyebrow{grid-column:auto}.section-head p{justify-self:start}.work-card{grid-column:span 6}.work-card:nth-child(1),.work-card:nth-child(5),.work-card:nth-child(4),.work-card:nth-child(6){grid-column:span 6}.work-card:nth-child(1) .work-media,.work-card:nth-child(5) .work-media{height:480px}.info{grid-template-columns:1fr}.contact-inner{grid-template-columns:1fr}.contact-art{display:none}
 }
 @media(max-width:760px){
+ .contact-line{grid-template-columns:1fr;gap:6px}
  .header{height:68px}.availability{display:none}.header{grid-template-columns:1fr auto}.header-right{gap:20px}.header-right .works-link{display:none}.header-right a,.header-right button{font-size:11px}
  .hero{padding-top:104px}.hero h1{font-size:clamp(72px,19vw,108px)}.hero-kor{font-size:25px}.stage{height:610px;min-height:610px}.primary-look{width:61%;left:19%}.secondary-look{width:35%;height:30%;right:0}.orbit-card{width:35%;left:0}.stage-count{font-size:37px}.browser{max-width:none}
  .works{padding-top:105px}.section-head h2{font-size:clamp(76px,19vw,112px)}.work-card,.work-card:nth-child(1),.work-card:nth-child(5),.work-card:nth-child(4),.work-card:nth-child(6){grid-column:span 12}.work-media,.work-card:nth-child(1) .work-media,.work-card:nth-child(5) .work-media{height:430px}
@@ -163,14 +164,10 @@ footer{padding:24px var(--pad);border-top:1px solid var(--line);display:flex;jus
 <main>
 <section class="hero" id="home">
   <div class="hero-copy reveal">
-    <p class="eyebrow">DIGITAL LOOKBOOK — PORTFOLIO 2026</p>
-    <h1><span>TAILORED</span><span>FOR <em>screen.</em></span></h1>
-    <p class="hero-kor">패션을 보는 감각으로,<br>화면의 형태와 경험을 설계합니다.</p>
-    <p class="hero-desc">패션의 편집감, 이미지의 긴장감, 웹의 구조를 하나의 화면에 연결합니다. 보기 좋은 장면보다 프로젝트가 기억되는 경험을 만드는 데 집중합니다.</p>
-    <div class="hero-actions">
-      <a href="#works" class="ghost-link">VIEW COLLECTION <span>↘</span></a>
-      <button class="ghost-link" id="heroContact">START A PROJECT <span>↗</span></button>
-    </div>
+    <p class="eyebrow">KIM JUNSEO — VISUAL DESIGN PORTFOLIO 2026</p>
+    <h1><span>SELECTED</span><span>WORKS <em>2026.</em></span></h1>
+    <p class="hero-kor">웹·UI/UX를 중심으로 작업하는<br>시각디자인 전공 김준서입니다.</p>
+    <p class="hero-desc">수업과 개인 프로젝트에서 진행한 웹디자인, UI/UX, 상세페이지, 디지털 콘텐츠 작업을 정리했습니다. 각 프로젝트의 기획 의도와 디자인 과정을 함께 보여드립니다.</p>
     <div class="tool-row" aria-label="사용 툴"><span class="tool">FIG</span><span class="tool">PS</span><span class="tool">AI</span><span class="tool">AE</span><span class="tool">VS</span></div>
 
     <div class="browser">
@@ -250,10 +247,14 @@ footer{padding:24px var(--pad);border-top:1px solid var(--line);display:flex;jus
   <button class="contact-close" id="contactClose">CLOSE ×</button>
   <div class="contact-inner">
     <div>
-      <p class="eyebrow">CONTACT / NEW PROJECT</p>
-      <h2>LET'S SHAPE<br>THE NEXT <em>look.</em></h2>
-      <p>웹, UI·UX, 상세페이지, 디지털 콘텐츠 작업에 열려 있습니다. 프로젝트의 목적과 분위기를 함께 정리해서 가장 맞는 화면으로 만들어갑니다.</p>
-      <div class="contact-links"><a href="mailto:mingjjun123@naver.com">EMAIL ↗</a><a href="https://github.com/superjjun" target="_blank" rel="noreferrer">GITHUB ↗</a></div>
+      <p class="eyebrow">CONTACT / KIM JUNSEO</p>
+      <h2>CONTACT<br><em>JUNSEO.</em></h2>
+      <p>프로젝트, 협업, 기타 문의는 아래 연락처로 보내주세요.</p>
+      <div class="contact-details">
+        <div class="contact-line"><span>EMAIL</span><a href="mailto:mingjjun123@naver.com">mingjjun123@naver.com ↗</a></div>
+        <div class="contact-line"><span>PHONE</span><a href="tel:01089865740">010 · 8986 · 5740</a></div>
+        <div class="contact-line"><span>GITHUB</span><a href="https://github.com/superjjun" target="_blank" rel="noreferrer">github.com/superjjun ↗</a></div>
+      </div>
     </div>
     <div class="contact-art"><div class="sphere"></div></div>
   </div>
@@ -356,16 +357,12 @@ dialog.addEventListener('click',e=>{if(e.target===dialog)closeDialog()});
 function openContact(){contactPanel.classList.add('open');document.body.style.overflow='hidden'}
 function closeContact(){contactPanel.classList.remove('open');document.body.style.overflow=''}
 document.querySelector('#contactBtn').onclick=openContact;
-document.querySelector('#heroContact').onclick=openContact;
 document.querySelector('#infoContact').onclick=openContact;
 document.querySelector('#contactClose').onclick=closeContact;
 
 const pager=document.querySelector('#pager');
 projects.forEach((_,i)=>{const b=document.createElement('button');b.ariaLabel='Look '+(i+1);b.onclick=()=>setLook(i);pager.appendChild(b)});
 
-const cursor=document.querySelector('#cursor');
-document.addEventListener('pointermove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px'});
-document.addEventListener('mouseover',e=>{cursor.classList.toggle('view',!!e.target.closest('.viewable,.ghost-link,.work-media,.contact-row a,.contact-row button'))});
 
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
