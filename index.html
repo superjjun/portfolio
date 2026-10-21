@@ -503,7 +503,7 @@ html,body{background:#fff}
 .hero .youtube-campaign{position:relative!important;isolation:isolate;background:#131316!important;overflow:hidden!important;min-height:0!important}
 .hero .youtube-campaign:after{display:none!important}
 .youtube-campaign .youtube-video-poster{
- position:absolute;inset:0;background:#151517 url("https://i.ytimg.com/vi/96W_vJRRP4I/maxresdefault.jpg") center/cover no-repeat;filter:saturate(.85);z-index:0
+ position:absolute;inset:0;background:#151517 url("https://i.ytimg.com/vi/DYaq2sWTWAA/maxresdefault.jpg") center/cover no-repeat;filter:saturate(.85);z-index:0
 }
 .youtube-campaign .youtube-video{
  position:absolute!important;border:0!important;max-width:none!important;
@@ -528,23 +528,47 @@ html,body{background:#fff}
  .youtube-credit{font-size:8px;padding:12px}
 }
 </style>
+<style id="meaningful-nav-design-film-20261021">
+/* Three distinct navigation actions and compact about detail */
+.header{padding-left:clamp(14px,2vw,28px)!important;padding-right:clamp(14px,2vw,28px)!important}
+.header .main-nav{display:flex!important;align-items:center;gap:clamp(17px,3vw,43px);margin-left:auto}
+.header .main-nav a,.header .main-nav button{display:inline-block!important;color:#111!important;font:800 clamp(11px,.9vw,13px)/1.2 Inter,Arial,sans-serif!important;letter-spacing:-.025em!important;white-space:nowrap;padding:12px 0!important;cursor:pointer}
+.header .main-nav a:hover,.header .main-nav button:hover{opacity:.56}
+.hero .type-poster .poster-line-one{font-size:clamp(55px,15.4cqw,160px)!important}
+.hero .type-poster .poster-line-three{font-size:clamp(50px,13.5cqw,142px)!important}
+.youtube-campaign .youtube-video-poster{background-image:url("https://i.ytimg.com/vi/DYaq2sWTWAA/maxresdefault.jpg")!important}
+.youtube-campaign .youtube-credit{z-index:3!important;padding:22px 18px!important;background:linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,0))!important}
+.about-dialog{inset:0;position:fixed;margin:auto;width:min(1030px,calc(100vw - 28px));height:min(710px,calc(100dvh - 28px));max-height:none;max-width:none;border:0;padding:0;background:#f4f3ef;color:#111;box-shadow:0 25px 100px rgba(0,0,0,.35)}
+.about-dialog::backdrop{background:rgba(0,0,0,.8)}
+.about-dialog-head{height:66px;padding:0 clamp(22px,4vw,47px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d6d4ce;font:700 11px 'DM Mono',monospace}
+.about-dialog-head button{background:#101010;color:#fff;border:0;padding:11px 15px;cursor:pointer;font:700 11px 'DM Mono',monospace}
+.about-dialog-main{display:flex;flex-direction:column;height:calc(100% - 66px);padding:clamp(25px,5vw,60px) clamp(22px,4vw,47px) 32px}
+.about-num{font:10px 'DM Mono',monospace;letter-spacing:.15em;color:#666}
+.about-dialog-main h2{margin:clamp(24px,6vh,55px) 0 0;font:900 clamp(58px,8.4vw,119px)/.86 Inter,Arial,sans-serif;letter-spacing:-.087em}
+.about-dialog-main h2 em{font-style:normal;-webkit-text-stroke:2px #111;color:transparent}
+.about-dialog-bottom{margin-top:auto;display:grid;grid-template-columns:1fr .8fr;gap:15px 35px;align-items:end}
+.about-dialog-bottom p{font-size:clamp(12px,1.2vw,15px);line-height:1.9;color:#363636;margin:0}
+.about-dialog-meta{display:grid;gap:7px;font:10px 'DM Mono',monospace;color:#686868}
+.about-dialog-bottom a{grid-column:2;border-top:1px solid #111;padding:14px 0;display:flex;justify-content:space-between;font:700 11px 'DM Mono',monospace}
+@media(max-width:760px){
+ .header .main-nav{gap:16px}
+ .hero .type-poster .poster-line-one{font-size:15cqw!important}
+ .hero .type-poster .poster-line-three{font-size:13.5cqw!important}
+ .about-dialog-main h2{font-size:clamp(51px,11vw,85px)}
+ .about-dialog-bottom{grid-template-columns:1fr}
+ .about-dialog-bottom a{grid-column:1}
+}</style>
 </head>
 <body>
 <div class="site-bg"></div>
 <div class="cursor" id="cursor"></div>
 
 <header class="header">
-  <a href="#home" class="brand" aria-label="KIM JUNSEO home">kimjunseo<sup>®</sup></a>
-  <nav class="header-primary" aria-label="Main navigation">
-    <a href="#works">Works</a>
-    <a href="#works">Selected Works</a>
-    <button type="button" class="js-open-contact">Information</button>
-    <a href="#works">Archive</a>
-  </nav>
-  <nav class="header-right" aria-label="Portfolio navigation">
-    <a href="#works" class="works-link">Projects</a>
-    <button type="button" class="js-open-contact">About</button>
-    <button id="contactBtn" type="button">Contact</button>
+  <a href="#home" class="brand" aria-label="홈으로">kimjunseo<sup>®</sup></a>
+  <nav class="header-right main-nav" aria-label="포트폴리오 메뉴">
+    <a href="#works" class="works-link">WORKS</a>
+    <button id="aboutBtn" type="button" aria-haspopup="dialog" aria-controls="aboutDialog">ABOUT</button>
+    <button id="contactBtn" type="button" aria-controls="contactPanel">CONTACT ↗</button>
   </nav>
   <div class="progress" id="progress"></div>
 </header>
@@ -556,9 +580,9 @@ html,body{background:#fff}
   <div class="hero-copy">
     <div class="type-poster" aria-label="KIM JUNSEO VISUAL DESIGN ARCHIVE">
       <div class="poster-mark">kimjunseo<sup>®</sup></div>
-      <div class="poster-line poster-line-one">VISUAL</div>
+      <div class="poster-line poster-line-one">IMAGINE</div>
       <div class="poster-line poster-line-two">DESIGN</div>
-      <div class="poster-line poster-line-three">ARCHIVE<sup>®</sup></div>
+      <div class="poster-line poster-line-three">REALITY<sup>®</sup></div>
     </div>
     <a class="poster-enter" href="#works">EXPLORE COLLECTION <span aria-hidden="true">↗</span></a>
     <div class="browser">
@@ -571,17 +595,17 @@ html,body{background:#fff}
     </div>
   </div>
 
-  <figure class="fashion-campaign youtube-campaign" aria-label="Imagination into reality — Whitecoat motion design showcase">
+  <figure class="fashion-campaign youtube-campaign" aria-label="디자인 아이디어가 실제 작업으로 구현되는 과정 — 넷플릭스 디자인 다큐멘터리">
   <div class="youtube-video-poster" aria-hidden="true"></div>
-  <iframe
-    class="youtube-video"
-    title="Whitecoat x Motion Design — turning imagination into 3D animation"
-    src="https://www.youtube.com/embed/96W_vJRRP4I?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=96W_vJRRP4I&amp;controls=0&amp;playsinline=1&amp;rel=0&amp;modestbranding=1"
+  <iframe class="youtube-video" title="Abstract: The Art of Design | Netflix 공식 트레일러"
+    src="https://www.youtube.com/embed/DYaq2sWTWAA?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=DYaq2sWTWAA&amp;controls=1&amp;playsinline=1&amp;rel=0&amp;start=4"
     referrerpolicy="strict-origin-when-cross-origin"
-    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen
-    loading="eager"></iframe>
-  <div class="youtube-credit"><span>CREATIVE REFERENCE / WHITECOAT</span><a href="https://www.youtube.com/watch?v=96W_vJRRP4I" target="_blank" rel="noopener noreferrer">WATCH ORIGINAL ↗</a></div>
+    allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture; web-share"
+    loading="eager" allowfullscreen></iframe>
+  <div class="youtube-credit">
+    <span>DESIGN FILM / NETFLIX · ABSTRACT</span>
+    <a href="https://www.youtube.com/watch?v=DYaq2sWTWAA" target="_blank" rel="noopener noreferrer">ORIGINAL VIDEO ↗</a>
+  </div>
 </figure>
   <div class="stage reveal" id="stage">
     <div class="ripple r1"></div><div class="ripple r2"></div><div class="ripple r3"></div>
@@ -616,6 +640,18 @@ html,body{background:#fff}
 
 <footer><span>2401110072 · 김준서</span><span>DIGITAL LOOKBOOK / 2026</span></footer>
 
+<dialog id="aboutDialog" class="about-dialog" aria-labelledby="aboutHeading">
+ <div class="about-dialog-head"><span>KIM JUNSEO <sup>®</sup> / 2026</span><button type="button" id="aboutClose">CLOSE ×</button></div>
+ <div class="about-dialog-main">
+  <span class="about-num">01 / ABOUT</span>
+  <h2 id="aboutHeading">IMAGINE.<br>DESIGN.<br><em>REALIZE.</em></h2>
+  <div class="about-dialog-bottom">
+    <p>상상한 것을 실현하는 디자이너.<br>패션에서 쌓은 시각적 감각을 웹·UI·비주얼 디자인으로 연결합니다.</p>
+    <div class="about-dialog-meta"><span>WEB / UI · UX / VISUAL</span><span>SEOUL, KR</span></div>
+    <a href="#works" id="aboutViewWorks">VIEW PROJECTS <span>↗</span></a>
+  </div>
+ </div>
+</dialog>
 <section class="contact-panel" id="contactPanel">
   <button class="contact-close" id="contactClose">CLOSE ×</button>
   <div class="contact-inner">
@@ -730,8 +766,16 @@ dialog.addEventListener('click',e=>{if(e.target===dialog)closeDialog()});
 function openContact(){contactPanel.classList.add('open');document.body.style.overflow='hidden'}
 function closeContact(){contactPanel.classList.remove('open');document.body.style.overflow=''}
 document.querySelector('#contactBtn').onclick=openContact;
-document.querySelectorAll('.js-open-contact').forEach(b=>b.onclick=openContact);
+
 document.querySelector('#contactClose').onclick=closeContact;
+const aboutDialog=document.querySelector('#aboutDialog');
+const openAbout=()=>{if(contactPanel.classList.contains('open'))closeContact();aboutDialog.showModal();document.body.style.overflow='hidden'};
+function closeAbout(){if(aboutDialog.open)aboutDialog.close();document.body.style.overflow=''}
+document.querySelector('#aboutBtn').onclick=openAbout;
+document.querySelector('#aboutClose').onclick=closeAbout;
+document.querySelector('#aboutViewWorks').onclick=closeAbout;
+aboutDialog.addEventListener('click',e=>{if(e.target===aboutDialog)closeAbout()});
+aboutDialog.addEventListener('close',()=>document.body.style.overflow='');
 
 const pager=document.querySelector('#pager');
 projects.forEach((_,i)=>{const b=document.createElement('button');b.ariaLabel='Look '+(i+1);b.onclick=()=>setLook(i);pager.appendChild(b)});
@@ -746,9 +790,9 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 window.addEventListener('resize',()=>positionKnob(current/(projects.length-1)));
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){if(dialog.open)closeDialog();else if(contactPanel.classList.contains('open'))closeContact()}
-  if(!dialog.open&&!contactPanel.classList.contains('open')&&e.key==='ArrowRight')setLook((current+1)%projects.length);
-  if(!dialog.open&&!contactPanel.classList.contains('open')&&e.key==='ArrowLeft')setLook((current-1+projects.length)%projects.length);
+  if(e.key==='Escape'){if(dialog.open)closeDialog();else if(aboutDialog.open)closeAbout();else if(contactPanel.classList.contains('open'))closeContact()}
+  if(!dialog.open&&!aboutDialog.open&&!contactPanel.classList.contains('open')&&e.key==='ArrowRight')setLook((current+1)%projects.length);
+  if(!dialog.open&&!aboutDialog.open&&!contactPanel.classList.contains('open')&&e.key==='ArrowLeft')setLook((current-1+projects.length)%projects.length);
 });
 setLook(0);
 
