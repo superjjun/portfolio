@@ -579,6 +579,63 @@ html,body{background:#fff}
   transform:none!important;
 }
 </style>
+<style id="original-photo-editorial-hero-20261021">
+/* Homepage 2026-10-21: real sourced editorial photograph, no YouTube iframe. */
+.hero .photo-campaign{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  isolation:isolate;
+  overflow:hidden!important;
+  background:#c5c3bd!important;
+}
+.hero .photo-campaign:after{display:none!important}
+.hero .photo-campaign .hero-editorial-photo{
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  object-position:50% 50%!important;
+  opacity:1!important;
+  filter:none!important;
+  transform:none!important;
+  background:#d5d4cf!important;
+}
+.hero .photo-campaign:hover .hero-editorial-photo{transform:none!important}
+.hero-photo-credit{
+  position:absolute;
+  z-index:3;
+  left:0;
+  right:0;
+  bottom:0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:36px 18px 16px;
+  font:600 9px/1.5 'DM Mono',monospace;
+  letter-spacing:.045em;
+  color:#fff;
+  background:linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,0));
+}
+.hero-photo-credit a{
+  color:inherit;
+  white-space:nowrap;
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.8);
+  padding-bottom:2px;
+}
+.hero-photo-credit a:hover{opacity:.7}
+@media(max-width:760px){
+  .hero .photo-campaign{height:100%!important;min-height:380px!important}
+  .hero-photo-credit{font-size:8px;padding:34px 12px 12px}
+}
+</style>
 </head>
 <body>
 <div class="site-bg"></div>
@@ -616,18 +673,14 @@ html,body{background:#fff}
     </div>
   </div>
 
-  <figure class="fashion-campaign youtube-campaign" aria-label="상상한 물건을 새로운 그림으로 재해석하는 창작 과정 영상">
-  <div class="youtube-video-poster" aria-hidden="true"></div>
-  <iframe class="youtube-video"
-    title="Making art with everyday objects — Christoph Niemann"
-    src="https://www.youtube.com/embed/qUEf6W6jkbI?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=qUEf6W6jkbI&amp;controls=1&amp;playsinline=1&amp;rel=0"
-    referrerpolicy="strict-origin-when-cross-origin"
-    allow="autoplay; encrypted-media; accelerometer; gyroscope; picture-in-picture; web-share"
-    loading="eager" allowfullscreen></iframe>
-  <div class="youtube-credit">
-    <span>CREATIVE REFERENCE / CHRISTOPH NIEMANN</span>
-    <a href="https://www.youtube.com/watch?v=qUEf6W6jkbI" target="_blank" rel="noopener noreferrer">WATCH ORIGINAL ↗</a>
-  </div>
+  <figure class="fashion-campaign photo-campaign" aria-label="실제로 촬영된 실험적인 패션 에디토리얼 사진">
+  <img class="hero-editorial-photo" src="https://images.unsplash.com/photo-1758887371574-c5fed023e3cf?auto=format&amp;fit=crop&amp;w=1600&amp;q=85"
+    alt="세로 줄무늬 그래픽 배경 앞에 모자를 쓴 두 인물이 실루엣으로 서 있는 흑백 실사 사진"
+    fetchpriority="high" decoding="async" loading="eager">
+  <figcaption class="hero-photo-credit">
+    <span>IMAGINATION / VISUAL EXPERIMENT</span>
+    <a href="https://unsplash.com/photos/two-figures-silhouetted-against-a-striped-background-TqYVU-yEvZE" target="_blank" rel="noopener noreferrer">PHOTO: BUDDY AN / UNSPLASH ↗</a>
+  </figcaption>
 </figure>
   <div class="stage reveal" id="stage">
     <div class="ripple r1"></div><div class="ripple r2"></div><div class="ripple r3"></div>
