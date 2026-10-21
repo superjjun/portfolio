@@ -731,6 +731,140 @@ html,body{background:#fff}
   .hero-photo-credit{gap:5px!important;flex-wrap:wrap!important;line-height:1.4!important}
 }
 </style>
+<style id="contact-fashion-editorial-v2">
+/* Editorial contact / 2026: matches the black-and-ivory fashion campaign hero */
+.contact-panel.contact-editorial{
+  position:fixed;inset:0;z-index:120;
+  background:#fff;color:#f6f5f0;overflow-x:hidden;overflow-y:auto;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .28s ease,visibility .28s ease;
+}
+.contact-panel.contact-editorial.open{opacity:1;visibility:visible;pointer-events:auto}
+.contact-editorial .contact-inner{
+  display:grid;grid-template-columns:minmax(0,55%) minmax(0,45%);
+  align-items:stretch;gap:0;
+  padding:0;height:auto;min-height:100svh;
+}
+.contact-editorial .contact-copy{
+  min-width:0;min-height:100svh;
+  padding:clamp(28px,4.6vh,60px) clamp(28px,4.15vw,82px) clamp(23px,3.5vh,44px);
+  display:flex;flex-direction:column;
+  background:#080808;color:#f6f5f0;
+}
+.contact-editorial .contact-overline{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:16px;width:100%;padding-right:0;
+  color:#f4f1eb;font:700 11px/1.3 Inter,Arial,sans-serif;letter-spacing:-.025em;
+}
+.contact-editorial .contact-overline span:last-child{font:500 10px/1.3 "DM Mono",monospace;letter-spacing:.09em;color:#92908a}
+.contact-editorial .contact-overline sup{vertical-align:super;font-size:7px;margin-left:2px}
+.contact-editorial .contact-message{margin:auto 0 0;padding:clamp(30px,5.5vh,72px) 0 26px}
+.contact-editorial .contact-message .contact-kicker{
+  margin:0 0 clamp(17px,2.5vh,29px);max-width:none;
+  color:#c0bdb6;font:500 10px/1.4 "DM Mono",monospace;letter-spacing:.11em
+}
+.contact-editorial .contact-message h2{
+  margin:0!important;
+  font:900 clamp(57px,7.1vw,130px)/.92 Inter,Arial,sans-serif!important;
+  letter-spacing:-.085em!important;
+  text-wrap:nowrap;color:#f6f5f0!important;
+}
+.contact-editorial .contact-message h2 em{
+  font-style:normal!important;font-family:Inter,Arial,sans-serif!important;
+  color:#f6f5f0!important;-webkit-text-stroke:0!important
+}
+.contact-editorial .contact-message .contact-intro{
+  color:#b8b5ae;font:400 clamp(12px,.87vw,15px)/1.8 Inter,"Noto Sans KR",sans-serif;
+  max-width:480px;margin:clamp(22px,3.2vh,36px) 0 0
+}
+.contact-editorial .contact-details{
+  max-width:none;width:100%;margin:0 0 auto;
+  border-top:1px solid rgba(255,255,255,.26)
+}
+.contact-editorial .contact-line{
+  display:grid;grid-template-columns:minmax(92px,25%) minmax(0,1fr);
+  align-items:center;gap:12px;min-width:0;
+  padding:clamp(13px,1.8vh,19px) 0;
+  border-bottom:1px solid rgba(255,255,255,.26);
+}
+.contact-editorial .contact-line>span{
+  color:#aaa6a0;font:500 10px/1.4 "DM Mono",monospace;letter-spacing:.05em
+}
+.contact-editorial .contact-line a{
+  min-width:0;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  color:#f6f5f0!important;
+  font:500 clamp(14px,1.43vw,23px)/1.2 Inter,Arial,sans-serif!important;
+  letter-spacing:-.035em!important;
+  overflow-wrap:anywhere;transform:none!important;
+}
+.contact-editorial .contact-line a>span{flex-shrink:0;font-size:18px;transition:transform .22s ease}
+.contact-editorial .contact-line a:hover>span{transform:translate(4px,-4px)}
+.contact-editorial .contact-line a:hover{color:#cecbc5!important}
+.contact-editorial .contact-foot{
+  display:flex;justify-content:space-between;gap:16px;
+  margin-top:clamp(32px,5vh,68px);
+  color:#84817c;font:500 9px/1.5 "DM Mono",monospace;letter-spacing:.04em
+}
+.contact-editorial .contact-visual{
+  position:relative;min-width:0;min-height:100svh;
+  overflow:hidden;background:#d0d0cd;
+}
+.contact-editorial .contact-visual>img{
+  display:block;width:100%;height:100%;position:absolute;inset:0;
+  object-fit:cover;object-position:52% center;filter:none;
+}
+.contact-editorial .contact-visual:after{
+  content:"";position:absolute;inset:40% 0 0;
+  background:linear-gradient(0deg,rgba(0,0,0,.65),transparent 55%);pointer-events:none
+}
+.contact-editorial .contact-art-caption{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  gap:16px;position:absolute;z-index:1;bottom:clamp(23px,3.5vh,44px);
+  left:clamp(20px,3vw,55px);right:clamp(20px,3vw,55px);
+  color:#fff;font:600 9px/1.5 "DM Mono",monospace;letter-spacing:.065em
+}
+.contact-editorial .contact-art-caption a{color:#fff;border-bottom:1px solid rgba(255,255,255,.7);white-space:nowrap}
+.contact-editorial .contact-close{
+  position:fixed;z-index:125;top:clamp(16px,2.7vh,29px);right:clamp(17px,2.6vw,48px);
+  display:flex;align-items:center;gap:14px;padding:10px 13px;
+  color:#0a0a0a;background:#f6f5f0;border:1px solid #e2e0db;
+  font:700 11px/1 "DM Mono",monospace;letter-spacing:.075em;
+  cursor:pointer;transition:background .2s,color .2s
+}
+.contact-editorial .contact-close span{font:500 19px/1 Inter,sans-serif}
+.contact-editorial .contact-close:hover{background:#080808;color:#fff}
+@media(max-width:1160px){
+  .contact-editorial .contact-inner{grid-template-columns:minmax(0,58%) minmax(0,42%)}
+  .contact-editorial .contact-message h2{font-size:clamp(56px,7.3vw,104px)!important}
+}
+@media(max-width:800px){
+  .contact-editorial .contact-inner{grid-template-columns:1fr;min-height:100svh}
+  .contact-editorial .contact-copy{
+    min-height:auto;padding:28px 23px 28px;
+    order:1
+  }
+  .contact-editorial .contact-visual{
+    order:2;min-height:42svh;max-height:500px;overflow:hidden
+  }
+  .contact-editorial .contact-visual>img{object-position:center 45%}
+  .contact-editorial .contact-message{padding:80px 0 20px}
+  .contact-editorial .contact-message h2{font-size:clamp(56px,12.5vw,94px)!important}
+  .contact-editorial .contact-close{position:fixed;top:17px;right:17px}
+  .contact-editorial .contact-details{margin:16px 0 0}
+  .contact-editorial .contact-line{grid-template-columns:96px minmax(0,1fr)}
+  .contact-editorial .contact-line a{font-size:clamp(14px,3.3vw,19px)!important}
+  .contact-editorial .contact-foot{margin-top:32px}
+  .contact-editorial .contact-art-caption{bottom:18px;left:20px;right:20px}
+}
+@media(max-width:430px){
+  .contact-editorial .contact-message{padding-top:80px}
+  .contact-editorial .contact-message h2{font-size:clamp(48px,11.7vw,61px)!important}
+  .contact-editorial .contact-line{grid-template-columns:1fr;gap:9px}
+  .contact-editorial .contact-line a{font-size:17px!important}
+  .contact-editorial .contact-foot{font-size:8px;flex-wrap:wrap}
+  .contact-editorial .contact-art-caption{flex-direction:column;align-items:flex-start}
+}
+</style>
 </head>
 <body>
 <div class="site-bg"></div>
@@ -823,20 +957,36 @@ html,body{background:#fff}
   </div>
  </div>
 </dialog>
-<section class="contact-panel" id="contactPanel">
-  <button class="contact-close" id="contactClose">CLOSE ×</button>
+<section class="contact-panel contact-editorial" id="contactPanel" role="dialog" aria-modal="true" aria-labelledby="contactHeading" aria-hidden="true">
+  <button class="contact-close" id="contactClose" type="button" aria-label="연락처 창 닫기">CLOSE <span aria-hidden="true">×</span></button>
   <div class="contact-inner">
-    <div>
-      <p class="eyebrow">CONTACT / KIM JUNSEO</p>
-      <h2>CONTACT<br><em>JUNSEO.</em></h2>
-      <p>프로젝트, 협업, 기타 문의는 아래 연락처로 보내주세요.</p>
-      <div class="contact-details">
-        <div class="contact-line"><span>EMAIL</span><a href="mailto:mingjjun123@naver.com">mingjjun123@naver.com ↗</a></div>
-        <div class="contact-line"><span>PHONE</span><a href="tel:01089865740">010 · 8986 · 5740</a></div>
-        <div class="contact-line"><span>GITHUB</span><a href="https://github.com/superjjun" target="_blank" rel="noreferrer">github.com/superjjun ↗</a></div>
+    <div class="contact-copy">
+      <div class="contact-overline"><span>KIMJUNSEO<sup>®</sup></span><span>02 / CONTACT</span></div>
+      <div class="contact-message">
+        <p class="contact-kicker">FROM IMAGINATION TO REALITY</p>
+        <h2 id="contactHeading">LET'S MAKE<br><em>IT REAL.</em></h2>
+        <p class="contact-intro">상상 속 아이디어를 현실의 디자인으로.<br>프로젝트와 협업에 대한 이야기를 기다립니다.</p>
       </div>
+      <div class="contact-details" aria-label="연락처">
+        <div class="contact-line">
+          <span>01 / EMAIL</span>
+          <a href="mailto:mingjjun123@naver.com">mingjjun123@naver.com <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="contact-line">
+          <span>02 / PHONE</span>
+          <a href="tel:01089865740">010 · 8986 · 5740 <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="contact-line">
+          <span>03 / GITHUB</span>
+          <a href="https://github.com/superjjun" target="_blank" rel="noopener noreferrer">github.com/superjjun <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <div class="contact-foot"><span>VISUAL DESIGN / WEB / UI·UX</span><span>SEOUL, KR — 2026</span></div>
     </div>
-    <div class="contact-art"><div class="sphere"></div></div>
+    <div class="contact-visual">
+      <img src="https://images.unsplash.com/photo-1733355718690-23de0bfedc34?auto=format&amp;fit=crop&amp;fm=jpg&amp;ixlib=rb-4.1.0&amp;q=78&amp;w=1800" alt="현실과 상상이 섞인 유리 구조물과 인물의 초현실적 아트워크" loading="lazy" decoding="async">
+      <div class="contact-art-caption"><span>IMAGINATION <span aria-hidden="true">→</span> REALITY</span><a href="https://unsplash.com/photos/a-digital-painting-of-a-man-standing-in-a-doorway-P80buQw9G5M" target="_blank" rel="noopener noreferrer">ARTWORK / GALINA NELYUBOVA ↗</a></div>
+    </div>
   </div>
 </section>
 
@@ -934,8 +1084,8 @@ function closeDialog(){dialog.close();document.body.style.overflow=''}
 document.querySelector('#dialogClose').onclick=closeDialog;
 dialog.addEventListener('click',e=>{if(e.target===dialog)closeDialog()});
 
-function openContact(){contactPanel.classList.add('open');document.body.style.overflow='hidden'}
-function closeContact(){contactPanel.classList.remove('open');document.body.style.overflow=''}
+function openContact(){contactPanel.classList.add('open');contactPanel.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';document.querySelector('#contactClose').focus()}
+function closeContact(){contactPanel.classList.remove('open');contactPanel.setAttribute('aria-hidden','true');document.body.style.overflow='';document.querySelector('#contactBtn').focus()}
 document.querySelector('#contactBtn').onclick=openContact;
 
 document.querySelector('#contactClose').onclick=closeContact;
