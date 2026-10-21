@@ -1234,7 +1234,7 @@ document.querySelector('#aboutClose').onclick=closeAbout;
 document.querySelector('#aboutViewWorks').onclick=closeAbout;
 document.querySelector('#aboutContact').onclick=()=>{closeAbout();openContact()};
 aboutDialog.addEventListener('click',e=>{if(e.target===aboutDialog)closeAbout()});
-aboutDialog.addEventListener('close',()=>document.body.style.overflow='');
+aboutDialog.addEventListener('close',()=>{if(!contactPanel.classList.contains('open') && !dialog.open)document.body.style.overflow=''});
 
 const pager=document.querySelector('#pager');
 projects.forEach((_,i)=>{const b=document.createElement('button');b.ariaLabel='Look '+(i+1);b.onclick=()=>setLook(i);pager.appendChild(b)});
