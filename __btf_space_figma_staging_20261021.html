@@ -1,0 +1,211 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>BEYOND THE FRAME — Museum Spaces / 3D Architecture</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+*{box-sizing:border-box}html,body{margin:0;background:#a5a29e;font-family:'DM Sans',sans-serif;color:#40352e}
+.board{width:6120px;padding:60px 72px 105px}
+.heading{display:flex;justify-content:space-between;font-size:20px;letter-spacing:3.3px;color:#332c26;padding:0 7px 25px}
+.rooms{display:grid;grid-template-columns:repeat(4,1440px);grid-template-rows:repeat(2,900px);gap:15px}
+.room{position:relative;width:1440px;height:900px;background:#e8ded0;overflow:hidden;border:5px solid #f0ebe4;box-shadow:0px 12px 27px #352f2836}
+.room img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.room-label{position:absolute;bottom:16px;left:22px;color:#fff4e5e8;letter-spacing:1.8px;font-size:12px;background:#41392fa8;padding:9px 13px}
+#status{position:fixed;top:12px;left:12px;z-index:99999;background:#fff;color:#171717;max-width:85vw;padding:14px;font-size:15px;white-space:pre-wrap;display:none}
+</style><script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async onload="window.__captureScriptLoaded=true" onerror="window.__captureScriptError=true"></script></head><body><main class="board"><div class="heading"><span>BEYOND THE FRAME　/　ARCHITECTURAL EXHIBITION SPACE STUDIES</span><span>2026　·　VIRTUAL MUSEUM</span></div><div class="rooms">
+<div class="room"><img id="render0"/><div class="room-label">01　ENTRY / ARRIVAL</div></div>
+<div class="room"><img id="render1"/><div class="room-label">02　CENTRAL ATRIUM</div></div>
+<div class="room"><img id="render2"/><div class="room-label">03　TRANSITION CORRIDOR</div></div>
+<div class="room"><img id="render3"/><div class="room-label">04　GALLERY 01 / FIRST ROOM</div></div>
+<div class="room"><img id="render4"/><div class="room-label">05　GALLERY 01 / SECOND VIEW</div></div>
+<div class="room"><img id="render5"/><div class="room-label">06　GALLERY 02 / ARCH HALL</div></div>
+<div class="room"><img id="render6"/><div class="room-label">07　GALLERY 03 / SCULPTURE COURT</div></div>
+<div class="room"><img id="render7"/><div class="room-label">08　FINAL CORRIDOR / RETURN</div></div>
+</div></main><div id="status"></div>
+<script type="module">
+const debug=new URLSearchParams(location.search).has('qa');const status=document.getElementById('status');status.style.display=debug?'block':'none';
+function show(t){window.__status=t;status.textContent=t;}
+try{
+show('Loading 3D architectural renderer...');
+const THREE=await import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js');
+const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true,alpha:false,powerPreference:'high-performance'});
+renderer.setSize(1440,900,false);renderer.setPixelRatio(1);
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.45;
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.setClearColor(0xe7d7bd,1);
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0xe7d7c5);
+scene.fog=new THREE.FogExp2(0xe2ceb8,.015);
+const camera=new THREE.PerspectiveCamera(60,1440/900,.12,160);
+const hemi=new THREE.HemisphereLight(0xf5e5cc,0x93816a,2.15);scene.add(hemi);
+const amb=new THREE.AmbientLight(0xffebd1,.25);scene.add(amb);
+const mat=(c,rough=.85,met=.02)=>new THREE.MeshStandardMaterial({color:c,roughness:rough,metalness:met});
+
+function makeStoneTexture(seed=3) {
+ const cv=document.createElement('canvas');cv.width=512;cv.height=512;
+ const c=cv.getContext('2d');c.fillStyle='#e0ceaf';c.fillRect(0,0,512,512);
+ let state=seed*997;const rand=()=>{state=(Math.imul(state,1664525)+1013904223)|0;return (state>>>0)/4294967296;};
+ for(let i=0;i<12500;i++){
+   const v=Math.floor(175+70*rand());c.fillStyle='rgba('+v+','+Math.floor(v*.94)+','+Math.floor(v*.85)+','+(rand()*.026)+')';
+   let x=rand()*512,y=rand()*512;
+   c.fillRect(x,y,rand()*6+.5,rand()*6+.5);
+ }
+ for(let k=0;k<24;k++){
+   let x=rand()*512;let y=rand()*512;c.beginPath();c.moveTo(x,y);
+   for(let p=0;p<12;p++){x+=25+rand()*22;y+=-17+rand()*24;c.lineTo(x,y);}
+   c.lineWidth=rand()*.75+.28;c.strokeStyle='rgba(110,84,63,'+(rand()*.14+.035)+')';c.stroke();
+ }
+ const texture=new THREE.CanvasTexture(cv);texture.wrapS=THREE.RepeatWrapping;texture.wrapT=THREE.RepeatWrapping;texture.repeat.set(4,9);texture.colorSpace=THREE.SRGBColorSpace;
+ return texture;
+}
+const stoneMap=makeStoneTexture(19);
+const wallMap=makeStoneTexture(41);wallMap.repeat.set(5,11);
+
+const cream=mat(0xe6d7bf),wallMat=mat(0xd0bda4),chalk=mat(0xf2e8d9,.72),gold=mat(0xc6a57b,.57,.3),vein=mat(0xd2bfa4,.36),dark=mat(0xb4a18b);
+vein.map=stoneMap;vein.color.set(0xffffff);vein.roughness=.25;vein.metalness=.06;
+wallMat.map=wallMap;wallMat.roughness=.93;wallMat.color.set(0xc3ad92);
+cream.map=wallMap;cream.color.set(0xece0d0);
+const leg=mat(0xe5d6c4,.64),hair=mat(0xe4d9c7,.72);
+const floors=[];
+function cube(w,h,d,x,y,z,m,receive=false,cast=true){const mesh=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);mesh.position.set(x,y,z);mesh.receiveShadow=receive;mesh.castShadow=cast;scene.add(mesh);floors.push(mesh);return mesh;}
+function sphere(rx,ry,rz,x,y,z,m){const obj=new THREE.Mesh(new THREE.SphereGeometry(1,28,20),m);obj.scale.set(rx,ry,rz);obj.position.set(x,y,z);obj.castShadow=true;obj.receiveShadow=true;scene.add(obj);floors.push(obj);return obj;}
+function cyl(rt,rb,h,x,y,z,m,n=40){const obj=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,n),m);obj.position.set(x,y,z);obj.castShadow=true;obj.receiveShadow=true;scene.add(obj);floors.push(obj);return obj;}
+function clearScene(){for(const o of floors){scene.remove(o);if(o.geometry)o.geometry.dispose();}floors.length=0;for(const l of activeLights){scene.remove(l);}activeLights=[];}
+let activeLights=[];
+function warmSpot(x,y,z,power=75,color=0xffe0ac){const light=new THREE.SpotLight(color,power,15,.56,.74,1);light.position.set(x,y,z);light.target.position.set(x-.5,0,z-1);light.castShadow=true;light.shadow.mapSize.width=512;light.shadow.mapSize.height=512;light.shadow.bias=-.0003;scene.add(light);scene.add(light.target);activeLights.push(light,light.target);return light;}
+function archFrame(x,y,z,width,height,depth=0.33,material=chalk){
+ // Uprights, lintel and a ring of radially oriented beveled stone blocks create a true physical arch.
+ cube(.33,height-1.2,depth,x-width/2,y+(height-1.2)/2,z,material);
+ cube(.33,height-1.2,depth,x+width/2,y+(height-1.2)/2,z,material);
+ const rad=width/2;const cy=y+height-1.19;const thick=.27;
+ for(let i=0;i<=17;i++){const a=Math.PI*i/17;const px=x+Math.cos(a)*rad,py=cy+Math.sin(a)*(height*.21);const obj=cube(rad*Math.PI/17+thick,thick,depth+0.03,px,py,z,material);obj.rotation.z=a-Math.PI/2;}
+}
+function pedestal(x,z,size=1,ybase=0,material=leg){
+ const w=1.24*size,d=1.09*size,h=1.36*size;
+ cube(w,h,d,x,ybase+h/2,z,material,true);
+ cube(w*1.12,.16*size,d*1.12,x,ybase+h+.075*size,z,chalk,true);
+ cube(w*1.14,.12*size,d*1.13,x,ybase+.08*size,z,cream,true);
+ return ybase+h+.15*size;
+}
+function bust(x,y,z,style=0,scale=1,rotation=0){
+ const group=new THREE.Group();group.position.set(x,y,z);group.rotation.y=rotation;group.scale.setScalar(scale);
+ const add=(geom,m,x1,y1,z1,sx=1,sy=1,sz=1)=>{const mesh=new THREE.Mesh(geom,m);mesh.position.set(x1,y1,z1);mesh.scale.set(sx,sy,sz);mesh.castShadow=true;mesh.receiveShadow=true;group.add(mesh);return mesh;}
+ add(new THREE.SphereGeometry(1,28,20),chalk,0,.38,0,.62,.43,.35);
+ add(new THREE.CylinderGeometry(.25,.28,.39,28),chalk,0,.76,.01);
+ add(new THREE.SphereGeometry(1,40,28),chalk,0,1.24,.03,.36,.47,.34);
+ add(new THREE.ConeGeometry(.13,.23,15),leg,0,1.19,.40,.65,1,.6).rotation.x=Math.PI/2;
+ add(new THREE.SphereGeometry(1,14,12),chalk,-.35,1.16,.04,.075,.17,.08);
+ add(new THREE.SphereGeometry(1,14,12),chalk,.35,1.16,.04,.075,.17,.08);
+ for(let k=0;k<24;k++){const ang=k*Math.PI*2/24;const yy=1.53+(.04*Math.sin(k*7)); const xx=Math.cos(ang)*.33;const zz=Math.sin(ang)*.3;
+ const hr=(style%3===0)?0.09:0.075;
+ add(new THREE.SphereGeometry(hr,9,7),hair,xx,yy,zz,1,1,1);}
+ for(let k=0;k<10;k++){const ang=k*Math.PI*2/10;add(new THREE.SphereGeometry(.082,8,6),hair,.32*Math.cos(ang),1.68,.25*Math.sin(ang));}
+ // Decorative shoulder folds and mid-torso variation.
+ for(let i=0;i<7;i++){const q=add(new THREE.CylinderGeometry(.024,.02,.84,9),leg,-.43+i*.145,.34,.29);q.rotation.z=Math.PI/2+(i-3)*.085;}
+ if(style===2){for(let w of [-1,1]){let fl=add(new THREE.ConeGeometry(.38,.9,14),chalk,w*.55,.52,-.15,.7,.9,.35);fl.rotation.z=w*.55;}}
+ scene.add(group);floors.push(group);return group;
+}
+function fullStatue(x,y,z,pose=0,scale=1,rotation=0){
+ const gr=new THREE.Group();gr.position.set(x,y,z);gr.scale.setScalar(scale);gr.rotation.y=rotation;
+ const add=(mesh,px,py,pz)=>{mesh.position.set(px,py,pz);mesh.castShadow=true;mesh.receiveShadow=true;gr.add(mesh);return mesh;};
+ add(new THREE.Mesh(new THREE.CylinderGeometry(.34,.66,2.1,24),chalk),0,1.1,0);
+ for(let i=0;i<12;i++){let strip=add(new THREE.Mesh(new THREE.CylinderGeometry(.03,.045,1.65,9),leg),-.49+i*.089,1.06,.28);strip.rotation.z=.06*Math.sin(i);}
+ add(new THREE.Mesh(new THREE.SphereGeometry(.37,26,22),chalk),0,2.45,.04).scale.set(1,1.22,.96);
+ for(let i=0;i<11;i++){const a=i*2*Math.PI/11;add(new THREE.Mesh(new THREE.SphereGeometry(.12,9,7),hair),.28*Math.cos(a),2.75,.26*Math.sin(a));}
+ for(const side of [-1,1]){const arm=add(new THREE.Mesh(new THREE.CylinderGeometry(.12,.13,1.27,14),chalk),side*.49,1.94,0);arm.rotation.z=side*(pose===2?.65:.24);}
+ scene.add(gr);floors.push(gr);return gr;
+}
+function studioRoom(opts={}){
+ const W=opts.w||17,D=opts.d||42,H=opts.h||7.2;
+ const beige=opts.yellow?mat(0xb5a16a,.87):wallMat;
+ const brighter=opts.yellow?mat(0xd8c478,.78):cream;
+ // Architectural envelope: constructed from planes, not a photograph.
+ cube(W,.36,D,0,-.20,-D/2+8,vein,true,false);
+ cube(W,.24,D,0,H+.12,-D/2+8,beige,true,false);
+ cube(.4,H+1,D,-W/2, H/2,-D/2+8,beige,true,false);
+ cube(.4,H+1,D, W/2, H/2,-D/2+8,beige,true,false);
+ cube(W,H,.48,0,H/2,-D+7.6,beige,true,false);
+ // Rectangular decorative wall pilasters with recesses at regular intervals.
+ for(let z=6;z>-D+8;z-=6.5){
+  for(let side of [-1,1]){
+   const x=side*(W/2-.28);
+   cube(.16,H-.75,1.2,x,(H-.75)/2,z,brighter);
+   cube(.24,.29,1.5,x,H-.8,z,chalk);
+   cube(.19,.25,1.4,x,.25,z,brighter);
+   // dark inset vertical stone niche; remains physically anchored to wall.
+   cube(.07,H*.39,2.3,x-side*.105,H*.52,z-2.25,dark,false,false);
+  }
+  // Foreground columns use real cylindrical meshes, bases and fluted shafts.
+  for(const side of [-1,1]){
+    const cx=side*(W/2-1.80),cz=z;
+    const sh=cyl(.42,.44,H-.95,cx,(H-.95)/2,cz,cream,48);
+    for(let fl=0;fl<12;fl++){const a=2*Math.PI*fl/12;const flute=cyl(.030,.034,H-1.17,cx+Math.cos(a)*.423,(H-.95)/2,cz+Math.sin(a)*.423,brighter,10);flute.castShadow=false;}
+    cube(1.06,.28,1.06,cx,.21,cz,chalk,true);
+    cube(1.15,.39,1.15,cx,H-.62,cz,chalk);
+    cube(1.28,.17,1.28,cx,H-.34,cz,brighter);
+  }
+  // Plaster coffers and continuous ceiling beams.
+  cube(W-.2,.23,.26,0,H-.30,z,brighter,false,false);
+  cube(.26,.24,6.5,-W*.25,H-.27,z-3.25,brighter,false,false);
+  cube(.26,.24,6.5,W*.25,H-.27,z-3.25,brighter,false,false);
+  const ceilingLight=new THREE.PointLight(opts.yellow?0xffdf81:0xffe6c3,opts.yellow?38:30,10,2);ceilingLight.position.set(0,H-.66,z-2.9);scene.add(ceilingLight);activeLights.push(ceilingLight);
+  cube(.65,.03,1.20,0,H-.26,z-2.9,mat(opts.yellow?0xffefac:0xfff6df,.85),false,false);
+  for(let s of [-1,1])warmSpot(s*(W*.24),H-.3,z-2.3,opts.yellow?45:65);
+ }
+ // Back portal arch to suggest continuous virtual museum beyond current room.
+ cube(3.6,5.5,.16,0,2.75,-D+7.8,mat(opts.yellow?0x786847:0x786958),false,false);
+ archFrame(0,0,-D+7.0,3.6,5.55,.5,chalk);
+ cube(2.5,5.05,.15,0,2.52,-D+8.0,mat(opts.yellow?0x6f6446:0x7f6d59),false,false);
+ // Floor thin tiles laid in the physical room, diminishing in perspective.
+ for(let x=-W/2+.2;x<=W/2;x+=2.25)cube(.017,.01,D-.3,x,.016,-D/2+8,mat(0xc3a98d,.9),false,false);
+ for(let z=7.6;z>-D+8;z-=2.5)cube(W,.011,.018,0,.02,z,mat(0xba9f84,.88),false,false);
+ // Ceiling indirect edge light lines.
+ for(let x of [-W/2+1.1,W/2-1.1])cube(.07,.12,D, x,H-.07,-D/2+8,mat(0xf8e8d0,.7),false,false);
+ return {W,D,H};
+}
+function sculptPlan(v){
+ // Vary artistic installations spatially between zones and camera viewpoints.
+ const arrangements=[
+ [[-3.8,-3,1.1,0], [3.8,-5,.85,1]],
+ [[-4.9,-1,1.1,0], [4.8,-2,1,1],[-2.9,-11,.9,3],[3.3,-12,.84,2]],
+ [[-3,-4,.85,1], [3,-8,.9,0]],
+ [[-5,-.8,1.04,0],[.8,-2,1.1,3],[5.8,-5,1.05,1],[-3.9,-12,.75,2]],
+ [[-5.6,-2,1,2], [0,-6,1.2,3],[5.2,-5,1,0]],
+ [[-4.8,0,1,3], [3.8,-4,.95,1],[-4.0,-10,.9,0],[3.6,-13,.72,2]],
+ [[-5.3,-3,1.05,1], [5.5,-3,1.1,0],[-3.3,-10,.83,3],[3.1,-12,.75,2]],
+ [[-3.1,-8,.75,0],[3.1,-11,.75,1]]
+ ];
+ const arr=arrangements[v];for(const [x,z,size,id] of arr){
+  const y=pedestal(x,z,size);
+  if(id===3)fullStatue(x,y,z,id,size*.75,Math.PI*.16);
+  else bust(x,y,z,id,size*.88,id%2?.35:-.15);
+ }
+}
+const views=[
+ {title:'ENTRANCE', w:18,d:45,h:7.6,cam:[0,2.5,13],target:[0,2.7,-22],exposure:1.42},
+ {title:'ATRIUM',w:19.5,d:39,h:8.5,cam:[-3.0,2.6,11],target:[.7,2.2,-15],exposure:1.56},
+ {title:'TRANSITION',w:11.5,d:60,h:6.5,cam:[0,2.3,13],target:[0,2.4,-36],exposure:1.50,yellow:true},
+ {title:'GALLERY 01',w:17.5,d:41,h:7.6,cam:[-2.0,2.25,11],target:[0,2.5,-16],exposure:1.63},
+ {title:'REVERSE',w:17.5,d:41,h:7.6,cam:[3.4,2.9,5],target:[-2.6,2.5,-13],exposure:1.60},
+ {title:'GALLERY 02',w:18,d:50,h:7.4,cam:[0,2.5,12],target:[-1,2.8,-26],exposure:1.54},
+ {title:'GALLERY 03',w:18,d:42,h:8.3,cam:[-2.5,2.45,9],target:[1,2.7,-14],exposure:1.59},
+ {title:'RETURN CORRIDOR',w:12,d:66,h:6.5,cam:[0,2.25,12],target:[0,2.5,-42],exposure:1.54}
+];
+const results=[];
+for(let i=0;i<views.length;i++){
+ const v=views[i];clearScene();show('Rendering original 3D-designed space '+(i+1)+'/8: '+v.title);
+ const room=studioRoom(v);sculptPlan(i);
+ camera.position.set(...v.cam);camera.lookAt(new THREE.Vector3(...v.target));
+ camera.fov=i===2||i===7?65:60;camera.updateProjectionMatrix();
+ renderer.toneMappingExposure=v.exposure;
+ renderer.render(scene,camera);
+ const url=renderer.domElement.toDataURL('image/webp',.94);
+ const output=document.getElementById('render'+i);output.src=url;
+ await output.decode();
+ if(output.naturalWidth<1000 || output.naturalHeight<700)throw new Error('Invalid room rendering '+(i+1));
+ results.push({space:i+1,bytes:Math.round(url.length*.75),rendered:true,width:output.naturalWidth,height:output.naturalHeight});
+}
+window.__spaceResults=results;
+window.__allSpacesReady=true;
+document.documentElement.dataset.spaceDesignReady='true';show('SUCCESS: 8 ORIGINAL ARCHITECTURAL ROOMS RENDERED. '+JSON.stringify(results));
+// Figma capture script has already loaded in head; wait controlled by figmadelay in URL.
+}catch(e){show('ERROR: '+e.message);window.__renderError=String(e);}
+</script></body></html>
