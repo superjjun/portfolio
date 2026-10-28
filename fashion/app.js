@@ -1,75 +1,156 @@
-/** RAGSAINT — interactive, static portfolio demo. No payment, account, or server processing. */
-const FALLBACK={
-  heroLeft:'https://www.figma.com/api/mcp/asset/761993c5-59fa-4f72-9d65-062a991f5a9d.png',
-  heroRight:'https://www.figma.com/api/mcp/asset/2f9a81f6-f06f-4a06-b632-12acdeba4073.png',
-  outer:'https://www.figma.com/api/mcp/asset/70204b6d-5cb9-4aaa-9f1f-656264919d65.png',
-  top:'https://www.figma.com/api/mcp/asset/8abc85bf-c5af-4ab8-9266-13b2ceeba019.png',
-  bottom:'https://www.figma.com/api/mcp/asset/572cc473-6319-48be-935e-96cc82936224.png',
-  acc:'https://www.figma.com/api/mcp/asset/79851502-3934-4982-9217-ae2a221def66.png',
-  coat:'https://www.figma.com/api/mcp/asset/59ebc8fe-446d-4d88-a255-779795315f8d.png',
-  texture:'https://www.figma.com/api/mcp/asset/3869e9f5-ab7f-48bd-86e1-761f24ccc280.png',
-  campaign1:'https://www.figma.com/api/mcp/asset/f0a2b3b2-7b2a-4a27-8e11-b094d42e373e.png',
-  campaign2:'https://www.figma.com/api/mcp/asset/794e1291-749b-4a3b-9e6f-57c96eb6e114.png',
-  shirt:'https://www.figma.com/api/mcp/asset/3a51541c-e9e9-4472-b29c-11a6382c5eaf.png',
-  chain:'https://www.figma.com/api/mcp/asset/80616f19-ee60-43f7-8813-16a346583fae.png',
-  editorial1:'https://www.figma.com/api/mcp/asset/984ff47b-bb60-434b-81f1-70f0f0389a23.png',
-  editorial2:'https://www.figma.com/api/mcp/asset/9611aa24-0ac8-43a6-9a52-ea7cc4810e59.png',
-  cutout1:'https://www.figma.com/api/mcp/asset/123a5b97-6b9d-4be0-aee8-600d0466291f.png',
-  cutout2:'https://www.figma.com/api/mcp/asset/de036c08-8c12-45b6-bebf-05f2ef207b08.png'
+/* RAGSAINT Figma-to-code prototype. No payments, login or orders are processed. */
+(function(){
+'use strict';
+const A=function(name){return './assets/'+name+'.png';};
+const goods={
+ hoodie:{key:'hoodie',name:'DISTRESSED CHECKER HOODIE',price:198000,category:'top',image:'hoodie',photos:['hoodie','hoodie2','hoodie3','hoodie4'],sizes:['S','M','L','XL']},
+ outer:{key:'outer',name:'BLACK LEATHER BOMBER',price:328000,category:'outer',image:'outer-main',photos:['outer-1','outer-main','outer-2','outer-3'],sizes:['S','M','L','XL']},
+ denim:{key:'denim',name:'WASHED BLACK DENIM',price:148000,category:'bottom',image:'denim-main',photos:['denim-1','denim-main','denim-2'],sizes:['S','M','L','XL']},
+ cargo:{key:'cargo',name:'QUILTED POCKET PANTS',price:148000,category:'bottom',image:'cargo-main',photos:['cargo-1','cargo-main','cargo-2'],sizes:['S','M','L','XL']},
+ acc:{key:'acc',name:'SILVER HARDWARE CHAIN',price:68000,category:'acc',image:'acc-main',photos:['acc-1','acc-main','acc-2'],sizes:['ONE SIZE']}
 };
-const A=Object.fromEntries(Object.entries(FALLBACK).map(([k,v])=>[k,`./assets/${k}.png`]));
-const products=[
- {id:'pilgrim-coat',name:'PILGRIM COAT',group:'OUTER',price:328000,no:'RS—001',label:'Distressed outer shell / washed black',description:'A sculptural outer layer with a weathered finish. Built around volume, abrasion, and the shape of movement.',images:['coat','texture','outer'],sizes:['S','M','L']},
- {id:'relic-shirt',name:'RELIC LAYERED SHIRT',group:'TOP',price:148000,no:'RS—002',label:'Layered construction / charcoal',description:'Double-layer composition with an irregular hem and tactile details. Created to be worn, worn down and kept.',images:['shirt','top','campaign2'],sizes:['S','M','L']},
- {id:'halo-fragment',name:'HALO FRAGMENT',group:'ACC',price:68000,no:'RS—003',label:'Silver-tone / found object',description:'A small fragment of the collection: industrial textures, worn metal, and an imperfect halo.',images:['chain','acc','cutout2'],sizes:['OS']},
- {id:'ash-denim',name:'ASH WIDE DENIM',group:'BOTTOM',price:186000,no:'RS—004',label:'Wide silhouette / ash wash',description:'Heavyweight washed denim. A generous silhouette, softened by repeated movement.',images:['bottom','editorial1','campaign1'],sizes:['S','M','L']}
-];
-const won=n=>'₩ '+n.toLocaleString('ko-KR');
-const icon=(kind)=>kind==='search'?'<svg viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9.4" cy="9.4" r="6"/><path d="m14 14 5.5 5.5"/></svg>':kind==='menu'?'<span class="hamburger"><i></i><i></i><i></i></span>':'<span aria-hidden="true">×</span>';
-const img=(key,cls='',extra='')=>`<img class="${cls}" src="${A[key]}" data-fallback="${FALLBACK[key]}" ${extra} loading="${['heroLeft','heroRight'].includes(key)?'eager':'lazy'}" />`;
-let bag=[]; try{bag=JSON.parse(localStorage.getItem('ragsaint-bag')||'[]');if(!Array.isArray(bag))bag=[];}catch{bag=[];}
-let state={route:location.hash.replace(/^#\/?/,'')||'home',overlay:null,filter:'ALL',search:'',detailImage:0,selectedSize:null,toast:null,liked:[],checkoutStep:1};
-const app=document.querySelector('#app');
-const save=()=>{try{localStorage.setItem('ragsaint-bag',JSON.stringify(bag));}catch{/* local demo / restricted browser */}};
-const bagCount=()=>bag.reduce((n,i)=>n+i.qty,0);
-const bagTotal=()=>bag.reduce((n,i)=>n+i.qty*(products.find(p=>p.id===i.id)?.price||0),0);
-const nav=(route,opts={})=>{state.overlay=null;state.detailImage=0;state.selectedSize=null;state.route=route;const hash='#/'+route;if(location.hash!==hash)history.pushState(null,'',hash);render();if(!opts.preserveScroll)window.scrollTo({top:0,behavior:'instant'});};
-const routes=['home','shop','journal','about','bag','account','checkout','complete','project'];
-const go=(route)=>nav(route);
-const header=()=>`<header class="site-header ${state.route==='home'?'home-header':''}"><div class="header-start"><button type="button" class="header-action" data-action="menu" aria-label="메뉴 열기">${icon('menu')}<span>MENU</span></button><button type="button" class="header-action" data-action="search" aria-label="상품 검색">${icon('search')}<span>SEARCH</span></button></div><a class="brand-mark" href="#/home" data-nav="home" aria-label="Ragsaint home">Ragsaint</a><div class="header-end"><button type="button" class="header-action account-link" data-nav="account">ACCOUNT</button><button type="button" class="header-action" data-nav="bag">BAG <span class="bag-num">[ ${bagCount()} ]</span></button></div></header>`;
-const footer=()=>`<footer class="site-footer"><div class="footer-left"><span>RAGSAINT®</span><p>Independent visual archive<br>Collection 001 / AW 26</p></div><div class="footer-links"><a href="#/shop" data-nav="shop">SHOP</a><a href="#/journal" data-nav="journal">JOURNAL</a><a href="#/about" data-nav="about">ABOUT</a><a href="mailto:contact@ragsaint.com">CONTACT</a></div><div class="footer-bottom"><span>© 2026 RAGSAINT. ALL RIGHTS RESERVED.</span><span>KOREA / KRW ₩</span><a href="#/project" data-nav="project">DESIGN PROJECT ↗</a></div></footer>`;
-const home=()=>`<main class="home-page">
-<section class="hero-split" aria-label="RAGSAINT Collection 001"><button type="button" class="hero-tile hero-left" data-nav="shop?cat=OUTER">${img('heroLeft','full-bleed','alt="RAGSAINT campaign: tattoo detail"')}<span class="hero-hover"><small>01 / COLLECTION</small><strong>AFTER THE HALO</strong><span>EXPLORE OUTER ↗</span></span></button><button type="button" class="hero-tile hero-right" data-nav="shop?cat=TOP">${img('heroRight','full-bleed','alt="RAGSAINT campaign: grey streetwear editorial"')}<span class="hero-hover"><small>02 / LOOKBOOK</small><strong>THE NEW UNIFORM</strong><span>EXPLORE TOP ↗</span></span></button></section>
-<div class="index-bar"><span>RAGSAINT — COLLECTION 001</span><span>SCROLL TO DISCOVER ↓</span><span>SEOUL, 2026</span></div>
-<section class="statement"><div class="statement-caption">[ COLLECTION 001 / AW 26 ]</div><h1>AFTER<br><em>THE</em> HALO<span class="period">.</span></h1><div class="statement-bottom"><p>FOR THE ONES WHO<br>LIVE BEYOND THE FRAME.</p><a class="underlink" href="#/shop" data-nav="shop">ENTER COLLECTION <span>↗</span></a></div></section>
-<section class="category-feature"><div class="section-top"><span>THE UNIFORM</span><span>001 — 004</span></div><div class="category-grid">${[['outer','OUTER','01'],['top','TOP','02'],['bottom','BOTTOM','03'],['acc','ACC','04']].map(([key,label,n])=>`<a class="category-tile" href="#/shop?cat=${label}" data-nav="shop?cat=${label}">${img(key,'category-img',`alt="${label} category fashion photo"`)}<span class="category-caption"><span>${n} / ${label}</span><span>↗</span></span></a>`).join('')}</div></section>
-<section class="drop-section"><div class="section-top"><span>THE FIRST DROP</span><span>4 OBJECTS</span></div><div class="drop-heading"><h2>OBJECTS<br>OF DESIRE.</h2><a class="underlink" href="#/shop" data-nav="shop">SHOP ALL <span>↗</span></a></div><div class="product-grid">${products.map(productCard).join('')}</div></section>
-<section class="editorial-banner">${img('editorial2','editorial-cover','alt="RAGSAINT editorial model portrait"')}<div class="editorial-content"><span>THE RAGSAINT JOURNAL / 001</span><h2>THE BEAUTY<br>OF BEING<br>UNFINISHED.</h2><a class="light-link" href="#/journal" data-nav="journal">VIEW EDITORIAL ↗</a></div></section>
-<section class="endline"><span>WEAR IT YOUR WAY.</span><a href="#/shop" data-nav="shop">DISCOVER THE COLLECTION ↗</a></section></main>`;
-const productCard=p=>`<a class="product-card" href="#/product/${p.id}" data-nav="product/${p.id}"><div class="product-visual">${img(p.images[0],'product-photo',`alt="${p.name}"`)}<span class="product-quick">VIEW PIECE ↗</span></div><div class="product-meta"><span>${p.name}</span><span>${won(p.price)}</span></div><div class="product-sub">${p.no} / ${p.group}</div></a>`;
-const shop=(filter='ALL')=>{const allowed=['ALL','OUTER','TOP','BOTTOM','ACC'];const f=allowed.includes(filter)?filter:'ALL';const listed=f==='ALL'?products:products.filter(p=>p.group===f);return `<main class="shop-page"><div class="page-eyebrow"><span>RAGSAINT / COLLECTION 001</span><span>AW 26 — 001</span></div><h1 class="shop-headline">THE COLLECTION<span class="dot">.</span></h1><div class="shop-controls"><div class="tabs">${allowed.map(c=>`<button type="button" class="tab ${f===c?'active':''}" data-filter="${c}">${c}</button>`).join('')}</div><span class="product-count">${listed.length} PIECE${listed.length>1?'S':''} / FILTER: ${f}</span></div><div class="shop-product-grid">${listed.map(productCard).join('')}</div><div class="shop-end">END OF COLLECTION / 001 — EXPLORE WITHOUT RULES.</div></main>`};
-const detail=(p)=>{if(!p)return notFound();return `<main class="detail-page"><div class="detail-head"><a href="#/shop" data-nav="shop">← BACK TO COLLECTION</a><span>COLLECTION 001 / ${p.no}</span></div><div class="detail-layout"><div class="gallery"><div class="gallery-main">${img(p.images[state.detailImage%p.images.length],'gallery-image',`alt="${p.name} item view"`)}<div class="gallery-controls"><button data-action="prev-image" type="button" aria-label="이전 이미지">←</button><span>${String(state.detailImage%p.images.length+1).padStart(2,'0')} / ${String(p.images.length).padStart(2,'0')}</span><button data-action="next-image" type="button" aria-label="다음 이미지">→</button></div></div><div class="gallery-thumbs">${p.images.map((k,i)=>`<button type="button" data-img-index="${i}" class="thumb ${state.detailImage===i?'selected':''}" aria-label="상품 이미지 ${i+1}">${img(k,'',`alt="${p.name} view ${i+1}"`)}</button>`).join('')}</div></div><div class="detail-information"><div class="detail-kicker">RAGSAINT® / AFTER THE HALO <span>${p.no}</span></div><h1>${p.name}</h1><div class="detail-price">${won(p.price)}</div><p class="product-label">${p.label}</p><div class="info-rule"></div><div class="detail-description"><span>DESCRIPTION / 01</span><p>${p.description}</p></div><div class="size-heading"><span>SELECT SIZE</span><button type="button" data-action="size-guide">SIZE GUIDE ↗</button></div><div class="sizes">${p.sizes.map(s=>`<button type="button" data-size="${s}" class="size ${state.selectedSize===s?'active':''}" aria-pressed="${state.selectedSize===s}">${s}</button>`).join('')}</div><button type="button" class="primary-add" data-add="${p.id}">ADD TO BAG <span>↗</span></button><button type="button" class="wishlist" data-like="${p.id}">${state.liked.includes(p.id)?'♥ SAVED TO FAVORITES':'♡ SAVE TO FAVORITES'}</button><div class="accordion"><details><summary>PRODUCT DETAILS <span>＋</span></summary><p>Part of Collection 001 / AW 26.<br>Concept sample — designed for portfolio demonstration.</p></details><details><summary>SHIPPING & RETURNS <span>＋</span></summary><p>This website is a portfolio prototype. Orders and shipping are not processed.</p></details></div></div></div><div class="related"><div class="section-top"><span>ALSO IN THE COLLECTION</span><span>DISCOVER MORE ↗</span></div><div class="related-grid">${products.filter(x=>x.id!==p.id).slice(0,3).map(productCard).join('')}</div></div></main>`};
-const cart=()=>`<main class="cart-page"><div class="page-eyebrow"><span>YOUR SELECTION</span><span>RAGSAINT® / 001</span></div><h1 class="cart-title">YOUR BAG <span>[ ${bagCount()} ]</span></h1><div class="bag-layout"><section class="bag-list">${bag.length?bag.map((item,i)=>{const p=products.find(x=>x.id===item.id);if(!p)return '';return `<div class="bag-row"><a href="#/product/${p.id}" data-nav="product/${p.id}">${img(p.images[0],'bag-image',`alt="${p.name}"`)}</a><div class="bag-detail"><div><a href="#/product/${p.id}" data-nav="product/${p.id}">${p.name}</a><span>${p.no} / SIZE ${item.size}</span></div><div class="bag-row-bottom"><div class="quantity"><button type="button" data-qty="${i},-1" aria-label="수량 감소">−</button><span>${item.qty}</span><button type="button" data-qty="${i},1" aria-label="수량 증가">＋</button></div><button type="button" class="remove" data-remove="${i}">REMOVE ×</button></div></div><strong>${won(p.price*item.qty)}</strong></div>`}).join(''):`<div class="empty-bag"><span>∅</span><h2>YOUR BAG IS<br>CURRENTLY EMPTY.</h2><p>YOUR NEXT FAVORITE IS WAITING.</p><a class="button-outline" href="#/shop" data-nav="shop">DISCOVER COLLECTION ↗</a></div>`}</section><aside class="order-summary"><h2>ORDER SUMMARY</h2><div><span>SUBTOTAL</span><span>${won(bagTotal())}</span></div><div><span>SHIPPING</span><span>CALCULATED AT CHECKOUT</span></div><div class="order-total"><span>TOTAL</span><strong>${won(bagTotal())}</strong></div><button type="button" class="primary-add" data-nav="checkout" ${!bag.length?'disabled':''}>CHECKOUT <span>↗</span></button><small>PORTFOLIO DEMO / NO REAL PAYMENT IS TAKEN.</small></aside></div></main>`;
-const account=()=>`<main class="account-page"><div class="account-card"><span class="page-eyebrow">RAGSAINT / PRIVATE ACCESS</span><h1>ACCOUNT</h1><form id="login-demo" class="simple-form"><label>EMAIL ADDRESS<input name="email" type="email" autocomplete="email" placeholder="YOUR EMAIL" required /></label><label>PASSWORD<input name="password" type="password" autocomplete="off" placeholder="PASSWORD" minlength="4" required /></label><button class="primary-add" type="submit">LOGIN <span>↗</span></button></form><p>NEW TO RAGSAINT?</p><button type="button" class="underlink" data-action="create-account">CREATE ACCOUNT →</button><small>DEMO ONLY — ACCOUNT INFORMATION IS NOT STORED.</small></div></main>`;
-const checkout=()=>{if(!bag.length)return cart();return `<main class="checkout-page"><div class="page-eyebrow"><span>SECURE CHECKOUT / DEMO</span><span>NO PAYMENT COLLECTED</span></div><h1 class="checkout-title">CHECKOUT<span>.</span></h1><div class="checkout-layout"><form id="checkout-form" class="checkout-form"><div class="checkout-progress"><span class="on">01 / INFORMATION</span><span>02 / SHIPPING</span><span>03 / REVIEW</span></div><div class="form-section-title">CONTACT INFORMATION</div><label>EMAIL ADDRESS<input type="email" name="email" placeholder="EMAIL@EXAMPLE.COM" required autocomplete="email"></label><div class="form-section-title">SHIPPING DETAILS</div><div class="form-two"><label>FIRST NAME<input name="firstName" placeholder="FIRST NAME" required autocomplete="given-name"></label><label>LAST NAME<input name="lastName" placeholder="LAST NAME" required autocomplete="family-name"></label></div><label>ADDRESS<input name="address" placeholder="STREET ADDRESS" required autocomplete="street-address"></label><div class="form-two"><label>CITY<input name="city" placeholder="CITY" required autocomplete="address-level2"></label><label>POSTAL CODE<input name="postal" placeholder="POSTAL CODE" required minlength="4" autocomplete="postal-code"></label></div><label class="checkbox-line"><input type="checkbox" name="demo" required /> I UNDERSTAND THIS IS A PORTFOLIO DEMO, NOT A REAL ORDER.</label><button class="primary-add" type="submit">COMPLETE DEMO ORDER <span>↗</span></button></form><aside class="checkout-summary"><h2>YOUR ORDER / ${bagCount()} ITEMS</h2>${bag.map(i=>{const p=products.find(x=>x.id===i.id);return `<div class="checkout-item">${img(p.images[0],'',`alt="${p.name}"`)}<span>${p.name}<small>SIZE ${i.size} / QTY ${i.qty}</small></span><strong>${won(p.price*i.qty)}</strong></div>`}).join('')}<div class="checkout-total"><span>TOTAL</span><strong>${won(bagTotal())}</strong></div><p>NO PAYMENT INFORMATION IS REQUESTED.</p></aside></div></main>`};
-const complete=()=>`<main class="complete-page"><span>RAGSAINT® / DEMO COMPLETE</span><h1>ORDER<br>CONFIRMED<span>.</span></h1><p>YOUR EXPERIENCE IS COMPLETE.<br>NO ORDER WAS PLACED AND NO PAYMENT WAS TAKEN.</p><button type="button" class="button-outline" data-nav="home">RETURN TO HOME ↗</button></main>`;
-const journal=()=>`<main class="journal-page"><div class="page-eyebrow"><span>RAGSAINT JOURNAL</span><span>ISSUE NO. 001</span></div><div class="journal-hero">${img('campaign1','',`alt="RAGSAINT fashion editorial"`)}<div class="journal-title"><span>AN EXPERIMENT IN FORM</span><h1>AFTER<br>THE HALO.</h1><p>AN EXPLORATION OF WHAT REMAINS WHEN THE IMAGE FALLS APART.</p></div></div><div class="journal-grid"><div><span>01 / THE MATERIAL</span><h2>IMPERFECTION<br>AS A LANGUAGE.</h2><p>Frayed edges. Unfinished surfaces. Clothing that records motion and time. RAGSAINT is built around tension between the familiar and the unfamiliar.</p></div>${img('editorial1','',`alt="Fashion editorial"`)}</div><div class="journal-grid reverse">${img('editorial2','',`alt="RAGSAINT portrait editorial"`)}<div><span>02 / THE PERSON</span><h2>BEYOND<br>THE FRAME.</h2><p>A fashion identity that refuses a fixed answer. Instead of prescribing a look, each piece leaves space for the wearer to transform it.</p><a class="underlink" href="#/shop" data-nav="shop">EXPLORE COLLECTION ↗</a></div></div></main>`;
-const about=()=>`<main class="about-page"><div class="page-eyebrow"><span>INDEPENDENT DESIGN PROJECT</span><span>SEOUL / 2026</span></div><h1>WE EXIST<br>OUTSIDE THE<br><em>FRAME.</em></h1><div class="about-bottom"><div class="about-image">${img('campaign2','',`alt="RAGSAINT AW26 editorial"`)}</div><div class="about-copy"><span>RAGSAINT® / MANIFESTO</span><h2>NOT MADE<br>TO FIT IN.</h2><p>RAGSAINT is a concept fashion label imagining an alternative uniform. A study of asymmetry, texture, weight, and emotional distance.</p><p>This independent student portfolio project explores how a fashion identity becomes a coherent digital shopping experience — from discovery to product detail and cart.</p><a class="underlink" href="#/project" data-nav="project">VIEW THE DESIGN PROJECT ↗</a></div></div></main>`;
-const project=()=>`<main class="project-page"><div class="project-intro"><div class="page-eyebrow"><span>SELECTED WORK / 2026</span><span>WEB DESIGN · FRONT-END</span></div><span class="project-index">01 / FASHION WEB EXPERIENCE</span><h1>RAGSAINT<span>®</span></h1><div class="project-bottom"><p>패션 브랜드의 정체성을<br>디지털 경험으로 확장하다.</p><div><span>ROLE</span><strong>Visual Design / UI·UX / Prototype / Web</strong></div><div><span>TOOLS</span><strong>Figma / HTML / CSS / JavaScript</strong></div></div></div><section class="project-shot"><div>${img('heroLeft','',`alt="Campaign image"`)}${img('heroRight','',`alt="Campaign image"`)}</div></section><div class="project-text-block"><span>01 / OVERVIEW</span><h2>A FASHION IDENTITY<br>BUILT FOR THE SCREEN.</h2><p>RAGSAINT는 실험적인 스트리트웨어 무드를 바탕으로 구상한 패션 브랜드 콘셉트입니다. 절제된 타이포그래피, 강렬한 에디토리얼 이미지, 흑백 대비를 중심으로 웹사이트 전반의 경험을 설계했습니다.</p></div><div class="project-pair"><div class="project-panel black"><span>02 / VISUAL LANGUAGE</span><h3>FORM<br>FOLLOWS<br>FEELING.</h3><p>#111111<br>#F5F5F3<br>#FFFFFF</p></div><div class="project-panel with-photo">${img('campaign2','',`alt="RAGSAINT fabric editorial"`)}</div></div><div class="project-text-block"><span>03 / INTERACTION</span><h2>DESIGNED TO MOVE.</h2><p>단순한 시안에서 멈추지 않고 메뉴 탐색, 카테고리 필터, 상품 상세 이미지 전환, 사이즈 선택, 장바구니와 주문 데모까지 이어지는 흐름을 직접 구현했습니다.</p><a class="underlink" href="#/home" data-nav="home">EXPERIENCE THE WEBSITE ↗</a></div><div class="project-final">RAGSAINT® <span>DESIGNED TO BE DIFFERENT.</span></div></main>`;
-const notFound=()=>`<main class="complete-page"><h1>NOT FOUND.</h1><a class="button-outline" href="#/home" data-nav="home">BACK HOME ↗</a></main>`;
-const overlay=()=>{if(state.overlay==='menu')return `<div class="overlay menu-overlay"><div class="overlay-top"><span>DIRECTORY / 001</span><button type="button" data-action="close-overlay" aria-label="닫기">CLOSE ×</button></div><nav class="menu-links">${[['home','HOME'],['shop','COLLECTION'],['journal','JOURNAL'],['about','ABOUT'],['project','PROJECT / DESIGN']].map(([r,t],i)=>`<a href="#/${r}" data-nav="${r}"><span>${String(i+1).padStart(2,'0')}</span>${t}<b>↗</b></a>`).join('')}</nav><div class="menu-bottom"><span>RAGSAINT / AW26</span><span>OUTSIDE THE FRAME.</span></div></div>`;if(state.overlay==='search')return `<div class="overlay search-overlay"><div class="overlay-top"><span>SEARCH THE ARCHIVE</span><button type="button" data-action="close-overlay">CLOSE ×</button></div><div class="search-box"><label for="search-input">WHAT ARE YOU LOOKING FOR?</label><div class="search-entry"><input id="search-input" type="search" placeholder="SEARCH COLLECTION..." value="${escapeHTML(state.search)}" autocomplete="off" /><button data-action="search-submit" type="button">↗</button></div><div id="search-results">${searchResults()}</div></div></div>`;return '';};
-const searchResults=()=>{const q=state.search.trim().toLowerCase();const found=q?products.filter(p=>(p.name+' '+p.group+' '+p.label).toLowerCase().includes(q)):products;return `<div class="search-count">${found.length} MATCHES ${q?`FOR “${escapeHTML(state.search)}”`:'IN THE ARCHIVE'}</div>${found.length?found.map(p=>`<a class="search-result" href="#/product/${p.id}" data-nav="product/${p.id}">${img(p.images[0],'',`alt="${p.name}"`)}<span>${p.name}<small>${p.group} / ${p.no}</small></span><strong>${won(p.price)}</strong><span>↗</span></a>`).join(''):'<p class="no-results">NO PIECES FOUND. TRY ANOTHER SEARCH.</p>'}`};
-const escapeHTML=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-function current(){const [route,args]=state.route.split('?');if(route==='home')return home();if(route==='shop'){const parsed=new URLSearchParams(args);return shop(parsed.get('cat')||'ALL');}if(route.startsWith('product/'))return detail(products.find(p=>p.id===route.split('/')[1]));return ({journal,about,bag:cart,account,checkout,complete,project}[route]||notFound)();}
-let toastTimer;
-function render(){document.title=`${state.route==='home'?'AFTER THE HALO':state.route.toUpperCase()} — RAGSAINT®`;app.innerHTML=`<div class="app-shell">${header()}${current()}${footer()}${overlay()}<div id="toast" class="toast ${state.toast?'visible':''}" role="status">${state.toast||''}</div></div>`;document.body.classList.toggle('has-overlay',!!state.overlay);bindImages();if(state.overlay==='search')setTimeout(()=>document.querySelector('#search-input')?.focus(),50);}
-function bindImages(){document.querySelectorAll('img[data-fallback]').forEach(image=>{image.addEventListener('error',()=>{if(image.dataset.failed){image.classList.add('image-missing');image.removeAttribute('src');return;}image.dataset.failed='1';image.src=image.dataset.fallback;});});}
-function notify(message){state.toast=message;let t=document.getElementById('toast');if(t){t.textContent=message;t.classList.add('visible');}clearTimeout(toastTimer);toastTimer=setTimeout(()=>{state.toast=null;document.getElementById('toast')?.classList.remove('visible')},2500);}
-function clickAction(e){const target=e.target.closest('[data-nav],[data-action],[data-filter],[data-size],[data-img-index],[data-add],[data-remove],[data-qty],[data-like]');if(!target)return;if(target.matches('a'))e.preventDefault();if(target.dataset.nav){go(target.dataset.nav);return;}if(target.dataset.filter){nav('shop'+(target.dataset.filter==='ALL'?'':'?cat='+target.dataset.filter),{preserveScroll:true});return;}if(target.dataset.size){state.selectedSize=target.dataset.size;render();return;}if(target.dataset.imgIndex!==undefined){state.detailImage=Number(target.dataset.imgIndex);render();return;}if(target.dataset.add){if(!state.selectedSize){notify('SELECT A SIZE FIRST');document.querySelector('.sizes')?.scrollIntoView({behavior:'smooth',block:'center'});return;}let i=bag.find(x=>x.id===target.dataset.add&&x.size===state.selectedSize);i?i.qty++:bag.push({id:target.dataset.add,size:state.selectedSize,qty:1});save();render();notify('ADDED TO YOUR BAG ✓');return;}if(target.dataset.remove!==undefined){bag.splice(Number(target.dataset.remove),1);save();render();return;}if(target.dataset.qty){const [idx,change]=target.dataset.qty.split(',').map(Number);if(bag[idx]){bag[idx].qty+=change;if(bag[idx].qty<1)bag.splice(idx,1);save();render();}return;}if(target.dataset.like){const id=target.dataset.like;state.liked=state.liked.includes(id)?state.liked.filter(x=>x!==id):[...state.liked,id];render();return;}switch(target.dataset.action){case'menu':state.overlay='menu';render();break;case'search':state.overlay='search';render();break;case'close-overlay':state.overlay=null;render();break;case'next-image':state.detailImage++;render();break;case'prev-image':state.detailImage=(state.detailImage+99)%3;render();break;case'size-guide':notify('SIZE GUIDE: S / M / L — SELECT YOUR USUAL SIZE');break;case'search-submit':break;case'create-account':notify('ACCOUNT REGISTRATION IS A DESIGN DEMO');break;}}
-app.addEventListener('click',clickAction);
-app.addEventListener('input',e=>{if(e.target.id==='search-input'){state.search=e.target.value;document.querySelector('#search-results').innerHTML=searchResults();bindImages();}});
-app.addEventListener('submit',e=>{if(e.target.id==='login-demo'){e.preventDefault();notify('LOGIN IS DISABLED IN THIS PORTFOLIO DEMO');}if(e.target.id==='checkout-form'){e.preventDefault();if(!e.target.reportValidity())return;bag=[];save();nav('complete');}});
-window.addEventListener('keydown',e=>{if(e.key==='Escape'&&state.overlay){state.overlay=null;render();}});
-window.addEventListener('popstate',()=>{state.route=location.hash.replace(/^#\/?/,'')||'home';state.overlay=null;render();});
-window.addEventListener('hashchange',()=>{const route=location.hash.replace(/^#\/?/,'')||'home';if(route!==state.route){state.route=route;state.overlay=null;render();window.scrollTo(0,0);}});
+const cats=['outer','top','bottom','acc'];
+let state={page:'home',menu:false,search:false,pid:'hoodie',pic:0,size:'',drawer:false,accordion:'',searchText:'',accepted:false,cart:[]};
+try{const saved=JSON.parse(localStorage.getItem('ragsaint-figma-cart')||'[]');if(Array.isArray(saved))state.cart=saved.filter(x=>goods[x.key]&&x.qty>0);}catch(e){}
+const root=document.getElementById('app');
+const money=n=>'₩'+Number(n).toLocaleString('ko-KR');
+const bagCount=()=>state.cart.reduce((a,x)=>a+x.qty,0);
+const bagTotal=()=>state.cart.reduce((a,x)=>a+x.qty*goods[x.key].price,0);
+const currentProduct=()=>goods[state.pid]||goods.hoodie;
+const img=(name,cl='',alt='')=>'<img loading="lazy" class="'+cl+'" src="'+A(name)+'" alt="'+alt+'">';
+const go=function(page){state.page=page;state.menu=false;state.search=false;state.drawer=false;state.accordion='';state.pic=0;state.size='';history.replaceState(null,'','#'+encodeURIComponent(page));window.scrollTo({top:0,behavior:'instant'});render();};
+function chrome(){return '<div class="browser" aria-hidden="true"><div class="lights"><i></i><i></i><i></i></div><span class="browser-nav">‹ › ▣</span><div class="url">♙ &nbsp; ragsaint.com</div><span class="browser-right">⇧ ▣ +</span></div>';}
+function header(){
+ const black=state.page.indexOf('category:')===0||state.page.indexOf('detail:')===0;
+ return '<header class="header'+(black?' dark':'')+'">'+
+ '<div class="nav-side">'+
+ '<button class="nav-action" data-action="menu"><span class="burger"><b></b><b></b><b></b></span><span class="label">'+(state.menu?'CLOSE':'MENU')+'</span></button>'+
+ '<button class="nav-action" data-action="search"><span class="search-mark"></span><span class="label">SEARCH</span></button>'+
+ '</div><button class="wordmark nav-action" data-go="home" aria-label="Ragsaint home">Ragsaint</button>'+
+ '<div class="nav-side right"><button class="nav-action" data-go="login"><span class="label">ACCOUNT</span></button><button class="nav-action" data-go="bag">BAG [ '+bagCount()+' ]</button></div></header>';
+}
+function home(){
+ return '<main><section class="hero" aria-label="RAGSAINT fashion campaign">'+
+ '<button class="hero-img" data-go="category:outer" aria-label="OUTER category">'+img('heroLeft','', 'RAGSAINT campaign image 01')+'</button>'+
+ '<button class="hero-img" data-go="category:top" aria-label="TOP category">'+img('heroRight','','RAGSAINT campaign image 02')+'</button></section>'+
+ '<section class="category-pair">'+categoryTile('outer')+categoryTile('top')+'</section>'+
+ '<section class="category-pair">'+categoryTile('bottom')+categoryTile('acc')+'</section>'+
+ '</main>';
+}
+function categoryTile(cat){return '<button class="category-tile" data-go="category:'+cat+'">'+img(cat,'',cat.toUpperCase()+' editorial')+'<strong>'+cat.toUpperCase()+'</strong></button>';}
+function overlay(){
+ const search=state.search;
+ return '<main class="overlay-content"><aside class="overlay-side">'+(search?
+ '<div class="search-line"><span class="search-mark"></span><input type="search" id="query" placeholder="TYPE HERE" autocomplete="off" value="'+state.searchText.replace(/[&<>"]/g,'')+'"></div>'+
+ '<div class="suggestions"><b>SUGGESTED SEARCH</b><button data-go="home">HOME PAGE</button><button data-go="detail:hoodie">DISTRESSED CHECKER HOODIE</button><button data-go="category:outer">OUTER</button></div>':
+ '<nav class="overlay-nav">'+cats.map(x=>'<button data-go="category:'+x+'">'+x.toUpperCase()+'</button>').join('')+'</nav><div class="overlay-footer"><button data-go="wishlist">WISHLIST [ 0 ]</button><button>KOR / ENG</button></div>')+
+ '</aside><div class="overlay-art">'+img('heroLeft')+img('heroRight')+'</div></main>';
+}
+function catalog(cat){
+ const picks=cat==='bottom'?['denim','cargo']:cat==='top'?['hoodie']:cat==='outer'?['outer']:['acc'];
+ return '<main class="catalog-screen"><div class="catalog-layout">'+picks.map((key,i)=>
+ '<button class="catalog-product" data-go="detail:'+key+'">'+img(goods[key].image,'',goods[key].name)+'<span class="count">'+String(i+1).padStart(2,'0')+'</span></button>'
+ ).join('')+'</div><span class="catalog-title">'+cat.toUpperCase()+'</span></main>';
+}
+function detail(){
+ const p=currentProduct(), photos=p.photos;
+ return '<main class="detail-layout"><div class="product-gallery"><div class="main-image">'+img(photos[state.pic]||photos[0],'',p.name)+'</div>'+
+ '<div class="thumbs">'+photos.map((name,i)=>'<button aria-label="View product photo '+(i+1)+'" data-pic="'+i+'" class="'+(state.pic===i?'selected':'')+'">'+img(name)+'</button>').join('')+'</div></div>'+
+ '<div class="detail-info"><div class="title-price"><h1>'+p.name+'</h1><span class="price">'+money(p.price)+'</span></div>'+
+ '<label class="sr-only" for="size-picker">SELECT SIZE</label><select id="size-picker" class="size-selector">'+
+ '<option value="">'+(p.key==='acc'?'ONE SIZE':'SELECT SIZE')+'</option>'+
+ p.sizes.map(x=>'<option value="'+x+'" '+(state.size===x?'selected':'')+'>'+x+'</option>').join('')+'</select>'+
+ '<p class="size-subtitle">'+(p.key==='acc'?'ONE SIZE / ADJUSTABLE LENGTH':'MODEL IS 1.86 WEARING SIZE LARGE')+'</p>'+
+ '<button class="outline-action" data-action="add">ADD TO CART</button>'+
+ '<p class="payment-note">Secure payment with Paypal, Apple Pay,<br>Klarna or Credit Card (Visa, Mastercard)</p>'+
+ ['PRODUCT DETAILS','SIZE AND FIT','MATERIAL AND CARE','SHIPPING AND RETURNS'].map((s,i)=>'<div class="accordion"><button data-accordion="'+i+'"><span>'+s+'</span><span>'+(state.accordion===String(i)?'−':'⌄')+'</span></button>'+
+ (state.accordion===String(i)?'<div class="panel">'+(i===0?'RAGSAINT collection / '+p.name:i===1?'Unisex fit. Select your usual size.':i===2?'Carefully selected textiles. Follow care label.':'Demo shop: no purchases are processed.')+'</div>':'')+'</div>').join('')+
+ '<p class="faq">Need more help? Check FAQ</p></div></main>';
+}
+function drawCart(){
+ let x=state.cart[0]; if(!x)return '<div class="cart-layer"><div class="cart-drawer"><div class="cart-drawer-top">YOUR CART<button data-action="close-drawer">×</button></div><p>YOUR BAG IS CURRENTLY EMPTY.</p><button class="solid-btn" data-go="home">CONTINUE SHOPPING</button></div></div>';
+ let p=goods[x.key];
+ return '<div class="cart-layer"><div class="cart-drawer"><div class="cart-drawer-top">ITEM ADDED TO CART<button data-action="close-drawer" aria-label="Close cart">×</button></div><h2>YOUR CART &nbsp;&nbsp; '+String(bagCount()).padStart(2,'0')+'</h2>'+
+ '<div class="drawer-item">'+img(p.image,'',p.name)+'<div><h3>'+p.name+'</h3><p>'+money(p.price)+'</p><p>SIZE: '+x.size+'</p>'+
+ '<div class="qty-control"><span>QUANTITY:</span><button data-qty="-1" data-key="'+x.key+'">−</button><span>'+x.qty+'</span><button data-qty="1" data-key="'+x.key+'">+</button></div>'+
+ '<p><button class="link-button" data-remove="'+x.key+'">Remove</button></p></div></div>'+
+ '<div class="drawer-bottom"><p>ESTIMATED TOTAL <b>'+money(bagTotal())+'</b></p><button class="solid-btn" data-go="bag">VIEW BAG →</button></div></div></div>';
+}
+function qtyActions(x,compact){return '<span class="qty-control"><button data-qty="-1" data-key="'+x.key+'">−</button><span>'+x.qty+'</span><button data-qty="1" data-key="'+x.key+'">+</button></span>';}
+function bag(){
+ if(!state.cart.length)return '<main class="bag-page"><div class="bag-left"><h1>BAG &nbsp; │ &nbsp; INFORMATION &nbsp; │ &nbsp; SHIPPING &nbsp; │ &nbsp; PAYMENT</h1><p>YOUR BAG IS CURRENTLY EMPTY.</p><button class="solid-btn" data-go="home">CONTINUE SHOPPING</button></div><div class="bag-summary"><h2>ORDER SUMMARY <span>0</span></h2>'+summaryRows()+'<button class="solid-btn" data-go="home">CONTINUE SHOPPING</button></div></main>';
+ return '<main class="bag-page"><section class="bag-left"><h1>BAG</h1><div class="bag-table-head"><span>PRODUCT</span><span>PRICE</span><span>QUANTITY</span><span>TOTAL</span></div>'+
+ state.cart.map(x=>{let p=goods[x.key];return '<div class="bag-row"><div class="bag-item">'+img(p.image,'',p.name)+'<div><strong>'+p.name+'</strong><p>SIZE: '+x.size+'<br>COLOR: BLACK<br>QUANTITY: '+x.qty+'</p><button class="link-button" data-remove="'+x.key+'">× &nbsp; REMOVE</button></div></div><div>'+money(p.price)+'</div><div>'+qtyActions(x)+'</div><div>'+money(p.price*x.qty)+'</div></div>';}).join('')+
+ '<div class="recommendations"><h3>YOU MAY ALSO LIKE</h3><div class="rec-grid">'+['cargo','hoodie'].map(key=>'<button class="rec" data-go="detail:'+key+'">'+img(goods[key].image)+'<span><b>'+goods[key].name+'</b><small>'+goods[key].category.toUpperCase()+'</small><small>VIEW PRODUCT &nbsp; +</small></span></button>').join('')+'</div></div></section>'+
+ '<aside class="bag-summary"><h2>ORDER SUMMARY <span>'+String(bagCount()).padStart(2,'0')+'</span></h2>'+summaryRows()+
+ '<label class="agree"><input id="agree-check" type="checkbox" '+(state.accepted?'checked':'')+' />I HAVE READ AND ACCEPT THE PRIVACY POLICY AND THE TERMS AND CONDITIONS</label>'+
+ '<button class="solid-btn" data-action="checkout"><span>CHECKOUT</span><span>'+money(bagTotal())+'</span></button><div class="pay-methods">VISA &nbsp; Mastercard &nbsp; PayPal &nbsp; Apple Pay &nbsp; Google Pay<br><br>DEMONSTRATION SITE — NO ACTUAL PAYMENTS</div></aside></main>';
+}
+function summaryRows(){
+ return '<div class="summary-row"><span>SUBTOTAL</span><span>'+money(bagTotal())+'</span></div><div class="summary-row"><span>SHIPPING</span><span>CALCULATED AT CHECKOUT</span></div><div class="summary-row total"><span>TOTAL</span><span>'+money(bagTotal())+'</span></div>';
+}
+function checkoutSummary(){
+ let p=state.cart.length?goods[state.cart[0].key]:goods.hoodie;
+ return '<aside class="checkout-right"><div class="checkout-item">'+img(p.image)+'<div><b>'+p.name+'</b><p>SIZE '+(state.cart[0]?.size||'L')+'</p></div><strong>'+money(bagTotal()||p.price)+'</strong></div>'+
+ '<div class="form-row"><input placeholder="Discount code" aria-label="Discount code"><button class="solid-btn" type="button">Apply</button></div><div class="checkout-summary"><p>Subtotal <span>'+money(bagTotal())+'</span></p><p>Shipping <span class="muted">Enter shipping address</span></p><p class="total">Total <span>'+money(bagTotal())+'</span></p><p class="muted">Tax and shipping calculated at checkout</p></div></aside>';
+}
+function checkout(){
+ const step=state.page.split(':')[1]||'contact';
+ let left='';
+ if(step==='contact')left='<h2>Contact</h2><input type="email" placeholder="Email" aria-label="Email"><label class="check-row"><input type="checkbox"> Email me with news and offers</label>'+
+ '<label class="check-row"><input type="checkbox"> I have read and agree to the shipping & refund policy.</label>'+
+ '<h3>Delivery</h3><p>Please ensure every field in the shipping address contains only valid Latin characters.</p>'+
+ '<select aria-label="Country"><option>South Korea</option></select>'+
+ '<div class="form-row"><input placeholder="First name"><input placeholder="Last name"></div>'+
+ '<div class="form-row"><input placeholder="Address"></div><div class="form-row"><input placeholder="Apartment, suite, etc. (optional)"></div>'+
+ '<div class="form-row"><input placeholder="Postal code"><input placeholder="City"><select aria-label="Province"><option>Province</option><option>Seoul</option><option>Gyeonggi</option></select></div>'+
+ '<div class="form-row"><input placeholder="Phone"></div><button class="continue" data-go="checkout:shipping">CONTINUE TO SHIPPING &nbsp; →</button>';
+ else if(step==='shipping')left='<p>DELIVERY &nbsp; / &nbsp; SHIPPING &nbsp; / &nbsp; PAYMENT</p><h2>Shipping method</h2>'+
+ '<p>Enter your shipping address to view available shipping methods.</p><div class="pay-option">STANDARD SHIPPING <span>Calculated at checkout</span></div><h3>Payment</h3>'+
+ '<p>All transactions are secure and encrypted.</p><p>This is an interactive design prototype. No information is submitted or processed.</p>'+
+ '<button class="continue" data-go="checkout:payment">CONTINUE TO PAYMENT &nbsp; →</button>';
+ else left='<p>DELIVERY &nbsp; / &nbsp; SHIPPING &nbsp; / &nbsp; PAYMENT</p><h2>Payment options</h2>'+
+ ['Credit card','PayPal','Pay with Klarna','Bank transfer'].map((x,i)=>'<label class="pay-option"><span><input type="radio" name="pay" '+(i===0?'checked':'')+'> '+x+'</span><span>'+(i===0?'VISA • MC':x)+'</span></label>').join('')+
+ '<h3>Save your information</h3><p>Save your information for a faster checkout next time.</p>'+
+ '<p class="muted">Portfolio demonstration only — do not enter payment details.</p><button class="solid-btn" style="width:100%;margin-top:26px" data-go="complete">PAY NOW (DEMO)</button>'+
+ '<p class="muted" style="margin-top:24px">Refund policy &nbsp;&nbsp; Shipping &nbsp;&nbsp; Privacy policy &nbsp;&nbsp; Terms of service</p>';
+ return '<main class="checkout"><section class="checkout-left">'+left+'</section>'+checkoutSummary()+'</main>';
+}
+function login(){return '<main class="login-page"><form class="login-form" id="login-form"><h1>LOGIN</h1><label>EMAIL *</label><input type="email" required placeholder="EMAIL"><label>PASSWORD *</label><input type="password" required placeholder="PASSWORD"><button class="solid-btn" type="submit">LOGIN</button><p>YOU DON’T HAVE AN ACCOUNT?<br>CLICK THE BUTTON BELOW AND CREATE AN ACCOUNT.</p><button type="button" class="link-button">CREATE ACCOUNT →</button><p class="muted">Demo design: account login is not connected.</p></form><div class="login-footer">KOR / ENG &nbsp;&nbsp;&nbsp;&nbsp; NEWSLETTER &nbsp;&nbsp;&nbsp;&nbsp; CUSTOMER CARE &nbsp;&nbsp;&nbsp;&nbsp; RETURNS &nbsp;&nbsp;&nbsp;&nbsp; SOCIAL &nbsp;&nbsp;&nbsp;&nbsp; ACCESSIBILITY</div></main>';}
+function wishlist(){return '<main class="wishlist-screen"><h1>YOUR WISHLIST</h1><p>SEE THE PRODUCTS YOU LIKED AND PURCHASE THEM</p><div class="wishlist-line"><span>PRODUCTS</span><span>[ 0 ]</span></div><p>THERE ARE NO PRODUCTS IN YOUR WISHLIST</p></main>';}
+function complete(){return '<main class="step-complete"><h1>ORDER COMPLETE</h1><p>This is a portfolio prototype. No real purchase has been made.</p><button class="solid-btn" data-go="home">BACK TO HOME</button></main>';}
+function render(){
+ let page=state.page;
+ if(page.indexOf('detail:')===0){state.pid=page.split(':')[1] in goods?page.split(':')[1]:'hoodie';}
+ let main=state.menu||state.search?overlay():page==='home'?home():page.indexOf('category:')===0?catalog(page.split(':')[1]):page.indexOf('detail:')===0?detail():page==='bag'?bag():page.indexOf('checkout:')===0?checkout():page==='login'?login():page==='wishlist'?wishlist():page==='complete'?complete():home();
+ root.innerHTML='<div class="site">'+chrome()+header()+main+'</div>'+(state.drawer?drawCart():'');
+ if(state.search){const q=document.getElementById('query');if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length);}}
+}
+function updateCart(){try{localStorage.setItem('ragsaint-figma-cart',JSON.stringify(state.cart));}catch(e){}}
+document.addEventListener('click',function(e){
+ const t=e.target.closest('button,[data-go]');
+ if(!t)return;
+ if(t.dataset.go){go(t.dataset.go);return;}
+ const action=t.dataset.action;
+ if(action==='menu'){state.menu=!state.menu;state.search=false;render();return;}
+ if(action==='search'){state.search=!state.search;state.menu=false;render();return;}
+ if(action==='close-drawer'){state.drawer=false;render();return;}
+ if(action==='add'){
+   const p=currentProduct();const size=state.size||p.sizes[p.key==='acc'?0:1];
+   const existing=state.cart.find(x=>x.key===p.key&&x.size===size);
+   if(existing)existing.qty++;else state.cart.push({key:p.key,size,qty:1});
+   updateCart();state.drawer=true;render();return;
+ }
+ if(action==='checkout'){let a=document.getElementById('agree-check');if(a&&!a.checked){a.focus();alert('Please accept the terms and conditions for this demo.');return;}go('checkout:contact');return;}
+ if(t.dataset.pic!==undefined){state.pic=Number(t.dataset.pic)||0;render();return;}
+ if(t.dataset.accordion!==undefined){state.accordion=state.accordion===t.dataset.accordion?'':t.dataset.accordion;render();return;}
+ if(t.dataset.qty){const x=state.cart.find(y=>y.key===t.dataset.key);if(x){x.qty+=Number(t.dataset.qty);state.cart=state.cart.filter(y=>y.qty>0);updateCart();render();}return;}
+ if(t.dataset.remove){state.cart=state.cart.filter(y=>y.key!==t.dataset.remove);updateCart();render();return;}
+});
+document.addEventListener('change',function(e){if(e.target.id==='size-picker')state.size=e.target.value;if(e.target.id==='agree-check')state.accepted=e.target.checked;});
+document.addEventListener('input',function(e){if(e.target.id==='query')state.searchText=e.target.value;});
+document.addEventListener('submit',function(e){if(e.target.id==='login-form'){e.preventDefault();alert('This is a visual portfolio prototype; no real login is provided.');}});
+window.addEventListener('hashchange',function(){const n=decodeURIComponent(location.hash.slice(1));if(n&&n!==state.page){state.page=n;state.menu=false;state.search=false;state.drawer=false;render();}});
+const start=decodeURIComponent(location.hash.slice(1));if(start&&/^(home|bag|wishlist|login|complete|category:|detail:|checkout:)/.test(start))state.page=start;
 render();
+})();
