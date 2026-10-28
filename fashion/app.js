@@ -1,7 +1,7 @@
 /* RAGSAINT Figma-to-code prototype. No payments, login or orders are processed. */
 (function(){
 'use strict';
-const A=function(name){return './assets/'+name+(name.endsWith('.webp')?'':'.png');};
+const A=function(name){return name.startsWith('../')||name.startsWith('https://')?name:'./assets/'+name+(name.endsWith('.webp')||name.endsWith('.png')?'':'.png');};
 const goods={
  hoodie:{key:'hoodie',name:'DISTRESSED CHECKER HOODIE',price:198000,category:'top',image:'hoodie',photos:['hoodie','hoodie2','hoodie3','hoodie4'],sizes:['S','M','L','XL']},
  outer:{key:'outer',name:'BLACK LEATHER BOMBER',price:328000,category:'outer',image:'outer-main',photos:['outer-1','outer-main','outer-2','outer-3'],sizes:['S','M','L','XL']},
@@ -10,9 +10,10 @@ const goods={
  acc:{key:'acc',name:'SILVER HARDWARE CHAIN',price:68000,category:'acc',image:'acc-main',photos:['acc-1','acc-main','acc-2'],sizes:['ONE SIZE']}
 };
 const cats=['outer','top','bottom','acc'];
-const portfolioWorks=[{"id":"soundcloud","title":"SOUNDCLOUD","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=6-2&page-id=0%3A1&starting-point-node-id=6%3A2&content-scaling=fixed&scaling=scale-down","image":"outer","number":"01","kind":"WEB / UI·UX"},{"id":"lostlink","title":"LOST LINK","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=65-45&page-id=0%3A1&starting-point-node-id=65%3A45&content-scaling=fixed&scaling=scale-down","image":"top","number":"02","kind":"APP / INTERACTION"},{"id":"junggonara","title":"JUNGGO NARA","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=122-4&page-id=0%3A1&starting-point-node-id=122%3A4&content-scaling=fixed&scaling=scale-down","image":"bottom","number":"03","kind":"MOBILE / UX"},{"id":"ppomppu","title":"PPOMPPU","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=10-167&page-id=0%3A1&starting-point-node-id=10%3A167&content-scaling=fixed&scaling=scale-down","image":"acc","number":"04","kind":"WEB / REDESIGN"},{"id":"roundlab","title":"자작나무 수분 선크림","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=86-3515&page-id=0%3A1&starting-point-node-id=86%3A3515&content-scaling=fixed&scaling=scale-down","image":"work-couch-photo.webp","number":"05","kind":"DETAIL PAGE / VISUAL"}];
+const portfolioWorks=[{"id":"soundcloud","title":"SOUNDCLOUD","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=6-2&page-id=0%3A1&starting-point-node-id=6%3A2&content-scaling=fixed&scaling=scale-down","image":"outer","number":"01","kind":"WEB / UI·UX"},{"id":"lostlink","title":"LOST LINK","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=65-45&page-id=0%3A1&starting-point-node-id=65%3A45&content-scaling=fixed&scaling=scale-down","image":"top","number":"02","kind":"APP / INTERACTION"},{"id":"junggonara","title":"JUNGGO NARA","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=122-4&page-id=0%3A1&starting-point-node-id=122%3A4&content-scaling=fixed&scaling=scale-down","image":"junggo-clear","number":"03","kind":"MOBILE / UX"},{"id":"ppomppu","title":"PPOMPPU","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=10-167&page-id=0%3A1&starting-point-node-id=10%3A167&content-scaling=fixed&scaling=scale-down","image":"acc","number":"04","kind":"WEB / REDESIGN"},{"id":"roundlab","title":"BIRCH MOISTURE SUNSCREEN","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=86-3515&page-id=0%3A1&starting-point-node-id=86%3A3515&content-scaling=fixed&scaling=scale-down","image":"work-couch-photo.webp","number":"05","kind":"DETAIL PAGE / VISUAL"}];
 
-let state={page:'home',menu:false,search:false,pid:'hoodie',pic:0,size:'',drawer:false,accordion:'',searchText:'',accepted:false,cart:[],infoPanel:null,workMenu:false};
+const projectCopy={"soundcloud":{"id":"soundcloud","title":"SOUNDCLOUD","date":"2026.05 — 06","category":"WEB UI/UX / PROMOTION","description":"음악을 듣는 경험에서 한 걸음 더 나아가, 알려지지 않은 아티스트를 발견하고 참여하도록 설계한 프로모션 웹사이트.","problem":"기존 사운드클라우드는 음악을 재생하고 탐색하는 기능에 집중되어 있습니다. 아직 알려지지 않은 아티스트와 사용자가 만날 수 있는 새로운 접점에 주목했습니다.","change":"‘Hidden Stage’와 ‘First Listener’ 콘셉트를 적용해 아티스트 발견에서 음악 감상, 참여와 보상까지 이어지는 경험을 구성했습니다. 프로모션 영역과 콘텐츠의 시각적 위계도 새롭게 정리했습니다.","details":["HIDDEN STAGE","DISCOVERY","PARTICIPATION"],"preview":"../assets/hd/soundcloud.png"},"lostlink":{"id":"lostlink","title":"LOST LINK","date":"2026.09 — 10","category":"MOBILE UI/UX / INTERACTION","description":"잃어버린 물건과 습득된 물건을 더 쉽고 빠르게 연결하는 분실물 매칭 서비스.","problem":"기존 LOST112는 이용자가 많은 게시글을 직접 살펴보면서 자신의 물건을 찾아야 합니다. 검색만으로는 놓치기 쉬운 장소와 시간의 단서에 주목했습니다.","change":"분실물과 습득물의 등록 흐름을 구분하고, 장소·시간·사진·카테고리를 바탕으로 일치 가능성이 높은 항목을 보여주는 구조를 제안했습니다. 선택 상태와 단계별 행동을 명확하게 설계했습니다.","details":["LOST / FOUND","MATCHING","USER FLOW"],"preview":"../assets/hd/lostlink.png"},"junggonara":{"id":"junggonara","title":"JUNGGO NARA","date":"2026.05","category":"MOBILE UI/UX / REDESIGN","description":"상품을 발견하는 순간부터 거래가 끝나는 순간까지, 탐색과 신뢰를 함께 개선한 중고거래 앱.","problem":"기존 중고나라의 복잡한 상품 정보와 다양한 광고 요소 속에서 원하는 제품을 빠르게 찾기 어렵다는 점에 집중했습니다. 안전한 거래 여부를 판단하기도 쉽지 않았습니다.","change":"브랜드와 카테고리를 중심으로 상품 탐색을 단순화하고, 검수 서비스·안전결제·판매자 후기·포인트 시스템을 거래 과정에 연결했습니다. 패션 커머스처럼 간결한 시각 언어로 차별화했습니다.","details":["DISCOVERY","SAFE PAYMENT","TRUST SYSTEM"],"preview":"../assets/hd/junggonara.png"},"ppomppu":{"id":"ppomppu","title":"PPOMPPU","date":"2026.03 — 04","category":"RESPONSIVE WEB / REDESIGN","description":"복잡한 커뮤니티의 정보 구조를 재정리해, 보고 싶은 콘텐츠에 더 빠르게 도달할 수 있도록 만든 웹 리디자인.","problem":"기존 뽐뿌는 다양한 게시판과 정보가 한 화면에 집중되어 있어 콘텐츠의 우선순위가 불분명했습니다. 사용자가 길을 잃지 않는 탐색 구조가 필요했습니다.","change":"정보·커뮤니티·포럼·갤러리·장터의 메뉴 구조를 분명하게 나누고, 카드형 콘텐츠와 통일된 타이포그래피로 정보의 위계를 재설계했습니다. 게시글 상세와 검색으로 이어지는 동선도 정리했습니다.","details":["INFORMATION ARCHITECTURE","COMMUNITY","RESPONSIVE"],"preview":"../assets/hd/ppomppu.jpg"},"roundlab":{"id":"roundlab","title":"BIRCH MOISTURE SUNSCREEN","date":"2026.05 — 06","category":"DETAIL PAGE / VISUAL DESIGN","description":"라운드랩 자작나무 수분 선크림의 청량한 사용감을 시각적으로 풀어낸 상세페이지 리디자인.","problem":"제품의 기능을 단순히 나열하는 방식에서 벗어나, 수분감·산뜻함·자외선 차단이라는 핵심 가치를 첫눈에 이해할 수 있는 구성에 집중했습니다.","change":"블루와 화이트를 기본으로 제품 컷과 물방울 그래픽, 짧은 메시지를 조합했습니다. 정보별 강약을 조절하고 스크롤에 따라 자연스럽게 제품의 특징을 이해하도록 구성했습니다.","details":["HYDRATION","BRAND VISUAL","DETAIL PAGE"],"preview":"../assets/hd/roundlab.jpg"}};
+let state={page:'home',menu:false,search:false,pid:'hoodie',pic:0,size:'',drawer:false,accordion:'',searchText:'',accepted:false,cart:[],infoPanel:null,workMenu:false,activeProject:null};
 try{const saved=JSON.parse(localStorage.getItem('ragsaint-figma-cart')||'[]');if(Array.isArray(saved))state.cart=saved.filter(x=>goods[x.key]&&x.qty>0);}catch(e){}
 const root=document.getElementById('app');
 const money=n=>'₩'+Number(n).toLocaleString('ko-KR');
@@ -20,7 +21,7 @@ const bagCount=()=>state.cart.reduce((a,x)=>a+x.qty,0);
 const bagTotal=()=>state.cart.reduce((a,x)=>a+x.qty*goods[x.key].price,0);
 const currentProduct=()=>goods[state.pid]||goods.hoodie;
 const img=(name,cl='',alt='')=>'<img loading="lazy" class="'+cl+'" src="'+A(name)+'" alt="'+alt+'">';
-const go=function(page){state.page=page;state.menu=false;state.search=false;state.infoPanel=null;state.workMenu=false;state.drawer=false;state.accordion='';state.pic=0;state.size='';history.replaceState(null,'','#'+encodeURIComponent(page));window.scrollTo({top:0,behavior:'instant'});render();};
+const go=function(page){state.page=page;state.menu=false;state.search=false;state.infoPanel=null;state.workMenu=false;state.activeProject=null;state.drawer=false;state.accordion='';state.pic=0;state.size='';history.replaceState(null,'','#'+encodeURIComponent(page));window.scrollTo({top:0,behavior:'instant'});render();};
 function chrome(){return '<div class="browser" aria-hidden="true"><div class="lights"><i></i><i></i><i></i></div><span class="browser-nav">‹ › ▣</span><div class="url">♙ &nbsp; portfolio / fashion</div><span class="browser-right">⇧ ▣ +</span></div>';}
 function header(){
  return '<header class="header"><div class="nav-side">'+
@@ -44,19 +45,40 @@ function home(){
  '</section></main>';
 }
 function workTile(p,wide){
- return '<a class="category-tile work-tile'+(wide?' work-featured':'')+'" href="'+p.url+
- '" target="_blank" rel="noopener noreferrer" aria-label="Open '+p.title+' Figma prototype in a new tab">'+
- img(p.image,'',p.title+' project preview')+
+ return '<button type="button" class="category-tile work-tile'+(wide?' work-featured':'')+'" data-project="'+p.id+'" aria-label="Explore '+p.title+' project">'+
+ img(p.image,'',p.title+' editorial cover')+
  '<span class="work-tile-meta">'+p.number+' / '+p.kind+'</span>'+
- '<span class="work-tile-label"><strong>'+p.title+'</strong><small>VIEW PROTOTYPE ↗</small></span>'+
- '</a>';
+ '<span class="work-tile-label"><strong>'+p.title+'</strong><small>VIEW PROJECT ↗</small></span>'+
+ '</button>';
+}
+function projectDetail(){
+ if(!state.activeProject)return '';
+ const p=portfolioWorks.find(x=>x.id===state.activeProject);
+ const d=projectCopy[state.activeProject];
+ if(!p||!d)return '';
+ const tags=d.details.map(x=>'<span>'+x+'</span>').join('');
+ return '<div class="project-modal-wrap" role="presentation">'+
+ '<button type="button" class="project-modal-backdrop" data-action="close-project" aria-label="Close project details"></button>'+
+ '<section class="project-modal" role="dialog" aria-modal="true" aria-label="'+p.title+' project details">'+
+ '<div class="project-modal-top"><span>KIM JUNSEO / SELECTED WORKS</span><button type="button" data-action="close-project">CLOSE <span aria-hidden="true">×</span></button></div>'+
+ '<div class="project-modal-content"><div class="project-modal-media">'+img(d.preview,'',p.title+' prototype preview')+
+ '<div class="project-modal-media-label">'+p.number+' / '+d.category+'</div></div>'+
+ '<div class="project-modal-body"><div class="project-modal-index"><span>PROJECT '+p.number+' / 05</span><span>'+d.date+'</span></div>'+
+ '<h1>'+d.title+'</h1><p class="project-modal-category">'+d.category+'</p>'+
+ '<p class="project-lead">'+d.description+'</p>'+
+ '<div class="project-essay"><div><span>01 / BACKGROUND</span><p>'+d.problem+'</p></div>'+
+ '<div><span>02 / DESIGN APPROACH</span><p>'+d.change+'</p></div></div>'+
+ '<div class="project-modal-tags">'+tags+'</div>'+
+ '<a class="prototype-cta" href="'+p.url+'" target="_blank" rel="noopener noreferrer"><span>VIEW FIGMA PROTOTYPE</span><span>↗</span></a>'+
+ '<p class="project-modal-hint">INTERACTIVE PROTOTYPE / OPENS IN A NEW TAB</p>'+
+ '</div></div></section></div>';
 }
 function portfolioWorksMenu(){
  if(!state.workMenu)return '';
  return '<div class="works-menu-layer" id="work-menu" role="presentation">'+
  '<button type="button" class="works-menu-backdrop" aria-label="Close works menu" data-action="close-works"></button>'+
  '<div class="works-menu-layout"><aside class="works-menu-panel" role="navigation" aria-label="Portfolio projects">'+
- '<div class="works-menu-list">'+portfolioWorks.map((p)=>'<a href="'+p.url+'" target="_blank" rel="noopener noreferrer" aria-label="Open '+p.title+' prototype">'+p.title+'</a>').join('')+'</div>'+
+ '<div class="works-menu-list">'+portfolioWorks.map((p)=>'<button type="button" data-project="'+p.id+'" aria-label="Explore '+p.title+' project">'+p.title+'</button>').join('')+'</div>'+
  '<div class="works-menu-bottom"><span>SELECTED WORKS [ 05 ]</span><span>KIM JUNSEO / 2026</span></div>'+
  '</aside></div></div>';
 }
@@ -161,19 +183,21 @@ function render(){
  let page=state.page;
  if(page.indexOf('detail:')===0){state.pid=page.split(':')[1] in goods?page.split(':')[1]:'hoodie';}
  let main=state.menu||state.search?overlay():page==='home'?home():page.indexOf('category:')===0?catalog(page.split(':')[1]):page.indexOf('detail:')===0?detail():page==='bag'?bag():page.indexOf('checkout:')===0?checkout():page==='login'?login():page==='wishlist'?wishlist():page==='complete'?complete():home();
- root.innerHTML='<div class="site">'+chrome()+header()+main+'</div>'+(state.drawer?drawCart():'')+portfolioWorksMenu()+portfolioInfo();
+ root.innerHTML='<div class="site">'+chrome()+header()+main+'</div>'+(state.drawer?drawCart():'')+portfolioWorksMenu()+portfolioInfo()+projectDetail();
  if(state.search){const q=document.getElementById('query');if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length);}}
 }
 function updateCart(){try{localStorage.setItem('ragsaint-figma-cart',JSON.stringify(state.cart));}catch(e){}}
 document.addEventListener('click',function(e){
- const t=e.target.closest('button,[data-go]');
+ const t=e.target.closest('button,[data-go],[data-project]');
  if(!t)return;
  if(t.dataset.go){go(t.dataset.go);return;}
+ if(t.dataset.project){state.activeProject=t.dataset.project;state.workMenu=false;state.infoPanel=null;render();document.querySelector('.project-modal [data-action="close-project"]')?.focus();return;}
  const action=t.dataset.action;
  if(action==='works'){state.infoPanel=null;state.menu=false;state.search=false;if(state.page!=='home'){state.page='home';history.replaceState(null,'','#home');window.scrollTo({top:0,behavior:'instant'});state.workMenu=true;}else{state.workMenu=!state.workMenu;}render();return;}
  if(action==='close-works'){state.workMenu=false;render();return;}
  if(action==='about'||action==='contact'){state.infoPanel=action;state.workMenu=false;render();document.querySelector('[data-action="close-info"]')?.focus();return;}
  if(action==='close-info'){state.infoPanel=null;render();return;}
+ if(action==='close-project'){state.activeProject=null;render();return;}
  if(action==='menu'){state.menu=!state.menu;state.search=false;render();return;}
  if(action==='search'){state.search=!state.search;state.menu=false;render();return;}
  if(action==='close-drawer'){state.drawer=false;render();return;}
@@ -192,7 +216,7 @@ document.addEventListener('click',function(e){
 document.addEventListener('change',function(e){if(e.target.id==='size-picker')state.size=e.target.value;if(e.target.id==='agree-check')state.accepted=e.target.checked;});
 document.addEventListener('input',function(e){if(e.target.id==='query')state.searchText=e.target.value;});
 document.addEventListener('submit',function(e){if(e.target.id==='login-form'){e.preventDefault();alert('This is a visual portfolio prototype; no real login is provided.');}});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(state.infoPanel||state.workMenu)){state.infoPanel=null;state.workMenu=false;render();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(state.infoPanel||state.workMenu||state.activeProject)){state.infoPanel=null;state.workMenu=false;state.activeProject=null;render();}});
 window.addEventListener('hashchange',function(){const n=decodeURIComponent(location.hash.slice(1));if(n&&n!==state.page){state.page=n;state.menu=false;state.search=false;state.drawer=false;render();}});
 const start=decodeURIComponent(location.hash.slice(1));if(start&&/^(home|bag|wishlist|login|complete|category:|detail:|checkout:)/.test(start))state.page=start;
 render();
