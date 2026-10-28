@@ -19,20 +19,20 @@ const bagTotal=()=>state.cart.reduce((a,x)=>a+x.qty*goods[x.key].price,0);
 const currentProduct=()=>goods[state.pid]||goods.hoodie;
 const img=(name,cl='',alt='')=>'<img loading="lazy" class="'+cl+'" src="'+A(name)+'" alt="'+alt+'">';
 const go=function(page){state.page=page;state.menu=false;state.search=false;state.drawer=false;state.accordion='';state.pic=0;state.size='';history.replaceState(null,'','#'+encodeURIComponent(page));window.scrollTo({top:0,behavior:'instant'});render();};
-function chrome(){return '<div class="browser" aria-hidden="true"><div class="lights"><i></i><i></i><i></i></div><span class="browser-nav">‹ › ▣</span><div class="url">♙ &nbsp; ragsaint.com</div><span class="browser-right">⇧ ▣ +</span></div>';}
+function chrome(){return '<div class="browser" aria-hidden="true"><div class="lights"><i></i><i></i><i></i></div><span class="browser-nav">‹ › ▣</span><div class="url">♙ &nbsp; portfolio / fashion</div><span class="browser-right">⇧ ▣ +</span></div>';}
 function header(){
  const black=state.page.indexOf('category:')===0||state.page.indexOf('detail:')===0;
  return '<header class="header'+(black?' dark':'')+'">'+
  '<div class="nav-side">'+
  '<button class="nav-action" data-action="menu"><span class="burger"><b></b><b></b><b></b></span><span class="label">'+(state.menu?'CLOSE':'MENU')+'</span></button>'+
  '<button class="nav-action" data-action="search"><span class="search-mark"></span><span class="label">SEARCH</span></button>'+
- '</div><button class="wordmark nav-action" data-go="home" aria-label="Ragsaint home">Ragsaint</button>'+
+ '</div><button class="wordmark nav-action" data-go="home" aria-label="Portfolio home">Portfolio</button>'+
  '<div class="nav-side right"><button class="nav-action" data-go="login"><span class="label">ACCOUNT</span></button><button class="nav-action" data-go="bag">BAG [ '+bagCount()+' ]</button></div></header>';
 }
 function home(){
- return '<main><section class="hero" aria-label="RAGSAINT fashion campaign">'+
- '<div class="hero-img">'+img('heroLeft','', 'RAGSAINT campaign image 01')+'</div>'+
- '<div class="hero-img">'+img('heroRight','','RAGSAINT campaign image 02')+'</div></section>'+
+ return '<main><section class="hero" aria-label="Fashion portfolio campaign">'+
+ '<div class="hero-img hero-photo-static">'+img('heroLeft','', 'Fashion portfolio campaign image 01')+'</div>'+
+ '<div class="hero-img hero-photo-static">'+img('heroRight','','Fashion portfolio campaign image 02')+'</div></section>'+
  '<section class="category-pair">'+categoryTile('outer')+categoryTile('top')+'</section>'+
  '<section class="category-pair">'+categoryTile('bottom')+categoryTile('acc')+'</section>'+
  '</main>';
@@ -64,7 +64,7 @@ function detail(){
  '<button class="outline-action" data-action="add">ADD TO CART</button>'+
  '<p class="payment-note">Secure payment with Paypal, Apple Pay,<br>Klarna or Credit Card (Visa, Mastercard)</p>'+
  ['PRODUCT DETAILS','SIZE AND FIT','MATERIAL AND CARE','SHIPPING AND RETURNS'].map((s,i)=>'<div class="accordion"><button data-accordion="'+i+'"><span>'+s+'</span><span>'+(state.accordion===String(i)?'−':'⌄')+'</span></button>'+
- (state.accordion===String(i)?'<div class="panel">'+(i===0?'RAGSAINT collection / '+p.name:i===1?'Unisex fit. Select your usual size.':i===2?'Carefully selected textiles. Follow care label.':'Demo shop: no purchases are processed.')+'</div>':'')+'</div>').join('')+
+ (state.accordion===String(i)?'<div class="panel">'+(i===0?'Fashion collection / '+p.name:i===1?'Unisex fit. Select your usual size.':i===2?'Carefully selected textiles. Follow care label.':'Demo shop: no purchases are processed.')+'</div>':'')+'</div>').join('')+
  '<p class="faq">Need more help? Check FAQ</p></div></main>';
 }
 function drawCart(){
