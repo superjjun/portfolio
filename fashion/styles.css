@@ -183,68 +183,11 @@ html{scroll-behavior:smooth}
 @media(max-width:900px){.portfolio-works .category-pair.work-featured-row{min-height:490px;padding:7px}.portfolio-works .work-featured-row .work-featured,.portfolio-works .work-featured-row .work-empty-panel{min-height:490px;height:490px}}
 @media(max-width:520px){.portfolio-works .category-pair.work-featured-row{gap:6px;min-height:370px;padding:6px}.portfolio-works .work-featured-row .work-featured,.portfolio-works .work-featured-row .work-empty-panel{min-height:370px;height:370px}.portfolio-works .work-featured-row .work-tile-label{max-width:100%;padding:0 6px}.portfolio-works .work-featured-row .work-tile-label strong{font-size:11px!important;letter-spacing:.5px!important;line-height:1.35!important}}
 
-
-/* All five project tiles: same dimensions, their actual Figma-designed screenshots. */
-.portfolio-works .category-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;min-height:690px;padding:12px 24px}
-.portfolio-works .category-pair .work-tile,
-.portfolio-works .work-featured-row .work-featured{
-  display:flex;align-items:center;justify-content:center;position:relative;
-  width:100%;height:665px;min-height:665px;max-height:665px;
-  background:#101419;border:0;overflow:hidden;
-}
-.portfolio-works .category-pair .work-screen-glow{
-  background-size:cover;background-position:center;position:absolute;
-  inset:-40px;z-index:0;filter:blur(30px) brightness(.25) saturate(.7);
-  transform:scale(1.08);pointer-events:none;
-}
-.portfolio-works .category-pair .work-tile > img.work-screen-capture{
-  display:block;position:absolute;
-  inset:auto;top:50%;left:50%;right:auto;bottom:auto;
-  width:94%;height:90%;max-width:94%;max-height:90%;padding:0!important;
-  object-fit:contain;object-position:center center;
-  transform:translate(-50%,-50%) scale(1);filter:none!important;
-  background:transparent!important;
-  image-rendering:auto;z-index:1;
-  transition:transform .35s ease,filter .35s ease!important;
-  box-shadow:0 8px 50px rgba(0,0,0,.24);
-}
-.portfolio-works .category-pair .work-tile:hover > img.work-screen-capture,
-.portfolio-works .category-pair .work-tile:focus-visible > img.work-screen-capture{
-  filter:none!important;
-  transform:translate(-50%,-50%) scale(1.025)!important;
-}
-.portfolio-works .category-pair .work-tile::after{
-  z-index:2;pointer-events:none;
-  background:linear-gradient(to bottom,transparent 64%,rgba(0,0,0,.68) 100%);
-}
-.portfolio-works .category-pair .work-tile .work-tile-label{
-  display:flex;position:relative;z-index:3;align-items:center;justify-content:center;
-  width:fit-content;max-width:90%;min-width:0;
-  margin:0 auto;padding:19px 22px;
-  background:rgba(0,0,0,.76);border:1px solid rgba(255,255,255,.14);
-  border-radius:1px;backdrop-filter:blur(5px);
-}
-.portfolio-works .category-pair .work-tile .work-tile-label strong{
-  display:block;text-align:center;font-size:18px!important;letter-spacing:1.5px!important;
-  line-height:1.5!important;white-space:normal;overflow-wrap:anywhere;
-  max-width:360px;opacity:1!important;visibility:visible!important;
-}
-.portfolio-works .category-pair .work-tile .work-tile-label small{font-size:10px}
-.portfolio-works .category-pair .work-tile .work-tile-meta{z-index:4;text-shadow:0 1px 5px #000a}
-.portfolio-works .category-pair.work-featured-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
-.portfolio-works .work-featured-row .work-empty-panel{height:665px;min-height:665px;background:#000;pointer-events:none}
-@media(max-width:900px){
- .portfolio-works .category-pair{min-height:490px;padding:7px}
- .portfolio-works .category-pair .work-tile,.portfolio-works .work-featured-row .work-featured,
- .portfolio-works .work-featured-row .work-empty-panel{height:490px;min-height:490px;max-height:490px}
- .portfolio-works .category-pair .work-tile .work-tile-label strong{font-size:14px!important}
-}
-@media(max-width:520px){
- .portfolio-works .category-pair{gap:6px;min-height:348px;padding:6px}
- .portfolio-works .category-pair .work-tile,.portfolio-works .work-featured-row .work-featured,
- .portfolio-works .work-featured-row .work-empty-panel{height:340px;min-height:340px;max-height:340px}
- .portfolio-works .category-pair .work-tile > img.work-screen-capture{width:96%;max-width:96%;height:94%;max-height:94%}
- .portfolio-works .category-pair .work-tile .work-tile-label{max-width:98%;padding:12px 7px}
- .portfolio-works .category-pair .work-tile .work-tile-label strong{font-size:10px!important;letter-spacing:.1px!important;line-height:1.35!important}
- .portfolio-works .category-pair .work-tile .work-tile-label small{font-size:8px}
-}
+/* Project detail preview: use actual exported Figma screens in the marked left panel only. */
+.project-modal-media{background:#2a2e33;isolation:isolate}
+.project-modal-media::before{content:"";position:absolute;inset:-55px;background-image:var(--project-preview);background-size:cover;background-position:center;filter:blur(35px) brightness(.45);opacity:.82;z-index:-1}
+.project-modal-media::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.12);z-index:0;pointer-events:none}
+.project-modal-media > img{object-fit:contain;object-position:center;width:100%;height:100%;padding:28px;position:absolute;z-index:1;filter:none;image-rendering:auto}
+.project-modal-media-label{z-index:2;color:#fff;text-shadow:0 1px 5px #000a}
+@media(max-width:900px){.project-modal-media > img{padding:18px}}
+@media(max-width:520px){.project-modal-media > img{padding:12px}}
