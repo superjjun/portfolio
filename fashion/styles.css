@@ -92,3 +92,9 @@ html{scroll-behavior:smooth}
 .works-menu-bottom{margin-top:auto;display:flex;flex-direction:column;gap:14px;font-size:11px;letter-spacing:1px}
 @media(max-width:900px){.works-menu-layer{top:76px}.works-menu-panel{width:340px;padding:45px 30px 32px}}
 @media(max-width:480px){.works-menu-panel{width:82vw;padding:45px 27px 32px}.works-menu-list a{font-size:13px;line-height:22px}.works-menu-bottom{font-size:9px}.header .nav-action.works-navigation{display:flex;align-items:center;gap:5px}}
+
+/* User-selected editorial cover image for the sunscreen project. */
+.portfolio-works .work-featured-row .work-featured{background:#777}
+.portfolio-works .work-featured-row .work-featured img{object-fit:cover;object-position:center 48%;background:transparent;padding:0;filter:brightness(.8)}
+.portfolio-works .work-featured-row .work-featured:hover img,.portfolio-works .work-featured-row .work-featured:focus-visible img{filter:brightness(.8);transform:scale(1.015)}
+@media(max-width:520px){.portfolio-works .work-featured-row .work-featured img{object-fit:cover;padding:0}}
