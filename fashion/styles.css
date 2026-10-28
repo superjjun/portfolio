@@ -159,3 +159,26 @@ html{scroll-behavior:smooth}
  .prototype-cta{padding:17px 19px}
  .project-modal-media-label{left:20px;bottom:17px}
 }
+
+/* Restore the original clean Safari mock browser toolbar; no unrelated header changes. */
+.browser.safari-chrome{position:relative;display:flex;align-items:center;gap:16px;height:37px;padding:0 15px;background:#f3f3f5;border-bottom:1px solid #e5e5e8;color:#888}
+.safari-chrome .lights{display:flex;gap:8px;margin-right:0;flex-shrink:0}
+.safari-chrome .lights i{width:12px;height:12px}
+.safari-left,.safari-right{display:flex;align-items:center;gap:5px}
+.safari-right{margin-left:auto;z-index:1}
+.safari-tool{width:29px;height:26px;border-radius:5px;background:#e4e4e7;display:flex;align-items:center;justify-content:center}
+.safari-sidebar{margin-left:9px}
+.safari-chrome .url{left:32%;width:40%;height:25px;background:#e4e4e7;font-size:12px;letter-spacing:.02em;gap:8px}
+.safari-lock{font-size:10px;color:#8e9298}
+.safari-chrome .safari-tool svg{display:block;width:16px;height:16px}
+@media(max-width:900px){.browser.safari-chrome{display:none}}
+/* Full-height first-half photo; matching the neighboring two-column project cards. */
+.portfolio-works .category-pair.work-featured-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;min-height:690px;padding:12px 24px}
+.portfolio-works .work-featured-row .work-featured{min-height:665px;height:665px;max-height:none;background:#050705}
+.portfolio-works .work-featured-row .work-featured img{width:100%;height:100%;object-fit:cover;object-position:center center;max-width:none;padding:0!important;background:#050705!important;image-rendering:auto;filter:blur(1.1px) brightness(.77)}
+.portfolio-works .work-featured-row .work-featured:hover img,.portfolio-works .work-featured-row .work-featured:focus-visible img{filter:blur(0) brightness(.88);transform:scale(1.012)}
+.portfolio-works .work-featured-row .work-empty-panel{background:#000;min-height:665px;pointer-events:none}
+.portfolio-works .work-featured-row .work-tile-label{max-width:90%;padding:0 14px;text-align:center}
+.portfolio-works .work-featured-row .work-tile-label strong{font-size:17px!important;line-height:1.5!important;letter-spacing:1.6px!important;white-space:normal;overflow-wrap:normal}
+@media(max-width:900px){.portfolio-works .category-pair.work-featured-row{min-height:490px;padding:7px}.portfolio-works .work-featured-row .work-featured,.portfolio-works .work-featured-row .work-empty-panel{min-height:490px;height:490px}}
+@media(max-width:520px){.portfolio-works .category-pair.work-featured-row{gap:6px;min-height:370px;padding:6px}.portfolio-works .work-featured-row .work-featured,.portfolio-works .work-featured-row .work-empty-panel{min-height:370px;height:370px}.portfolio-works .work-featured-row .work-tile-label{max-width:100%;padding:0 6px}.portfolio-works .work-featured-row .work-tile-label strong{font-size:11px!important;letter-spacing:.5px!important;line-height:1.35!important}}
