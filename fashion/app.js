@@ -31,8 +31,8 @@ function header(){
 }
 function home(){
  return '<main><section class="hero" aria-label="RAGSAINT fashion campaign">'+
- '<button class="hero-img" data-go="category:outer" aria-label="OUTER category">'+img('heroLeft','', 'RAGSAINT campaign image 01')+'</button>'+
- '<button class="hero-img" data-go="category:top" aria-label="TOP category">'+img('heroRight','','RAGSAINT campaign image 02')+'</button></section>'+
+ '<div class="hero-img">'+img('heroLeft','', 'RAGSAINT campaign image 01')+'</div>'+
+ '<div class="hero-img">'+img('heroRight','','RAGSAINT campaign image 02')+'</div></section>'+
  '<section class="category-pair">'+categoryTile('outer')+categoryTile('top')+'</section>'+
  '<section class="category-pair">'+categoryTile('bottom')+categoryTile('acc')+'</section>'+
  '</main>';
