@@ -10,9 +10,9 @@ const goods={
  acc:{key:'acc',name:'SILVER HARDWARE CHAIN',price:68000,category:'acc',image:'acc-main',photos:['acc-1','acc-main','acc-2'],sizes:['ONE SIZE']}
 };
 const cats=['outer','top','bottom','acc'];
-const portfolioWorks=[{"id":"soundcloud","title":"SOUNDCLOUD","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=6-2&page-id=0%3A1&starting-point-node-id=6%3A2&content-scaling=fixed&scaling=scale-down","image":"outer","number":"01","kind":"WEB / UI·UX"},{"id":"lostlink","title":"LOST LINK","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=65-45&page-id=0%3A1&starting-point-node-id=65%3A45&content-scaling=fixed&scaling=scale-down","image":"top","number":"02","kind":"APP / INTERACTION"},{"id":"junggonara","title":"JUNGGO NARA","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=122-4&page-id=0%3A1&starting-point-node-id=122%3A4&content-scaling=fixed&scaling=scale-down","image":"bottom","number":"03","kind":"MOBILE / UX"},{"id":"ppomppu","title":"PPOMPPU","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=10-167&page-id=0%3A1&starting-point-node-id=10%3A167&content-scaling=fixed&scaling=scale-down","image":"acc","number":"04","kind":"WEB / REDESIGN"},{"id":"roundlab","title":"ROUND LAB","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=86-3515&page-id=0%3A1&starting-point-node-id=86%3A3515&content-scaling=fixed&scaling=scale-down","image":"work-roundlab","number":"05","kind":"DETAIL PAGE / VISUAL"}];
+const portfolioWorks=[{"id":"soundcloud","title":"SOUNDCLOUD","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=6-2&page-id=0%3A1&starting-point-node-id=6%3A2&content-scaling=fixed&scaling=scale-down","image":"outer","number":"01","kind":"WEB / UI·UX"},{"id":"lostlink","title":"LOST LINK","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=65-45&page-id=0%3A1&starting-point-node-id=65%3A45&content-scaling=fixed&scaling=scale-down","image":"top","number":"02","kind":"APP / INTERACTION"},{"id":"junggonara","title":"JUNGGO NARA","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=122-4&page-id=0%3A1&starting-point-node-id=122%3A4&content-scaling=fixed&scaling=scale-down","image":"bottom","number":"03","kind":"MOBILE / UX"},{"id":"ppomppu","title":"PPOMPPU","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=10-167&page-id=0%3A1&starting-point-node-id=10%3A167&content-scaling=fixed&scaling=scale-down","image":"acc","number":"04","kind":"WEB / REDESIGN"},{"id":"roundlab","title":"자작나무 수분 선크림","url":"https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=86-3515&page-id=0%3A1&starting-point-node-id=86%3A3515&content-scaling=fixed&scaling=scale-down","image":"work-roundlab","number":"05","kind":"DETAIL PAGE / VISUAL"}];
 
-let state={page:'home',menu:false,search:false,pid:'hoodie',pic:0,size:'',drawer:false,accordion:'',searchText:'',accepted:false,cart:[],infoPanel:null};
+let state={page:'home',menu:false,search:false,pid:'hoodie',pic:0,size:'',drawer:false,accordion:'',searchText:'',accepted:false,cart:[],infoPanel:null,workMenu:false};
 try{const saved=JSON.parse(localStorage.getItem('ragsaint-figma-cart')||'[]');if(Array.isArray(saved))state.cart=saved.filter(x=>goods[x.key]&&x.qty>0);}catch(e){}
 const root=document.getElementById('app');
 const money=n=>'₩'+Number(n).toLocaleString('ko-KR');
@@ -20,11 +20,11 @@ const bagCount=()=>state.cart.reduce((a,x)=>a+x.qty,0);
 const bagTotal=()=>state.cart.reduce((a,x)=>a+x.qty*goods[x.key].price,0);
 const currentProduct=()=>goods[state.pid]||goods.hoodie;
 const img=(name,cl='',alt='')=>'<img loading="lazy" class="'+cl+'" src="'+A(name)+'" alt="'+alt+'">';
-const go=function(page){state.page=page;state.menu=false;state.search=false;state.infoPanel=null;state.drawer=false;state.accordion='';state.pic=0;state.size='';history.replaceState(null,'','#'+encodeURIComponent(page));window.scrollTo({top:0,behavior:'instant'});render();};
+const go=function(page){state.page=page;state.menu=false;state.search=false;state.infoPanel=null;state.workMenu=false;state.drawer=false;state.accordion='';state.pic=0;state.size='';history.replaceState(null,'','#'+encodeURIComponent(page));window.scrollTo({top:0,behavior:'instant'});render();};
 function chrome(){return '<div class="browser" aria-hidden="true"><div class="lights"><i></i><i></i><i></i></div><span class="browser-nav">‹ › ▣</span><div class="url">♙ &nbsp; portfolio / fashion</div><span class="browser-right">⇧ ▣ +</span></div>';}
 function header(){
  return '<header class="header"><div class="nav-side">'+
- '<button class="nav-action works-navigation" type="button" data-action="works">WORKS</button></div>'+
+ '<button class="nav-action works-navigation" type="button" data-action="works" aria-expanded="'+(state.workMenu?'true':'false')+'" aria-controls="work-menu">'+(state.workMenu?'<span class="works-close-symbol">×</span> CLOSE':'<span class="burger works-icon"><b></b><b></b><b></b></span> WORKS')+'</button></div>'+
  '<button class="wordmark nav-action" data-go="home" aria-label="Portfolio home">Portfolio</button>'+
  '<nav class="nav-side right" aria-label="Portfolio navigation">'+
  '<button class="nav-action" type="button" data-action="about">ABOUT</button>'+
@@ -50,6 +50,15 @@ function workTile(p,wide){
  '<span class="work-tile-meta">'+p.number+' / '+p.kind+'</span>'+
  '<span class="work-tile-label"><strong>'+p.title+'</strong><small>VIEW PROTOTYPE ↗</small></span>'+
  '</a>';
+}
+function portfolioWorksMenu(){
+ if(!state.workMenu)return '';
+ return '<div class="works-menu-layer" id="work-menu" role="presentation">'+
+ '<button type="button" class="works-menu-backdrop" aria-label="Close works menu" data-action="close-works"></button>'+
+ '<div class="works-menu-layout"><aside class="works-menu-panel" role="navigation" aria-label="Portfolio projects">'+
+ '<div class="works-menu-list">'+portfolioWorks.map((p)=>'<a href="'+p.url+'" target="_blank" rel="noopener noreferrer" aria-label="Open '+p.title+' prototype">'+p.title+'</a>').join('')+'</div>'+
+ '<div class="works-menu-bottom"><span>SELECTED WORKS [ 05 ]</span><span>KIM JUNSEO / 2026</span></div>'+
+ '</aside></div></div>';
 }
 function portfolioInfo(){
  if(!state.infoPanel)return '';
@@ -152,7 +161,7 @@ function render(){
  let page=state.page;
  if(page.indexOf('detail:')===0){state.pid=page.split(':')[1] in goods?page.split(':')[1]:'hoodie';}
  let main=state.menu||state.search?overlay():page==='home'?home():page.indexOf('category:')===0?catalog(page.split(':')[1]):page.indexOf('detail:')===0?detail():page==='bag'?bag():page.indexOf('checkout:')===0?checkout():page==='login'?login():page==='wishlist'?wishlist():page==='complete'?complete():home();
- root.innerHTML='<div class="site">'+chrome()+header()+main+'</div>'+(state.drawer?drawCart():'')+portfolioInfo();
+ root.innerHTML='<div class="site">'+chrome()+header()+main+'</div>'+(state.drawer?drawCart():'')+portfolioWorksMenu()+portfolioInfo();
  if(state.search){const q=document.getElementById('query');if(q){q.focus();q.setSelectionRange(q.value.length,q.value.length);}}
 }
 function updateCart(){try{localStorage.setItem('ragsaint-figma-cart',JSON.stringify(state.cart));}catch(e){}}
@@ -161,8 +170,9 @@ document.addEventListener('click',function(e){
  if(!t)return;
  if(t.dataset.go){go(t.dataset.go);return;}
  const action=t.dataset.action;
- if(action==='works'){state.infoPanel=null;state.menu=false;state.search=false;state.page='home';render();document.getElementById('works')?.scrollIntoView({behavior:'smooth',block:'start'});return;}
- if(action==='about'||action==='contact'){state.infoPanel=action;render();document.querySelector('[data-action="close-info"]')?.focus();return;}
+ if(action==='works'){state.infoPanel=null;state.menu=false;state.search=false;if(state.page!=='home'){state.page='home';history.replaceState(null,'','#home');window.scrollTo({top:0,behavior:'instant'});state.workMenu=true;}else{state.workMenu=!state.workMenu;}render();return;}
+ if(action==='close-works'){state.workMenu=false;render();return;}
+ if(action==='about'||action==='contact'){state.infoPanel=action;state.workMenu=false;render();document.querySelector('[data-action="close-info"]')?.focus();return;}
  if(action==='close-info'){state.infoPanel=null;render();return;}
  if(action==='menu'){state.menu=!state.menu;state.search=false;render();return;}
  if(action==='search'){state.search=!state.search;state.menu=false;render();return;}
@@ -182,7 +192,7 @@ document.addEventListener('click',function(e){
 document.addEventListener('change',function(e){if(e.target.id==='size-picker')state.size=e.target.value;if(e.target.id==='agree-check')state.accepted=e.target.checked;});
 document.addEventListener('input',function(e){if(e.target.id==='query')state.searchText=e.target.value;});
 document.addEventListener('submit',function(e){if(e.target.id==='login-form'){e.preventDefault();alert('This is a visual portfolio prototype; no real login is provided.');}});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&state.infoPanel){state.infoPanel=null;render();}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(state.infoPanel||state.workMenu)){state.infoPanel=null;state.workMenu=false;render();}});
 window.addEventListener('hashchange',function(){const n=decodeURIComponent(location.hash.slice(1));if(n&&n!==state.page){state.page=n;state.menu=false;state.search=false;state.drawer=false;render();}});
 const start=decodeURIComponent(location.hash.slice(1));if(start&&/^(home|bag|wishlist|login|complete|category:|detail:|checkout:)/.test(start))state.page=start;
 render();

@@ -76,3 +76,19 @@ html{scroll-behavior:smooth}
  .info-contacts a{grid-template-columns:1fr;gap:6px}
  .portfolio-foot{padding:25px 15px;font-size:8px}
 }
+
+/* WORKS left-side project navigation based on reference menu. */
+.header .works-icon{display:inline-flex;flex-direction:column;justify-content:space-around;align-items:flex-start;width:17px;height:15px;margin-right:2px}
+.header .works-icon b{display:block;height:1px;width:16px;background:currentColor}
+.header .works-icon b:nth-child(2){width:11px}
+.header .works-close-symbol{font-size:20px;line-height:12px;font-weight:400}
+.works-menu-layer{position:fixed;inset:115px 0 0;z-index:45;display:flex;justify-content:center;pointer-events:none}
+.works-menu-layout{position:relative;width:min(1280px,100%);height:100%;pointer-events:none}
+.works-menu-backdrop{position:absolute;inset:0;width:100%;border:0;cursor:default;background:transparent;pointer-events:auto}
+.works-menu-panel{background:#fff;color:#080808;position:relative;z-index:1;height:min(740px,100%);width:380px;max-width:82vw;display:flex;flex-direction:column;padding:66px 55px 47px;pointer-events:auto;box-shadow:8px 20px 42px rgba(0,0,0,.08)}
+.works-menu-list{display:flex;flex-direction:column;gap:0}
+.works-menu-list a{font-family:"Inter",Arial,sans-serif;font-size:15px;font-weight:400;letter-spacing:1px;line-height:23px;color:#111;display:block;text-decoration:none;padding:10px 0;transition:color .2s ease,transform .2s ease}
+.works-menu-list a:hover,.works-menu-list a:focus-visible{color:#777;transform:translateX(5px)}
+.works-menu-bottom{margin-top:auto;display:flex;flex-direction:column;gap:14px;font-size:11px;letter-spacing:1px}
+@media(max-width:900px){.works-menu-layer{top:76px}.works-menu-panel{width:340px;padding:45px 30px 32px}}
+@media(max-width:480px){.works-menu-panel{width:82vw;padding:45px 27px 32px}.works-menu-list a{font-size:13px;line-height:22px}.works-menu-bottom{font-size:9px}.header .nav-action.works-navigation{display:flex;align-items:center;gap:5px}}
