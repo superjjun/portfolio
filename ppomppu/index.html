@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f2f6f9">
+<title>POMPPU — 커뮤니티 리디자인</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap');
+:root{--bg:#f2f6f9;--ink:#162437;--muted:#8393a5;--white:#fff;--soft:#f7fafc;--line:#e7edf1;--mint:#e9f5f7;--shadow:0 7px 24px rgba(33,55,75,.025)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:'Noto Sans KR','Malgun Gothic',sans-serif;font-size:14px;font-weight:500}button,input{font:inherit}button{cursor:pointer;border:0;color:inherit;background:transparent}button:focus-visible,input:focus-visible{outline:2px solid #5d9bd2;outline-offset:2px}button:disabled{cursor:default}a{color:inherit;text-decoration:none}
+.wrap{max-width:1288px;margin:auto}.top{padding:22px 0 18px;display:flex;align-items:center;gap:38px}.brand{border:0;background:linear-gradient(90deg,#3ece9a,#7295ee,#ed77b6,#e85c77);color:transparent;background-clip:text;-webkit-background-clip:text;font-size:31px;letter-spacing:.17em;font-weight:500;line-height:1.3}.tagline{font-size:11px;line-height:1.6;color:#8c9cab}.top-spacer{flex:1}.search{width:306px;height:43px;border-radius:26px;display:flex;background:#fff;align-items:center;padding:0 9px 0 19px;gap:6px}.search input{width:100%;border:0;outline:none;color:#263c4d;background:transparent;font-size:12px}.search input::placeholder{color:#adbac7}.search button{border-radius:50%;width:32px;height:32px;font-size:21px;color:#71859a}.login{background:var(--ink);border-radius:24px;padding:10px 33px;color:white;font-size:12px;min-width:104px}.nav{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));background:#fff;border-radius:28px;padding:5px;gap:3px;height:50px}.nav button{border-radius:24px;font-size:13px;font-weight:700;transition:background .15s}.nav button:hover,.nav button.active{background:var(--ink);color:white}
+.layout{display:grid;grid-template-columns:236px minmax(0,1fr);gap:22px;margin-top:62px;align-items:start}.card{border-radius:21px;background:var(--white);box-shadow:var(--shadow)}.sidebar{padding:23px 14px 26px;min-height:638px;position:sticky;top:14px}.sidebar h3{font-size:19px;margin:0 9px 26px}.side-links{display:grid;gap:6px}.side-links button{width:100%;height:60px;display:flex;align-items:center;justify-content:space-between;text-align:left;padding:0 17px;border-radius:14px;font-size:14px}.side-links button span:last-child{color:#869aa9}.side-links button:hover,.side-links button.active{background:var(--mint)}.side-links button.active{font-weight:800}
+.content{min-width:0}.mast{padding:26px 33px 18px;min-height:230px}.eyebrow{color:#66a7a9;letter-spacing:.05em;font-size:11px;font-weight:700}.mast h1{font-size:41px;line-height:1.2;letter-spacing:-.045em;margin:26px 0 13px}.mast p{color:var(--muted);margin:0;font-size:14px}.filters{display:flex;gap:12px;margin-top:27px;flex-wrap:wrap}.filters button{border-radius:22px;background:var(--soft);padding:9px 27px;min-width:93px;font-size:12px;font-weight:700}.filters button:hover,.filters button.active{background:var(--ink);color:#fff}.board{margin-top:20px;padding:25px 29px 33px;min-height:600px}.board h2{font-size:20px;letter-spacing:-.04em;margin:0 0 8px}.hint{font-size:12px;color:var(--muted);margin:0 0 27px}.item{display:flex;align-items:center;min-height:59px;border-top:1px solid var(--line);width:100%;padding:0 3px;text-align:left;gap:17px}.item:hover{background:#f9fcfe}.num{min-width:35px;color:#8499ac;font-size:13px;font-weight:800}.item-title{flex:1;font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.meta{font-size:11px;color:#8c9db0;min-width:116px;text-align:right}.count{font-size:12px;color:#9daaba;margin-top:24px}
+.help{margin:20px 0 32px;border-radius:20px;background:#e6f2f6;padding:25px 29px}.help h3{margin:0 0 10px}.help p{margin:0;color:#62798a;line-height:1.9}.footer{border-top:1px solid #dce5eb;margin:70px auto 40px;padding-top:23px;color:#8b9cab;font-size:11px;display:flex;justify-content:space-between;gap:20px}
+.home-layout{margin-top:54px;display:grid;grid-template-columns:198px 449px 257px 322px;gap:19px;align-items:start}.home-layout .sidebar{min-height:880px}.stack{display:grid;gap:18px}.homecard{padding:20px 21px}.homecard h3{margin:0 0 15px;font-size:17px}.homecard small{color:var(--muted)}.trend-list button{display:block;width:100%;text-align:left;padding:7px 0;font-size:15px;font-weight:700}.trend-list button:hover{color:#3e98ab}.trend-foot{margin:18px -21px -20px;padding:16px 21px;background:#e5f3ff;border-radius:0 0 21px 21px;color:#879da9;font-size:11px;line-height:1.7}.ad{height:306px;border-radius:20px;background:#192738;display:grid;place-items:center;color:#99a8bb;font-size:12px;letter-spacing:.2em}.notice-entry{display:flex;align-items:center;gap:10px;width:100%;padding:11px 0;text-align:left;font-size:12px}.notice-entry+.notice-entry{border-top:1px solid #f1f5f8}.notice-entry span:first-child{flex:1}.notice-entry span:last-child{color:var(--muted);font-size:10px}.notice-entry:hover span:first-child{text-decoration:underline}.profile{display:flex;align-items:center;gap:15px;padding:4px 0 18px}.avatar{width:43px;height:43px;background:#e4f9f5;border-radius:50%;display:grid;place-items:center}.avatar:after{content:'';background:#1e3640;width:22px;height:22px;border-radius:50%}.profile small{font-size:10px;display:block;margin-top:6px}.shortcuts{display:flex;gap:7px}.shortcuts button{background:#f5f8fa;border-radius:9px;flex:1;padding:11px 3px;font-size:11px}.shortcuts button:hover{background:#e7f3f8}.stock-value{font-size:31px;font-weight:800;margin:14px 0 0}.muted{color:var(--muted)}.hotlink{margin-top:17px;padding-top:17px;border-top:1px solid var(--line);font-size:12px}.quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}.quick-grid button{height:104px;border-radius:13px;background:#f6f9fa;font-size:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}.quick-grid button:hover{background:#e5f4f6}.quick-grid b{background:#e7f3f4;width:37px;height:37px;border-radius:50%;display:grid;place-items:center;font-size:12px}.home-wide{margin-top:24px}
+.detail{max-width:910px;margin:60px auto;padding:36px 45px;min-height:760px}.detail h1{font-size:31px;margin:23px 0}.detail .date{color:var(--muted);font-size:12px;border-bottom:1px solid var(--line);padding-bottom:28px}.detail .body{font-size:16px;line-height:2;white-space:pre-line;padding:40px 0;min-height:280px}.back{background:#f4f8fa;border-radius:25px;padding:11px 18px;font-size:12px}.detail textarea{padding:14px;border:1px solid var(--line);border-radius:12px;width:100%;resize:vertical;min-height:85px}.detail .actions{display:flex;gap:10px;margin:15px 0}.detail .actions button,.primary{background:var(--ink);color:white;border-radius:12px;padding:12px 18px}.detail .actions button:last-child{background:#eef5f8;color:var(--ink)}
+.overlay{position:fixed;inset:0;background:rgba(18,29,43,.48);z-index:99;display:grid;place-items:center;padding:20px}.modal{width:100%;max-width:510px;border-radius:24px;background:white;padding:34px;box-shadow:0 20px 70px #17263830;position:relative}.modal h2{font-size:27px;margin:23px 0 10px}.modal p{color:var(--muted);font-size:13px;line-height:1.7}.modal input{width:100%;height:52px;margin-top:12px;border:1px solid var(--line);background:#f7fafb;border-radius:13px;padding:0 16px}.modal .primary{width:100%;margin-top:20px;padding:15px}.close{position:absolute;right:25px;top:25px;background:#f4f7f9;width:40px;height:40px;border-radius:50%;font-size:22px}.feedback{color:#397d87;font-size:12px;margin-top:18px}.empty{padding:60px;text-align:center;color:var(--muted)}
+@media(max-width:1350px){.wrap{max-width:calc(100% - 50px)}.home-layout{grid-template-columns:190px minmax(0,1.3fr) minmax(190px,.8fr) minmax(230px,1fr)}}
+@media(max-width:1050px){.home-layout{grid-template-columns:190px 1fr 1fr}.home-layout>.stack:last-child{grid-column:2/4;grid-row:2;grid-template-columns:repeat(3,1fr)}.top{gap:16px}.tagline{display:none}.layout{grid-template-columns:205px 1fr}}
+@media(max-width:700px){.wrap{max-width:calc(100% - 28px)}.top{padding:17px 0;gap:10px;flex-wrap:wrap}.brand{font-size:25px}.top-spacer{flex:1}.login{padding:9px 16px;min-width:auto}.search{order:3;flex-basis:100%;width:100%}.nav{display:flex;overflow-x:auto;scrollbar-width:none}.nav button{min-width:95px}.layout,.home-layout{display:block;margin-top:26px}.sidebar{position:relative;top:0;min-height:auto;margin-bottom:16px}.side-links{display:flex;overflow-x:auto;gap:7px}.side-links button{width:auto;flex:none;height:45px;padding:0 14px}.side-links button span:last-child{display:none}.content{display:block}.mast{padding:22px;min-height:auto}.mast h1{font-size:30px;margin:18px 0 12px}.filters{gap:6px;margin-top:22px}.filters button{min-width:67px;padding:9px 13px}.board{padding:22px 18px}.item-title{font-size:12px}.meta{min-width:57px}.home-layout>.stack{margin-bottom:16px}.home-layout>.stack:last-child{display:block}.home-layout>.stack>*{margin-bottom:16px}.home-layout>.stack:nth-child(3){display:none}.footer{display:block}.detail{margin:25px auto;padding:24px 22px}.detail h1{font-size:24px}}
+</style>
+</head>
+<body>
+<header class="wrap"><div class="top"><button class="brand" data-nav="뽐뿌" aria-label="뽐뿌 홈">PPOMPPU</button><div class="tagline">사람이 모여 함께<br>만드는 정보와 이야기</div><div class="top-spacer"></div><form class="search" id="search-form"><input id="search-input" type="search" placeholder="찾고 싶은 정보를 검색하세요" aria-label="통합 검색"><button type="submit" title="검색" aria-label="검색">⌕</button></form><button class="login" data-modal="login">로그인</button></div><nav class="nav" id="nav" aria-label="주요 메뉴"></nav></header>
+<main id="root" class="wrap" aria-live="polite"></main>
+<footer class="wrap footer"><span>© 2026 POMPPU — UX/UI CONCEPT REDESIGN</span><span>포트폴리오용 인터랙티브 데모 · 실제 거래 및 로그인 불가</span></footer>
+<div id="modal-root"></div>
+<script>
+(function(){
+'use strict';
+var SECTIONS=['뽐뿌','정보','커뮤니티','포럼','오픈포럼','갤러리','장터'];
+var LEFT=['전체 게시글','인기글','최근 올라온 글','추천 게시글','자유게시판','이용 안내'];
+var SORTS=['전체','인기순','최신순','댓글순'];
+var HEADLINES={
+ '정보':['아이폰16 출시일과 구매 정보','갤럭시 S24 울트라 실사용 후기','전기차 보조금 안내','중고거래 사기 예방 체크리스트','에어팟 프로2 가격 비교','알뜰폰 요금제 추천','구매 전 확인해야 할 노트북 사양','가전제품 할인 정보'],
+ '커뮤니티':['오늘 다들 점심 뭐 드셨나요?','최근에 산 것 중 만족도 높은 제품','주말에 가볼 만한 서울 근교','요즘 날씨에 입기 좋은 옷 추천','생활 속 소소한 꿀팁','이번 달 가장 좋은 소비','오늘 하루의 작은 발견','다들 취미 활동 어떻게 하세요?'],
+ '포럼':['아이폰 사용자 정보 공유','갤럭시 신제품 사용 후기','PC 조립 질문과 답변','여행 준비 체크리스트','러닝 장비 추천 리스트','자취 생활 비용 절감 팁','집에서 사용하기 좋은 소형 가전','캠핑 초보 준비물'],
+ '오픈포럼':['자유롭게 나누는 오늘의 이야기','최근 관심 있는 취미 이야기','새롭게 시작한 운동 후기','좋아하는 영화 추천','독서 모임 관련 정보','일상 속 재미있는 발견','이번 주 계획 함께 공유','우리 동네 소식 나눔'],
+ '갤러리':['주말 서울 거리 사진','가을 산책에서 찍은 사진','이번 달 데일리룩 모음','작업 공간 꾸미기','직접 만든 요리 사진','여행 중 발견한 풍경','필름 카메라 기록','오늘의 반려동물'],
+ '장터':['미개봉 무선 이어폰 판매','기계식 키보드 정리합니다','가벼운 노트북 판매합니다','겨울 아우터 판매','필름 카메라 거래','새 상품 스마트워치 판매','모니터 암 팝니다','운동화 사이즈 교환']
+};
+var sectionData={};
+Object.keys(HEADLINES).forEach(function(cat){
+ sectionData[cat]=HEADLINES[cat].concat(HEADLINES[cat].map(function(x){return x+' · 추가 정보';})).map(function(title,i){
+  return {id:cat+'-'+i,section:cat,title:title,views:21+(i*37)%960,comments:3+(i*11)%68,likes:(i*9+4)%55,rank:i,date:new Date(2026,9,29,12-(i%13)).getTime(),body:'이 게시글은 '+cat+' 카테고리에 올라온 정보입니다.\n\n'+title+'에 관해 자유롭게 의견을 나눌 수 있는 프로토타입 화면입니다.\n\n실제 서비스 데이터가 아닌 디자인 시연용 예시입니다.'};
+ });
+});
+var app={section:'뽐뿌',side:'전체 게시글',sort:'전체',post:null,prev:null,search:null};
+var root=document.getElementById('root'),modalRoot=document.getElementById('modal-root');
+function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]});}
+function button(label,attr,cls){return '<button '+attr+' class="'+(cls||'')+'">'+esc(label)+'</button>';}
+function nav(){document.getElementById('nav').innerHTML=SECTIONS.map(function(s){return button(s,'data-nav="'+s+'"'+(app.section===s&&!app.post?' aria-current="page"':''),app.section===s&&!app.post?'active':'');}).join('');}
+function side(){return '<aside class="card sidebar"><h3>카테고리</h3><div class="side-links">'+LEFT.map(function(x){return '<button class="'+(app.side===x?'active':'')+'" data-side="'+x+'"><span>'+x+'</span><span>›</span></button>';}).join('')+'</div></aside>';}
+function filters(){return '<div class="filters">'+SORTS.map(function(x){return button(x,'data-sort="'+x+'" aria-pressed="'+(app.sort===x)+'"',app.sort===x?'active':'');}).join('')+'</div>';}
+function getList(){
+ var list=(sectionData[app.section]||[]).slice();
+ if(app.side==='인기글')list=list.filter(function(p){return p.views>=150;});
+ if(app.side==='최근 올라온 글')list=list.filter(function(p){return p.rank<=7;});
+ if(app.side==='추천 게시글')list=list.filter(function(p){return p.likes>=17;});
+ if(app.side==='자유게시판')list=list.filter(function(p){return p.rank%2===0;});
+ if(app.side==='이용 안내')list=[{id:app.section+'-guide',section:app.section,title:app.section+' 게시판 이용 안내 및 안전 수칙',views:402,comments:12,likes:35,rank:0,date:Date.now(),body:'커뮤니티 이용 안내\n\n1. 상대방을 존중하고 예의를 지켜주세요.\n2. 개인 정보 및 금전 거래에 주의하세요.\n3. 의심스러운 콘텐츠는 관리자에게 문의하세요.'}];
+ if(app.sort==='인기순')list.sort(function(a,b){return b.views-a.views;});
+ else if(app.sort==='최신순')list.sort(function(a,b){return b.date-a.date;});
+ else if(app.sort==='댓글순')list.sort(function(a,b){return b.comments-a.comments;});
+ else list.sort(function(a,b){return a.rank-b.rank;});
+ return list;
+}
+function postRows(list){
+ if(!list.length)return '<p class="empty">해당하는 게시글이 없습니다.</p>';
+ return list.map(function(p,i){return '<button class="item" data-post="'+esc(p.id)+'"><span class="num">'+String(i+1).padStart(2,'0')+'</span><span class="item-title">'+esc(p.title)+'</span><span class="meta">'+p.views+'　·　'+p.comments+'</span></button>';}).join('');
+}
+function board(){
+ var title=app.side==='전체 게시글'?app.section+' 게시판':app.section+' '+app.side;
+ var cap=app.side==='이용 안내'?'안전하고 유익한 이용을 위한 안내를 확인하세요.':app.side==='전체 게시글'?'새로운 이야기를 살펴보세요.':'선택한 항목의 게시글을 모아 보여드립니다.';
+ return '<div class="layout">'+side()+'<div class="content"><section class="card mast"><div class="eyebrow">POMPPU COMMUNITY</div><h1>'+esc(app.section)+'</h1><p>'+(app.section==='장터'?'안전한 거래를 위해 판매자 정보와 거래 조건을 확인하세요.':'관심 있는 주제에 대한 정보를 함께 발견하고 이야기해요.')+'</p>'+filters()+'</section><section class="card board" id="board"><h2>'+esc(title)+'</h2><p class="hint">'+esc(cap)+'</p>'+postRows(getList())+'<p class="count">선택한 조건 · '+getList().length+'개의 게시글</p></section><div class="help"><h3>커뮤니티 가이드</h3><p>서로의 경험과 정보를 자유롭게 공유해 보세요.<br>실제 판매·거래는 지원하지 않는 UI 시연 페이지입니다.</p></div></div></div>';
+}
+function noticeCard(){var news=['커뮤니티 이용 안내 및 운영 정책 변경','장터 게시판 이용 시 주의사항','댓글 신고 기능 업데이트 안내','모바일 마이페이지 개선 예정'];return '<section class="card homecard"><h3>공지사항</h3>'+news.map(function(x,i){return '<button class="notice-entry" data-post="정보-'+i+'"><span>'+esc(x)+'</span><span>'+['04.02','04.01','03.29','03.27'][i]+'</span></button>';}).join('')+'</section>';}
+function homeSidebar(){
+ var arr=[['01','정치 / 사회','커뮤니티'],['02','게임 / 취미','포럼'],['03','익명게시판','커뮤니티'],['04','자동차','포럼'],['05','먹거리','정보'],['06','생활 꿀팁','정보'],['07','개인정보 관리','정보'],['08','글쓰기','커뮤니티']];
+ return '<aside class="card sidebar"><h3>빠른 카테고리</h3><small class="muted">빠른 카테고리</small><div class="quick-grid">'+arr.map(function(x){return '<button data-nav="'+x[2]+'"><b>'+x[0]+'</b><span>'+x[1]+'</span></button>';}).join('')+'</div></aside>';
+}
+function compact(title,section){
+ return '<section class="card homecard"><h3>'+title+'</h3>'+postRows(sectionData[section].slice(0,4))+'<button class="hotlink" data-nav="'+section+'">더 많은 이야기 보기 ↗</button></section>';
+}
+function home(){
+ var trend=['아이폰16 출시일','갤럭시 S24 울트라','전기차 보조금','중고거래 사기 예방','에어팟 프로2 가격'];
+ return '<div class="home-layout">'+homeSidebar()+
+ '<div class="stack"><section class="card homecard"><div class="eyebrow">인기검색어</div><div class="trend-list">'+trend.map(function(s,i){return '<button data-query="'+esc(s)+'">'+(i+1)+'. '+esc(s)+'</button>';}).join('')+'</div><div class="trend-foot">사람들이 많이 찾는 인기 키워드를 한눈에 확인하고<br>최신 트렌드와 관심사를 빠르게 탐색할 수 있습니다.</div></section>'+noticeCard()+compact('뽐뿌 뉴스','정보')+compact('함께 나누는 정보','커뮤니티')+'</div>'+
+ '<div class="stack"><div class="ad">AD</div>'+compact('오늘의 핫딜','장터')+compact('커뮤니티 인기글','커뮤니티')+'</div>'+
+ '<div class="stack">'+noticeCard()+'<section class="card homecard"><div class="profile"><div class="avatar"></div><div><strong>개인 로그인창</strong><small class="muted">자주 쓰는 기능을 빠르게 이용할 수 있습니다.</small></div></div><div class="shortcuts">'+['메일','알림','마이페이지'].map(function(s){return button(s,'data-modal="login"');}).join('')+'</div></section><section class="card homecard"><h3>주식</h3><div class="stock-value">5,279.47</div><small>코스피 · 화면 예시 수치</small><div class="hotlink muted">실시간 주가가 아닌 디자인 시연 데이터</div></section></div></div>';
+}
+function lookup(id){var out=null;Object.keys(sectionData).some(function(k){return sectionData[k].some(function(x){if(x.id===id){out=x;return true;}return false;});});if(!out&&/-guide$/.test(id)){out=getList()[0];}return out;}
+function detail(){
+ var p=app.post;
+ if(!p)return '';
+ return '<article class="card detail"><button class="back" data-back="1">← 뒤로가기</button><div class="eyebrow" style="margin-top:29px">'+esc(p.section)+' / COMMUNITY</div><h1>'+esc(p.title)+'</h1><div class="date">작성자 · POMPPU MEMBER　　조회 '+p.views+'　　댓글 '+p.comments+'</div><div class="body">'+esc(p.body)+'</div><div class="actions">'+button('♡ 좋아요','data-like="1"')+button('공유하기','data-share="1"')+'</div><p id="detail-feedback" class="feedback"></p><h3>댓글 '+p.comments+'</h3><textarea placeholder="로그인 후 댓글을 작성할 수 있습니다." readonly data-modal="login"></textarea><div style="margin-top:15px"><button class="primary" data-modal="login">댓글 작성하려면 로그인</button></div></article>';
+}
+function searchPage(){
+ var q=(app.search||'').toLowerCase();
+ var posts=Object.keys(sectionData).reduce(function(a,k){return a.concat(sectionData[k]);},[]);
+ var matches=posts.filter(function(p){return p.title.toLowerCase().includes(q)||p.section.toLowerCase().includes(q);});
+ return '<div class="card detail"><button class="back" data-back="1">← 뒤로가기</button><div class="eyebrow" style="margin-top:26px">POMPPU SEARCH</div><h1>통합 검색</h1><p class="hint">검색어: '+esc(app.search)+' · '+matches.length+'건의 결과</p><div style="margin-top:25px">'+postRows(matches.slice(0,35))+'</div></div>';
+}
+function render(scroll){
+ nav();
+ root.innerHTML=app.post?detail():app.search!==null?searchPage():app.section==='뽐뿌'?home():board();
+ if(scroll!==false)window.scrollTo({top:0,behavior:'auto'});
+}
+function setSection(s){app.section=s;app.side='전체 게시글';app.sort='전체';app.search=null;app.post=null;render();}
+function openPost(id){var p=lookup(id);if(!p)return;app.prev={section:app.section,side:app.side,sort:app.sort,search:app.search};app.post=p;render();}
+function back(){app.post=null;if(app.search!==null){app.search=null;}render();}
+function login(){modalRoot.innerHTML='<div class="overlay" data-dismiss="1"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="login-title"><button class="close" data-close="1" aria-label="닫기">×</button><div class="brand" style="font-size:27px">PPOMPPU</div><h2 id="login-title">로그인</h2><p>뽐뿌에서 더 많은 정보를 만나보세요.</p><form id="login-form"><input name="id" type="text" autocomplete="off" placeholder="아이디 또는 이메일" required><input name="password" type="password" placeholder="비밀번호" required><button class="primary" type="submit">로그인</button></form><p class="feedback">디자인 시연용 페이지로 실제 계정 인증은 진행되지 않습니다.</p></div></div>';modalRoot.querySelector('input').focus();}
+function closeModal(){modalRoot.innerHTML='';}
+document.addEventListener('click',function(e){
+ var b=e.target.closest('button,[data-modal]');
+ if(!b){if(e.target.hasAttribute('data-dismiss'))closeModal();return;}
+ if(b.dataset.close){closeModal();return;}
+ if(b.dataset.nav){setSection(b.dataset.nav);return;}
+ if(b.dataset.side){app.side=b.dataset.side;app.post=null;render(false);document.getElementById('board')?.scrollIntoView({behavior:'smooth',block:'nearest'});return;}
+ if(b.dataset.sort){app.sort=b.dataset.sort;render(false);return;}
+ if(b.dataset.post){openPost(b.dataset.post);return;}
+ if(b.dataset.modal){login();return;}
+ if(b.dataset.query){document.getElementById('search-input').value=b.dataset.query;app.search=b.dataset.query;app.post=null;render();return;}
+ if(b.dataset.back){back();return;}
+ if(b.dataset.like){var feed=document.getElementById('detail-feedback');if(feed)feed.textContent='좋아요 표시가 적용되었습니다. (시연용)';return;}
+ if(b.dataset.share){if(navigator.clipboard){navigator.clipboard.writeText(location.href).then(function(){document.getElementById('detail-feedback').textContent='페이지 링크를 복사했습니다.';}).catch(function(){document.getElementById('detail-feedback').textContent='이 페이지의 주소를 복사해 주세요.';});}return;}
+});
+document.getElementById('search-form').addEventListener('submit',function(e){e.preventDefault();var q=document.getElementById('search-input').value.trim();if(!q){document.getElementById('search-input').focus();return;}app.search=q;app.post=null;render();});
+document.addEventListener('submit',function(e){if(e.target.id==='login-form'){e.preventDefault();var feedback=modalRoot.querySelector('.feedback');if(feedback)feedback.textContent='UI 시연 전용 화면입니다. 실제 로그인 요청은 전송되지 않습니다.';}});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+window.addEventListener('popstate',function(){render();});
+render();
+})();
+</script>
+</body>
+</html>
