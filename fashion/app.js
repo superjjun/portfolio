@@ -73,9 +73,9 @@ function projectDetail(){
  return '<div class="project-modal-wrap" role="presentation">'+
  '<button type="button" class="project-modal-backdrop" data-action="close-project" aria-label="Close project details"></button>'+
  '<section class="project-modal" role="dialog" aria-modal="true" aria-label="'+p.title+' project details">'+
- '<div class="project-modal-top"><span>KIM JUNSEO / SELECTED WORKS</span><button type="button" data-action="close-project">CLOSE <span aria-hidden="true">×</span></button></div>'+
+ '<div class="project-modal-top"><button type="button" data-action="close-project">CLOSE <span aria-hidden="true">×</span></button></div>'+
  '<div class="project-modal-content"><div class="project-modal-media" style="--project-preview:url(\''+A(d.preview)+'\')">'+img(d.preview,'',p.title+' prototype preview')+
- '<div class="project-modal-media-label">'+p.number+' / '+d.category+'</div></div>'+
+ '</div>'+
  '<div class="project-modal-body"><div class="project-modal-index"><span>PROJECT '+p.number+' / 05</span><span>'+d.date+'</span></div>'+
  '<h1>'+d.title+'</h1><p class="project-modal-category">'+d.category+'</p>'+
  '<p class="project-lead">'+d.description+'</p>'+

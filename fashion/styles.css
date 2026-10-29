@@ -117,7 +117,7 @@ html{scroll-behavior:smooth}
 .project-modal-wrap{position:fixed;inset:0;z-index:210;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.79);padding:26px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .project-modal-backdrop{position:absolute;inset:0;border:0;background:transparent;cursor:default}
 .project-modal{position:relative;z-index:1;background:#f4f3f0;color:#141414;width:min(1240px,100%);height:min(850px,calc(100dvh - 52px));overflow:auto;box-shadow:0 30px 100px rgba(0,0,0,.4)}
-.project-modal-top{height:74px;border-bottom:1px solid #d5d3cf;display:flex;justify-content:space-between;align-items:center;padding:0 42px;font-size:10px;font-weight:600;letter-spacing:1.7px}
+.project-modal-top{height:74px;border-bottom:1px solid #d5d3cf;display:flex;justify-content:flex-end;align-items:center;padding:0 42px;font-size:10px;font-weight:600;letter-spacing:1.7px}
 .project-modal-top button{background:none;border:0;color:#171717;font-size:11px;font-weight:600;letter-spacing:1.4px;cursor:pointer;padding:10px}
 .project-modal-top button span{margin-left:18px;font-size:19px;font-weight:400}
 .project-modal-content{display:grid;grid-template-columns:46% 54%;min-height:620px}
