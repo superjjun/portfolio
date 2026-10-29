@@ -863,6 +863,7 @@ html,body{background:#fff}
   .contact-editorial .contact-foot{font-size:8px;flex-wrap:wrap}
   .contact-editorial .contact-art-caption{flex-direction:column;align-items:flex-start}
 }
+.project-demo-link{display:inline-flex;align-items:center;justify-content:center;width:max-content;max-width:100%;background:#9a83ff;color:#0b0713;text-decoration:none;padding:14px 18px;margin:8px 0 23px;font:600 10px "DM Mono",monospace;letter-spacing:.07em;border:1px solid #c9bbff}.project-demo-link:hover{background:#c9bbff;color:#08070a}
 </style>
 
 </head>
@@ -1070,7 +1071,7 @@ if(runway) runway.innerHTML=runwayProjects.map((p,i)=>'<figure class="run-item">
 function detailMedia(p){return p.image?'<img src="'+p.image+'" alt="'+p.name+' 대표 이미지">':'<div class="detail-fallback">PPOMPPU</div>'}
 function openProject(i){
   const p=projects[i];
-  detailRoot.innerHTML='<div class="detail"><div class="detail-media">'+detailMedia(p)+'</div><article class="detail-copy"><span class="detail-kicker">LOOK '+String(i+1).padStart(2,'0')+' / 07 · CASE STUDY</span><h2>'+p.name+'</h2><div class="detail-cat">'+(p.category?p.category+' / ':'')+p.period+'</div><p class="detail-desc">'+p.desc+'</p><div class="detail-focus"><b>KEY FOCUS</b><span>'+p.focus+'</span></div><div class="detail-nav"><button data-prev>← PREVIOUS</button><button data-next>NEXT LOOK →</button></div></article></div>';
+  detailRoot.innerHTML='<div class="detail"><div class="detail-media">'+detailMedia(p)+'</div><article class="detail-copy"><span class="detail-kicker">LOOK '+String(i+1).padStart(2,'0')+' / 07 · CASE STUDY</span><h2>'+p.name+'</h2><div class="detail-cat">'+(p.category?p.category+' / ':'')+p.period+'</div><p class="detail-desc">'+p.desc+'</p><div class="detail-focus"><b>KEY FOCUS</b><span>'+p.focus+'</span></div>' +(p.name==='LOST LINK'?'<a class="project-demo-link" href="lostlink/" target="_blank" rel="noopener noreferrer">VIEW INTERACTIVE PROTOTYPE ↗</a>':'')+'<div class="detail-nav"><button data-prev>← PREVIOUS</button><button data-next>NEXT LOOK →</button></div></article></div>';
   detailRoot.querySelector('[data-prev]').onclick=()=>openProject((i-1+projects.length)%projects.length);
   detailRoot.querySelector('[data-next]').onclick=()=>openProject((i+1)%projects.length);
   if(!dialog.open)dialog.showModal();document.body.style.overflow='hidden';
