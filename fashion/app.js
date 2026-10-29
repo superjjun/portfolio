@@ -33,7 +33,7 @@ function chrome(){
  return '<div class="browser safari-chrome" aria-hidden="true">'+
  '<div class="lights"><i></i><i></i><i></i></div>'+
  '<div class="safari-left"><span class="safari-tool safari-back">'+back+'</span><span class="safari-tool safari-forward">'+forward+'</span><span class="safari-tool safari-sidebar">'+sidebar+'</span></div>'+
- '<div class="url"><span class="safari-lock">♙</span><span>portfolio / fashion</span></div>'+
+ '<div class="url"><span class="safari-lock">♙</span><span>KIM JUNSEO portfolio</span></div>'+
  '<div class="safari-right"><span class="safari-tool">'+share+'</span><span class="safari-tool">'+tabs+'</span><span class="safari-tool">'+plus+'</span></div>'+
  '</div>';
 }
