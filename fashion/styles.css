@@ -251,3 +251,31 @@ html{scroll-behavior:smooth}
  .editorial-case .case-heading .case-brand{font-size:11px}
  .editorial-project .prototype-cta{margin-top:20px}
 }
+
+
+/* Portfolio preview image clarity — 2026-10-29 */
+/* Keep gallery work visible without a permanent 2–3px blur. */
+.portfolio-works .category-pair .category-tile img {
+  filter: brightness(.72) contrast(1.045) !important;
+  image-rendering: auto;
+}
+.portfolio-works .category-pair .category-tile:hover img,
+.portfolio-works .category-pair .category-tile:focus-visible img {
+  filter: brightness(.82) contrast(1.045) !important;
+}
+.portfolio-works .work-featured-row .work-featured img {
+  filter: brightness(.81) contrast(1.045) !important;
+}
+.portfolio-works .work-featured-row .work-featured:hover img,
+.portfolio-works .work-featured-row .work-featured:focus-visible img {
+  filter: brightness(.90) contrast(1.045) !important;
+}
+/* The case-study screenshot itself stays unblurred. A mild edge-sharpen pass
+   helps small lettering without cropping, enlarging, or changing the layout. */
+.editorial-project .project-modal-media > img {
+  filter: url(#portfolio-preview-sharpen) contrast(1.035) !important;
+  image-rendering: auto;
+}
+@supports not (filter: url(#portfolio-preview-sharpen)) {
+  .editorial-project .project-modal-media > img { filter: contrast(1.055) !important; }
+}
