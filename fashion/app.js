@@ -70,7 +70,6 @@ function projectDetail(){
  const p=portfolioWorks.find(x=>x.id===state.activeProject);
  const d=projectCopy[state.activeProject];
  if(!p||!d)return '';
- const tags=d.details.map(x=>'<span>'+x+'</span>').join('');
  return '<div class="project-modal-wrap" role="presentation">'+
  '<button type="button" class="project-modal-backdrop" data-action="close-project" aria-label="Close project details"></button>'+
  '<section class="project-modal" role="dialog" aria-modal="true" aria-label="'+p.title+' project details">'+
@@ -82,9 +81,7 @@ function projectDetail(){
  '<p class="project-lead">'+d.description+'</p>'+
  '<div class="project-essay"><div><span>01 / BACKGROUND</span><p>'+d.problem+'</p></div>'+
  '<div><span>02 / DESIGN APPROACH</span><p>'+d.change+'</p></div></div>'+
- '<div class="project-modal-tags">'+tags+'</div>'+
  '<a class="prototype-cta" href="'+p.url+'" target="_blank" rel="noopener noreferrer"><span>VIEW FIGMA PROTOTYPE</span><span>↗</span></a>'+
- '<p class="project-modal-hint">INTERACTIVE PROTOTYPE / OPENS IN A NEW TAB</p>'+
  '</div></div></section></div>';
 }
 function portfolioWorksMenu(){
