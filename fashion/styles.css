@@ -191,3 +191,63 @@ html{scroll-behavior:smooth}
 .project-modal-media-label{z-index:2;color:#fff;text-shadow:0 1px 5px #000a}
 @media(max-width:900px){.project-modal-media > img{padding:18px}}
 @media(max-width:520px){.project-modal-media > img{padding:12px}}
+
+/* Editorial case study treatment — applied only inside project detail modals.
+   No changes to the site chrome, gallery, menus, project images or data. */
+.editorial-project{background:#f4f3f0;color:#191919}
+.editorial-project .project-modal-top{height:60px;min-height:60px;padding:0 35px;border-color:#dedbd5}
+.editorial-project .project-modal-top button{font-family:"DM Sans","Inter",sans-serif;font-size:10px;font-weight:600;letter-spacing:1.4px;padding:10px 0 10px 15px;display:flex;align-items:center;gap:21px}
+.editorial-project .project-modal-top button span{font-size:19px;font-weight:400;margin:0;line-height:1}
+.editorial-project .project-modal-content{grid-template-columns:43.5% minmax(0,56.5%);min-height:680px}
+.editorial-project .project-modal-media{min-height:680px}
+.editorial-project .project-modal-body.editorial-case{padding:43px clamp(34px,4vw,63px) 34px;min-width:0;min-height:680px;display:flex;flex-direction:column;font-family:"DM Sans","Noto Sans KR","Inter",sans-serif}
+.editorial-case .case-topline{display:flex;align-items:center;justify-content:space-between;gap:20px;font-family:"DM Sans",sans-serif;font-size:10px;font-weight:500;letter-spacing:1.5px;color:#666963}
+.editorial-case .case-date{white-space:nowrap;letter-spacing:1px}
+.editorial-case .case-heading{margin:57px 0 0}
+.editorial-case .case-heading h1{font-family:"DM Sans","Inter",sans-serif;font-size:clamp(35px,3.5vw,51px);line-height:1.04;letter-spacing:-2.2px;font-weight:500;margin:0;color:#171717;overflow-wrap:normal;word-break:normal}
+.editorial-case .case-discipline{font-family:"DM Sans",sans-serif;font-size:10px;font-weight:500;letter-spacing:1.4px;color:#84817b;margin:17px 0 0;text-transform:uppercase}
+.editorial-case .case-intro{font-family:"Noto Sans KR","Inter",sans-serif;font-size:14px;font-weight:400;line-height:1.85;letter-spacing:-.3px;word-break:keep-all;color:#222;margin:37px 0 27px;max-width:540px}
+.editorial-case .case-notes{border-top:1px solid #bfbdb7}
+.editorial-case .case-note{display:grid;grid-template-columns:140px minmax(0,1fr);gap:17px;padding:19px 0;border-bottom:1px solid #dbd8d1;align-items:start}
+.editorial-case .case-note-label{display:flex;align-items:center;gap:14px;padding-top:3px;font-family:"DM Sans",sans-serif;color:#54534f}
+.editorial-case .case-note-label span{font-size:10px;color:#9a968d}
+.editorial-case .case-note-label b{font-size:11px;letter-spacing:.2px;font-weight:500;white-space:nowrap}
+.editorial-case .case-note p{font-family:"Noto Sans KR","Inter",sans-serif;font-size:12px;line-height:1.85;letter-spacing:-.16px;font-weight:400;color:#55534f;margin:0;word-break:keep-all}
+.editorial-case .case-heading .case-brand{font-family:"DM Sans",sans-serif;font-weight:500;font-size:12px;letter-spacing:1.8px;text-transform:uppercase;color:#5f5d58;display:block;margin-bottom:15px}
+.editorial-case--roundlab .case-heading{margin-top:48px}
+.editorial-case--roundlab .case-heading h1{font-size:clamp(30px,3.15vw,44px);line-height:1.14;letter-spacing:-1.7px}
+.editorial-case .case-heading .case-product-name{display:block;text-wrap:balance;max-width:520px}
+.editorial-project .prototype-cta{background:transparent!important;color:#171717!important;display:flex;align-items:center;justify-content:space-between;border:0;border-top:1px solid #282825;border-radius:0;margin:25px 0 0;padding:18px 0 12px;font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:1px;font-weight:600;text-decoration:none;transition:padding .2s ease}
+.editorial-project .prototype-cta span:last-child{font-size:22px;line-height:1;font-weight:400}
+.editorial-project .prototype-cta:hover,.editorial-project .prototype-cta:focus-visible{background:transparent!important;padding-right:8px}
+@media(max-width:1100px) and (min-width:901px){
+ .editorial-project .project-modal-body.editorial-case{padding:35px 37px 28px}
+ .editorial-case .case-heading{margin-top:37px}
+ .editorial-case .case-heading h1{font-size:38px}
+ .editorial-case--roundlab .case-heading h1{font-size:34px}
+ .editorial-case .case-intro{margin-top:24px}
+ .editorial-case .case-note{grid-template-columns:119px minmax(0,1fr);gap:12px;padding:17px 0}
+}
+@media(max-width:900px){
+ .editorial-project .project-modal-content{grid-template-columns:minmax(0,1fr)}
+ .editorial-project .project-modal-media{height:370px;min-height:370px}
+ .editorial-project .project-modal-body.editorial-case{min-height:auto;padding:34px 34px 38px}
+ .editorial-case .case-heading{margin-top:29px}
+ .editorial-case .case-heading h1{font-size:43px}
+ .editorial-case--roundlab .case-heading h1{font-size:39px}
+ .editorial-case--roundlab .case-heading{margin-top:29px}
+ .editorial-case .case-intro{margin:27px 0 23px}
+}
+@media(max-width:520px){
+ .editorial-project .project-modal-top{height:54px;min-height:54px;padding:0 20px}
+ .editorial-project .project-modal-media{height:310px;min-height:310px}
+ .editorial-project .project-modal-body.editorial-case{padding:30px 22px 34px}
+ .editorial-case .case-heading{margin-top:27px}
+ .editorial-case .case-heading h1{font-size:37px;letter-spacing:-1.7px}
+ .editorial-case--roundlab .case-heading h1{font-size:32px}
+ .editorial-case .case-intro{font-size:13px;line-height:1.85}
+ .editorial-case .case-note{grid-template-columns:1fr;gap:10px;padding:17px 0}
+ .editorial-case .case-note p{font-size:12px}
+ .editorial-case .case-heading .case-brand{font-size:11px}
+ .editorial-project .prototype-cta{margin-top:20px}
+}

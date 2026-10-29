@@ -70,18 +70,25 @@ function projectDetail(){
  const p=portfolioWorks.find(x=>x.id===state.activeProject);
  const d=projectCopy[state.activeProject];
  if(!p||!d)return '';
+ const isRoundLab=p.id==='roundlab';
+ const title=isRoundLab?
+   '<span class="case-brand">Round Lab</span><span class="case-product-name">Birch Juice Moisturizing Sunscreen</span>':
+   d.title;
  return '<div class="project-modal-wrap" role="presentation">'+
  '<button type="button" class="project-modal-backdrop" data-action="close-project" aria-label="Close project details"></button>'+
- '<section class="project-modal" role="dialog" aria-modal="true" aria-label="'+p.title+' project details">'+
- '<div class="project-modal-top"><button type="button" data-action="close-project">CLOSE <span aria-hidden="true">×</span></button></div>'+
- '<div class="project-modal-content"><div class="project-modal-media" style="--project-preview:url(\''+A(d.preview)+'\')">'+img(d.preview,'',p.title+' prototype preview')+
+ '<section class="project-modal editorial-project" role="dialog" aria-modal="true" aria-label="'+p.title+' project details">'+
+ '<div class="project-modal-top"><button type="button" data-action="close-project" aria-label="Close project details">CLOSE <span aria-hidden="true">×</span></button></div>'+
+ '<div class="project-modal-content"><div class="project-modal-media" style="--project-preview:url(\''+A(d.preview)+'\')">'+img(d.preview,'',p.title+' design preview')+
  '</div>'+
- '<div class="project-modal-body"><div class="project-modal-index"><span>PROJECT '+p.number+' / 05</span><span>'+d.date+'</span></div>'+
- '<h1>'+d.title+'</h1><p class="project-modal-category">'+d.category+'</p>'+
- '<p class="project-lead">'+d.description+'</p>'+
- '<div class="project-essay"><div><span>01 / BACKGROUND</span><p>'+d.problem+'</p></div>'+
- '<div><span>02 / DESIGN APPROACH</span><p>'+d.change+'</p></div></div>'+
- '<a class="prototype-cta" href="'+p.url+'" target="_blank" rel="noopener noreferrer"><span>VIEW FIGMA PROTOTYPE</span><span>↗</span></a>'+
+ '<div class="project-modal-body editorial-case'+(isRoundLab?' editorial-case--roundlab':'')+'">'+
+ '<div class="case-topline"><span class="case-number">PROJECT &nbsp;'+p.number+' / 05</span><span class="case-date">'+d.date+'</span></div>'+
+ '<header class="case-heading"><h1>'+title+'</h1><p class="case-discipline">'+d.category+'</p></header>'+
+ '<p class="case-intro">'+d.description+'</p>'+
+ '<div class="case-notes">'+
+ '<div class="case-note"><div class="case-note-label"><span>01</span><b>Context</b></div><p>'+d.problem+'</p></div>'+
+ '<div class="case-note"><div class="case-note-label"><span>02</span><b>Design approach</b></div><p>'+d.change+'</p></div>'+
+ '</div>'+
+ '<a class="prototype-cta" href="'+p.url+'" target="_blank" rel="noopener noreferrer"><span>VIEW FIGMA PROTOTYPE</span><span aria-hidden="true">↗</span></a>'+
  '</div></div></section></div>';
 }
 function portfolioWorksMenu(){
