@@ -1,0 +1,41 @@
+name: Generate animated portfolio demo fallbacks
+on:
+  push:
+    paths:
+      - .github/workflows/generate-portfolio-gifs.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install GIF rendering tool
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Create animated previews from recorded project videos
+        run: |
+          for slug in lostlink junggonara ppomppu soundcloud roundlab; do
+            file="fashion/assets/demos/$slug.mp4"
+            output="fashion/assets/demos/$slug.gif"
+            width=540
+            case "$slug" in
+              lostlink|junggonara|roundlab) width=280 ;;
+            esac
+            ffmpeg -y -hide_banner -loglevel error -i "$file" -filter_complex "[0:v]fps=9,scale=$width:-2:flags=lanczos,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4" -loop 0 "$output"
+            ls -lh "$output"
+          done
+      - name: Publish GIF fallback animations
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fashion/assets/demos/*.gif
+          if ! git diff --cached --quiet; then
+            git commit -m "Add animated project walkthrough GIF fallbacks"
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
+          fi
