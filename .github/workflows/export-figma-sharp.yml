@@ -1,0 +1,36 @@
+name: Re-export sharp original Figma preview pictures
+on:
+  push:
+    paths:
+      - scripts/export-figma-sharp.cjs
+      - .github/workflows/export-figma-sharp.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Playwright + PNG parser
+        run: |
+          npm install --no-save playwright@1.56.1 pngjs@7.0.0
+          npx playwright install --with-deps chromium
+      - name: Capture original prototype at high device pixel ratio
+        run: node scripts/export-figma-sharp.cjs
+      - name: Commit actual high-resolution screenshots
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fashion/assets/figma-original/junggonara-figma-hires.png fashion/assets/figma-original/roundlab-figma-hires.png
+          if ! git diff --cached --quiet; then
+            git commit -m "Export original Figma JUNGGO and Round Lab previews at 3x native pixels"
+            git pull --rebase
+            git push
+          fi
