@@ -36,6 +36,7 @@ async function capture(browser,demo){
  }
  const video=page.video();await context.close();
  const webm=await video.path(),output=path.join(OUT,demo.slug+'.mp4'),maxWidth=demo.width>900?960:390;
+ fs.copyFileSync(webm,path.join(OUT,demo.slug+'.webm'));
  const vf='scale=min(iw\\,'+maxWidth+'):-2:flags=lanczos,fps=18,format=yuv420p';
  const cmd=['-y','-hide_banner','-loglevel','error','-i',webm,'-vf',vf,'-c:v','libx264','-preset','fast','-crf','30','-movflags','+faststart','-an',output];
  const status=cp.spawnSync('ffmpeg',cmd,{encoding:'utf8',timeout:150000});if(status.status!==0)throw new Error('ffmpeg '+status.stderr);
