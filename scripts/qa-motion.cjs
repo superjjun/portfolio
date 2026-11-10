@@ -23,7 +23,7 @@ const {chromium}=require('playwright');
   clip:getComputedStyle(document.querySelector('#transition')).clipPath,
   opacity:getComputedStyle(document.querySelector('#transition')).opacity
  }));
- await page.waitForTimeout(3000);
+ await page.waitForFunction(()=>!document.body.classList.contains('is-locked'),null,{timeout:18000});
  const after=await page.evaluate(()=>({
    unlocked:!document.body.classList.contains('is-locked'),
    hash:location.hash,
@@ -47,7 +47,7 @@ const {chromium}=require('playwright');
   moving:document.querySelector('#detail .detail-video-fallback img')?.getAttribute('src'),
   close:!!document.querySelector('#detail .detail-close')
  }));
- await page.locator('#detail .detail-close').click();await page.waitForTimeout(750);
+ await page.locator('#detail .detail-close').click();await page.waitForFunction(()=>document.querySelector('#detail').hidden,null,{timeout:8000});
  const closed=await page.evaluate(()=>document.querySelector('#detail').hidden);
  const mobile=await browser.newContext({viewport:{width:390,height:800},isMobile:true,hasTouch:true,deviceScaleFactor:1,reducedMotion:'no-preference'});
  const m=await mobile.newPage();const mErrors=[];m.on('pageerror',e=>mErrors.push(e.message));
@@ -57,7 +57,7 @@ const {chromium}=require('playwright');
   enterButton:(()=>{let r=document.querySelector('#enter').getBoundingClientRect();return r.top>=0&&r.top<innerHeight&&r.left>=0&&r.right<=innerWidth;})(),
   heading:document.querySelector('.hero h1').textContent
  }));
- await m.locator('#enter').click();await m.waitForTimeout(3650);
+ await m.locator('#enter').click();await m.waitForFunction(()=>!document.body.classList.contains('is-locked'),null,{timeout:18000});
  const mobileAbout=await m.evaluate(()=>({entered:!document.body.classList.contains('is-locked'),imageLoaded:document.querySelector('#profile-photo').naturalWidth>0,overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth}));
  console.log('MOTION_QA '+JSON.stringify({before,preEntryScroll,during,after,media,detail,closed,mobileIntro,mobileAbout,errors,mErrors},null,2));
  await mobile.close();await ctx.close();await browser.close();
