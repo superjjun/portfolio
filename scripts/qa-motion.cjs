@@ -1,95 +1,68 @@
 const {chromium}=require('playwright');
 (async()=>{
  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
- const url='https://superjjun.github.io/portfolio/fashion/?qa=six-submitted-posters-20261110';
- const context=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'no-preference'});
- const page=await context.newPage(),errors=[];
+ const url='https://superjjun.github.io/portfolio/fashion/?qa=single-stories-20261110';
+ const ctx=await browser.newContext({viewport:{width:1440,height:900},reducedMotion:'no-preference'});
+ const page=await ctx.newPage();const errors=[];
  page.on('pageerror',e=>errors.push(e.message));
- await page.goto(url,{waitUntil:'domcontentloaded',timeout:65000});
- await page.waitForFunction(()=>!!document.querySelector('.profile-sheet')&&document.querySelectorAll('.work-card').length===6,{timeout:8000}).catch(()=>{});
- await page.waitForFunction(()=>document.querySelectorAll('.work-card').length===6,null,{timeout:60000});
+ await page.goto(url,{waitUntil:'domcontentloaded',timeout:60000});
+ await page.waitForFunction(()=>document.querySelectorAll('.story-project').length===6,null,{timeout:25000});
  const initial=await page.evaluate(()=>({
-   hero:document.querySelector('.hero h1')?.innerText,
-   locked:document.body.classList.contains('is-locked'),
-   noMenu:!document.querySelector('nav.nav')&&!document.querySelector('header.header'),
-   noFooter:!document.querySelector('footer')&&!document.querySelector('#contact'),
-   noBigTitle:!document.querySelector('.works-heading'),
-   cards:document.querySelectorAll('.work-card').length,
-   cardImages:document.querySelectorAll('.work-card img').length,
-   coverPaths:[...document.querySelectorAll('.work-card img')].map(n=>n.getAttribute('src'))
+  locked:document.body.classList.contains('is-locked'),
+  chapters:document.querySelectorAll('.story-project').length,
+  galleryGone:!document.querySelector('.deck-stage')&&!document.querySelector('.work-card'),
+  avatar:document.querySelector('#profile-photo')?.getAttribute('src'),
+  noMenu:!document.querySelector('.header'),
+  noFooter:!document.querySelector('#contact')
  }));
- await page.mouse.wheel(0,1100);await page.waitForTimeout(300);
- const beforeEntryScroll=await page.evaluate(()=>scrollY);
+ await page.mouse.wheel(0,1250);await page.waitForTimeout(200);
+ const lockedScroll=await page.evaluate(()=>scrollY);
  await page.locator('#enter').click();
- await page.waitForFunction(()=>!document.body.classList.contains('is-locked'),null,{timeout:20000});
- await page.waitForTimeout(450);
- const about=await page.evaluate(()=>({
-  scroll:scrollY,
-  portrait:document.querySelector('#profile-photo')?.naturalWidth,
-  hasContact:!!document.querySelector('.profile-facts a[href^="tel:"]')&&!!document.querySelector('.profile-facts a[href^="mailto:"]'),
-  noMenu:!document.querySelector('header.header'),
-  noFooter:!document.querySelector('footer')
+ await page.waitForFunction(()=>!document.body.classList.contains('is-locked'),null,{timeout:18000});
+ await page.waitForTimeout(300);
+ const profile=await page.evaluate(()=>({
+  photoLoaded:document.querySelector('#profile-photo').naturalWidth>0,
+  info:!!document.querySelector('.profile-facts a[href^="mailto:"]')&&!!document.querySelector('.profile-facts a[href^="tel:"]'),
+  src:document.querySelector('#profile-photo').currentSrc
  }));
- await page.evaluate(()=>{const w=document.querySelector('#works');scrollTo({top:w.offsetTop+(w.offsetHeight-innerHeight)*.5,behavior:'instant'});});
- await page.waitForTimeout(750);
- const mid=await page.evaluate(()=>({
-  current:document.querySelector('.work-card[data-active="true"]')?.getAttribute('data-open'),
-  cards:document.querySelectorAll('.work-card').length,
-  visible:document.querySelector('.deck-stage').getBoundingClientRect().top<=1
- }));
- const galleryLayout=await page.evaluate(()=>{
-  const card=document.querySelector('.work-card[data-active="true"]');
-  const img=card.querySelector('img');
-  const b=img.getBoundingClientRect(),c=card.getBoundingClientRect(),stage=document.querySelector('.deck-stage').getBoundingClientRect();
-  const cx=b.left+b.width/2,cy=b.top+b.height/2,hit=document.elementFromPoint(cx,cy);
-  return {active:card.id,imageRect:{x:b.x,y:b.y,width:b.width,height:b.height},cardRect:{x:c.x,y:c.y,width:c.width,height:c.height},stageRect:{top:stage.top,height:stage.height},imageStyle:{display:getComputedStyle(img).display,opacity:getComputedStyle(img).opacity,visibility:getComputedStyle(img).visibility},topElement:hit?.tagName,topClass:hit?.className?.toString().slice(0,100),onscreen:cx>=0&&cx<innerWidth&&cy>=0&&cy<innerHeight};
- });
- const screenshotData=(await page.screenshot({type:'jpeg',quality:49})).toString('base64');
- console.log('GALLERY_JPG_BEGIN'+screenshotData+'GALLERY_JPG_END');
- const imageTests=[];
- for(const card of await page.locator('.work-card').all()){
-   await card.evaluate(n=>n.querySelector('img').loading='eager');
-   imageTests.push(await card.evaluate(async n=>{const img=n.querySelector('img');if(!img.complete)await new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});setTimeout(resolve,7000)});return {id:n.id,src:img.currentSrc,loaded:img.naturalWidth>0};}));
+ const shots=[];
+ for(const section of await page.locator('.story-project').all()){
+  await section.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(230);
+  const d=await section.evaluate(async el=>{
+   const i=el.querySelector('.story-picture img');
+   i.loading='eager';
+   if(!i.complete)await new Promise(resolve=>{i.addEventListener('load',resolve,{once:true});i.addEventListener('error',resolve,{once:true});setTimeout(resolve,9000)});
+   const r=i.getBoundingClientRect(),natural=i.naturalWidth/i.naturalHeight;
+   return {id:el.dataset.project,loaded:i.naturalWidth>0,displayRatio:r.width/r.height,naturalRatio:natural,
+     visible:r.top<innerHeight&&r.bottom>0&&r.left<innerWidth&&r.right>0,
+     sectionHeight:el.getBoundingClientRect().height,
+     imageWidth:r.width,imageHeight:r.height};
+  });
+  shots.push(d);
  }
- await page.locator('.work-card[data-active="true"]').click();
- await page.waitForFunction(()=>document.querySelector('#detail')?.classList.contains('open'),null,{timeout:10000});
- const detail=await page.evaluate(()=>({
-  opened:!document.querySelector('#detail').hidden,
-  title:document.querySelector('#detail h2')?.textContent,
-  hasVideo:!!document.querySelector('#detail video'),
-  hasProjectImage:!!document.querySelector('#detail .detail-original img')
- }));
- await page.locator('#detail [data-close]').first().click();
- await page.waitForFunction(()=>document.querySelector('#detail').hidden,null,{timeout:8000});
- // VOLT-UP has user-provided full poster but no fabricated prototype video.
- await page.locator('[data-open="voltup"]').evaluate(e=>e.click());
- await page.waitForFunction(()=>document.querySelector('#detail')?.classList.contains('open'),null,{timeout:10000});
- const voltup=await page.evaluate(()=>({
-  title:document.querySelector('#detail h2')?.textContent,
-  poster:document.querySelector('#detail .detail-original img')?.getAttribute('src'),
-  hasFakeVideo:!!document.querySelector('#detail video')
- }));
- await page.locator('#detail [data-close]').first().click();
- await page.waitForFunction(()=>document.querySelector('#detail').hidden,null,{timeout:8000});
-
- const mobile=await browser.newContext({viewport:{width:390,height:800},isMobile:true,hasTouch:true,deviceScaleFactor:1,reducedMotion:'reduce'});
- const m=await mobile.newPage(),mobileErrors=[];
- m.on('pageerror',e=>mobileErrors.push(e.message));
- await m.goto(url+'&mobile=1',{waitUntil:'domcontentloaded',timeout:65000});
- await m.waitForFunction(()=>document.querySelectorAll('.work-card').length===6,null,{timeout:60000});
- const mbefore=await m.evaluate(()=>({buttonVisible:(()=>{const b=document.querySelector('#enter').getBoundingClientRect();return b.top>=0&&b.left>=0&&b.right<=innerWidth&&b.bottom<=innerHeight})(),overflow:document.documentElement.scrollWidth-innerWidth}));
- await m.locator('#enter').click();await m.waitForFunction(()=>!document.body.classList.contains('is-locked'),null,{timeout:10000});
- const mafter=await m.evaluate(()=>({profileContact:!!document.querySelector('.profile-facts a[href^="tel:"]'),horizontalOverflow:document.documentElement.scrollWidth-innerWidth}));
- console.log('CLEAN_PORTFOLIO_QA '+JSON.stringify({initial,beforeEntryScroll,about,mid,galleryLayout,imageTests,detail,voltup,mbefore,mafter,errors,mobileErrors},null,2));
- await mobile.close();await context.close();await browser.close();
- if(!initial.locked||beforeEntryScroll>5)throw Error('Intro lock broken');
- if(!initial.noMenu||!initial.noFooter||!initial.noBigTitle||initial.cardImages!==6||initial.cards!==6)throw Error('Menu/footer/title or artwork gallery not correct');
- if(!about.hasContact||!about.portrait)throw Error('About contact or portrait missing');
- if(mid.current!=='junggonara')throw Error('Scroll-driven card activation failed');
- if(!galleryLayout.onscreen||galleryLayout.imageRect.height<100||galleryLayout.imageRect.width<100)throw Error('Focused gallery artwork invisible');
- if(imageTests.some(x=>!x.loaded))throw Error('Submitted artwork loading failed: '+JSON.stringify(imageTests));
- if(!detail.opened||!detail.hasVideo||!detail.hasProjectImage)throw Error('Details failed to open');
- if(voltup.title!=='VOLT-UP'||voltup.hasFakeVideo||!voltup.poster?.includes('voltup-poster.webp'))throw Error('VoltUp poster detail invalid');
- if(!mbefore.buttonVisible||mbefore.overflow>3||mafter.horizontalOverflow>3||!mafter.profileContact)throw Error('Mobile layout/contact failed');
- if(errors.length||mobileErrors.length)throw Error('JS page errors: '+errors.concat(mobileErrors).join(' | '));
+ await page.locator('[data-project="voltup"] .story-picture').click();
+ await page.waitForFunction(()=>document.querySelector('#detail')?.classList.contains('open'),null,{timeout:13000});
+ const voltup=await page.evaluate(()=>({title:document.querySelector('#detail h2')?.textContent,fullPoster:document.querySelector('#detail .detail-original img')?.naturalWidth>0,video:!!document.querySelector('#detail video')}));
+ await page.locator('#detail [data-close]').first().click();await page.waitForFunction(()=>document.querySelector('#detail').hidden,null,{timeout:10000});
+ await page.locator('[data-project="lostlink"] .story-picture').click();
+ await page.waitForFunction(()=>document.querySelector('#detail')?.classList.contains('open'),null,{timeout:13000});
+ const lostlink=await page.evaluate(()=>({video:!!document.querySelector('#detail video'),title:document.querySelector('#detail h2')?.textContent}));
+ await page.locator('#detail [data-close]').first().click();await page.waitForFunction(()=>document.querySelector('#detail').hidden,null,{timeout:10000});
+ const mobile=await browser.newContext({viewport:{width:390,height:800},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
+ const mp=await mobile.newPage(),mobileErrors=[];mp.on('pageerror',e=>mobileErrors.push(e.message));
+ await mp.goto(url+'&mobile=1',{waitUntil:'domcontentloaded',timeout:60000});
+ await mp.waitForFunction(()=>document.querySelectorAll('.story-project').length===6,null,{timeout:25000});
+ const mobileIntro=await mp.evaluate(()=>{const r=document.querySelector('#enter').getBoundingClientRect();return {buttonVisible:r.top>=0&&r.bottom<=innerHeight&&r.left>=0&&r.right<=innerWidth,overflow:document.documentElement.scrollWidth-innerWidth};});
+ await mp.locator('#enter').click();await mp.waitForFunction(()=>!document.body.classList.contains('is-locked'),null,{timeout:9000});
+ await mp.locator('[data-project="roundlab"]').scrollIntoViewIfNeeded();
+ const mobileEnd=await mp.evaluate(()=>{const el=document.querySelector('[data-project="roundlab"] img');const r=el.getBoundingClientRect();return {overflow:document.documentElement.scrollWidth-innerWidth,visible:r.top<innerHeight&&r.bottom>0,width:r.width,height:r.height};});
+ console.log('STORY_QA '+JSON.stringify({initial,lockedScroll,profile,shots,voltup,lostlink,mobileIntro,mobileEnd,errors,mobileErrors},null,2));
+ await mobile.close();await ctx.close();await browser.close();
+ if(!initial.locked||lockedScroll!==0||!initial.galleryGone||!initial.avatar?.includes('junseo-first-avatar'))throw Error('Intro/avatar/gallery change failed');
+ if(!profile.photoLoaded||!profile.info)throw Error('Profile avatar/contact failed');
+ if(shots.some(s=>!s.loaded||!s.visible||s.imageHeight<120||Math.abs(s.displayRatio-s.naturalRatio)>.012))throw Error('Missing, cropped, or invisible submitted artwork: '+JSON.stringify(shots));
+ if(voltup.title!=='VOLT-UP'||voltup.video||!voltup.fullPoster||!lostlink.video)throw Error('Work detail failed');
+ if(!mobileIntro.buttonVisible||mobileIntro.overflow>3||!mobileEnd.visible||mobileEnd.overflow>3)throw Error('Mobile layout or works failed');
+ if(errors.length||mobileErrors.length)throw Error('JS errors '+errors.concat(mobileErrors).join('|'));
 })().catch(e=>{console.error(e.stack||e);process.exit(1)});
