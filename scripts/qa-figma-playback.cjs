@@ -26,6 +26,6 @@ const {chromium}=require('playwright');
  await browser.close();
  if(errors.length)throw Error('JS errors '+errors.join('|'));
  if(results.some(x=>!x.section.hasGrowth||!x.section.isVisible))throw Error('Natural animation missing');
- if(results.some(x=>!x.before.src.includes(x.name+'-figma.mp4')||x.before.width===0||x.before.ready<2))throw Error('Figma clip failed to load');
+ if(results.some(x=>!(x.before.src.includes(x.name+'-figma.webm')||x.before.src.includes(x.name+'-figma.mp4'))||x.before.width===0||x.before.ready<2))throw Error('Figma clip failed to load');
  if(results.some(x=>x.after.time<=x.before.time))throw Error('Figma clip not playing');
 })().catch(e=>{console.error(e.stack||e);process.exit(1)});
