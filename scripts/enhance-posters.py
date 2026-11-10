@@ -25,7 +25,11 @@ for name, factor in ASSETS.items():
         img = source.convert("RGB")
         original_size = img.size
     # Skip on subsequent runs; avoid cascading resampling artifacts.
-    if original_size[0] >= 890 or original_size[1] >= 1600:
+    original_width = {
+        "soundcloud": 445, "lostlink": 717, "voltup": 714,
+        "junggonara": 231, "ppomppu": 838, "roundlab": 462,
+    }[name]
+    if original_size[0] >= original_width * 1.8:
         print(f"SKIP {name} {original_size} already high resolution")
         continue
     # Lanczos resampling preserves the exact layout, colors and typography.
