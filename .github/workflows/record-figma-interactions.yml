@@ -1,0 +1,37 @@
+name: Record Figma prototype real button interaction
+on:
+  push:
+    paths:
+      - scripts/record-figma-interactions.cjs
+      - .github/workflows/record-figma-interactions.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install browser and video encoder
+        run: |
+          npm install --no-save playwright@1.56.1 pngjs@7.0.0
+          npx playwright install --with-deps chromium
+          sudo apt-get update -qq && sudo apt-get install -y ffmpeg
+      - name: Record only verified Figma interactions
+        run: node scripts/record-figma-interactions.cjs
+      - name: Commit real Figma interaction video clips
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fashion/assets/demos/*-figma.mp4
+          if ! git diff --cached --quiet; then
+            git commit -m "Record genuine clicks and scroll actions in Figma prototypes"
+            git pull --rebase
+            git push
+          fi
