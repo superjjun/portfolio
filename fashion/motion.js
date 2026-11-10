@@ -7,20 +7,22 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)');
 const mobile=matchMedia('(pointer:coarse)');
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const projects=[
- {id:'soundcloud',n:'01',title:'SOUNDCLOUD',kind:'WEB / PROMOTION',short:'음악 발견과 참여를 연결하는 새로운 경험.',color:'#f9a875',shade:'#f2c6ae',back:'#f7e9de',img:'../assets/hd/soundcloud.png',fallback:'./assets/work-soundcloud.png',mode:'desktop',movie:'soundcloud',isDemo:false,sub:'SoundCloud Promotion',challenge:'음악 재생을 넘어 아티스트와 사용자가 만나는 새로운 접점이 필요했습니다.',solution:'음악을 발견하고 감상하며 참여와 보상으로 이어지는 프로모션 흐름을 기획했습니다.'},
- {id:'lostlink',n:'02',title:'LOST LINK',kind:'UI/UX / MOBILE APP',short:'잃어버린 물건을 다시 연결하는 디자인.',color:'#b4c6f8',shade:'#b5caff',back:'#e5eafa',img:'../assets/hd/lostlink.png',fallback:'./assets/work-lostlink.png',mode:'mobile',movie:'lostlink',isDemo:true,sub:'Lost & Found Matching App',challenge:'수많은 게시글 속에서 물건을 직접 찾아야 하는 불편함을 줄이고자 했습니다.',solution:'물건의 특징, 장소, 시간을 연결하여 등록부터 매칭 결과 확인까지 단계별로 설계했습니다.'},
- {id:'junggonara',n:'03',title:'JUNGGO NARA',kind:'UI/UX / REDESIGN',short:'상품 탐색부터 안전거래까지, 더 직관적으로.',color:'#b2e6bb',shade:'#a9d6b4',back:'#e6f1e4',img:'../assets/hd/junggonara.png',fallback:'./assets/work-junggonara.png',mode:'mobile',movie:'junggonara',isDemo:true,sub:'Secondhand Commerce Redesign',challenge:'복잡한 탐색 구조와 중고 거래의 신뢰도를 함께 개선하고 싶었습니다.',solution:'브랜드 탐색, 검수, 후기, 안전결제를 하나의 자연스러운 사용자 흐름으로 연결했습니다.'},
- {id:'ppomppu',n:'04',title:'PPOMPPU',kind:'RESPONSIVE / WEB',short:'복잡한 커뮤니티를 쉽고 빠르게.',color:'#dfc7ff',shade:'#d2c4ee',back:'#f0e9f6',img:'../assets/hd/ppomppu.jpg',fallback:'./assets/work-ppomppu.png',mode:'desktop',movie:'ppomppu',isDemo:true,sub:'Community Website Redesign',challenge:'커뮤니티 정보와 게시판 구조의 우선순위가 명확하지 않았습니다.',solution:'카테고리, 검색, 인기 정보의 위계를 재설계하여 정보 탐색을 간편하게 만들었습니다.'},
- {id:'roundlab',n:'05',title:'ROUND LAB',kind:'VISUAL / DETAIL PAGE',short:'촉촉함을 시각적인 경험으로 전달하다.',color:'#b1dff1',shade:'#b8e5e9',back:'#e3f2f4',img:'../assets/hd/roundlab.jpg',fallback:'./assets/work-roundlab-screen.png',mode:'mobile',movie:'roundlab',isDemo:false,sub:'Birch Juice Sunscreen',challenge:'수분감과 산뜻함을 설명보다 감각적인 이미지로 전달하고자 했습니다.',solution:'블루·화이트, 물방울, 제품 컷을 결합한 스크롤형 상세페이지를 제작했습니다.'}
+ {id:'soundcloud',cover:'./assets/figma/soundcloud-figma-cover.png',n:'01',title:'SOUNDCLOUD',kind:'WEB / PROMOTION',short:'음악 발견과 참여를 연결하는 새로운 경험.',color:'#f9a875',shade:'#f2c6ae',back:'#f7e9de',img:'../assets/hd/soundcloud.png',fallback:'./assets/work-soundcloud.png',mode:'desktop',movie:'soundcloud',isDemo:false,sub:'SoundCloud Promotion',challenge:'음악 재생을 넘어 아티스트와 사용자가 만나는 새로운 접점이 필요했습니다.',solution:'음악을 발견하고 감상하며 참여와 보상으로 이어지는 프로모션 흐름을 기획했습니다.'},
+ {id:'lostlink',cover:'./assets/figma/lostlink-figma-cover.png',n:'02',title:'LOST LINK',kind:'UI/UX / MOBILE APP',short:'잃어버린 물건을 다시 연결하는 디자인.',color:'#b4c6f8',shade:'#b5caff',back:'#e5eafa',img:'../assets/hd/lostlink.png',fallback:'./assets/work-lostlink.png',mode:'mobile',movie:'lostlink',isDemo:true,sub:'Lost & Found Matching App',challenge:'수많은 게시글 속에서 물건을 직접 찾아야 하는 불편함을 줄이고자 했습니다.',solution:'물건의 특징, 장소, 시간을 연결하여 등록부터 매칭 결과 확인까지 단계별로 설계했습니다.'},
+ {id:'junggonara',cover:'./assets/figma/junggonara-figma-cover.png',n:'03',title:'JUNGGO NARA',kind:'UI/UX / REDESIGN',short:'상품 탐색부터 안전거래까지, 더 직관적으로.',color:'#b2e6bb',shade:'#a9d6b4',back:'#e6f1e4',img:'../assets/hd/junggonara.png',fallback:'./assets/work-junggonara.png',mode:'mobile',movie:'junggonara',isDemo:true,sub:'Secondhand Commerce Redesign',challenge:'복잡한 탐색 구조와 중고 거래의 신뢰도를 함께 개선하고 싶었습니다.',solution:'브랜드 탐색, 검수, 후기, 안전결제를 하나의 자연스러운 사용자 흐름으로 연결했습니다.'},
+ {id:'ppomppu',cover:'./assets/figma/ppomppu-figma-cover.png',n:'04',title:'PPOMPPU',kind:'RESPONSIVE / WEB',short:'복잡한 커뮤니티를 쉽고 빠르게.',color:'#dfc7ff',shade:'#d2c4ee',back:'#f0e9f6',img:'../assets/hd/ppomppu.jpg',fallback:'./assets/work-ppomppu.png',mode:'desktop',movie:'ppomppu',isDemo:true,sub:'Community Website Redesign',challenge:'커뮤니티 정보와 게시판 구조의 우선순위가 명확하지 않았습니다.',solution:'카테고리, 검색, 인기 정보의 위계를 재설계하여 정보 탐색을 간편하게 만들었습니다.'},
+ {id:'roundlab',cover:'./assets/figma/roundlab-figma-cover.png',n:'05',title:'ROUND LAB',kind:'VISUAL / DETAIL PAGE',short:'촉촉함을 시각적인 경험으로 전달하다.',color:'#b1dff1',shade:'#b8e5e9',back:'#e3f2f4',img:'../assets/hd/roundlab.jpg',fallback:'./assets/work-roundlab-screen.png',mode:'mobile',movie:'roundlab',isDemo:false,sub:'Birch Juice Sunscreen',challenge:'수분감과 산뜻함을 설명보다 감각적인 이미지로 전달하고자 했습니다.',solution:'블루·화이트, 물방울, 제품 컷을 결합한 스크롤형 상세페이지를 제작했습니다.'}
 ];
 // Color-coded cards contain no thumbnail images. Actual screenshots exist only in the detail view.
 function projectHTML(p){
- return '<button class="work-card" id="card-'+p.id+'" data-open="'+p.id+'" data-active="false" '+
-  'style="--card:'+p.back+';--shade:'+p.shade+'" type="button" aria-label="'+p.title+' 작품 카드">'+
-  '<span class="work-card-top"><span>'+p.n+'</span><span class="card-arrow">↗</span></span>'+
-  '<span class="work-card-label"><strong class="card-title">'+p.title+'</strong><span class="card-sub">'+safe(p.short)+'</span></span></button>';
+ return '<button class="work-card work-artwork" id="card-'+p.id+'" data-open="'+p.id+'" data-active="false" data-aspect="'+p.mode+'" '+
+   'style="--card:'+p.back+';--shade:'+p.shade+'" type="button" aria-label="'+p.title+' 대표 작품 보기">'+
+   '<span class="artwork-surface"><img class="artwork-image" src="'+p.cover+'" data-fallback="'+p.fallback+'" alt="'+safe(p.title)+' 피그마 실제 대표 이미지" loading="lazy"></span>'+
+   '<span class="work-caption"><span class="work-number">'+p.n+' / 05</span><strong class="work-name">'+p.title+'</strong><span class="work-role">'+p.kind+' · VIEW WORK ↗</span></span>'+
+ '</button>';
 }
 q('#project-list').innerHTML=projects.map(projectHTML).join('');
+bindFallback(document);
 function bindFallback(area){qa('img[data-fallback]',area).forEach(img=>img.addEventListener('error',()=>{if(!img.dataset.failed){img.dataset.failed='yes';img.src=img.dataset.fallback;}},{once:true}));}
 
 // The hero is rendered live in WebGL. Its shape refracts colour and morphs over time.
@@ -101,23 +103,24 @@ if('IntersectionObserver' in window){
  reveals.forEach(el=>observer.observe(el));
 }else reveals.forEach(el=>el.classList.add('visible'));
 function layoutDeck(){
- const step=innerWidth<=640?Math.min(innerWidth*.48,180):Math.min(innerWidth*.224,320);
- cards.forEach((card,i)=>{
-  const diff=i-activeIndex,abs=Math.abs(diff);
-  const off=diff*step;
-  const angle=diff*17;
-  const rise=abs===0?0:abs===1?34:70;
-  const scale=abs===0?1:abs===1?.9:.78;
-  const visible=abs<=2?1:Math.max(.2,1-(abs-2)*.55);
-  card.style.setProperty('--x',off.toFixed(1)+'px');
-  card.style.setProperty('--y',rise+'px');
-  card.style.setProperty('--angle',angle+'deg');
+ const w=innerWidth,h=innerHeight;
+ cards.forEach((card,index)=>{
+  const diff=index-activeIndex,abs=Math.abs(diff);
+  const left=diff<0?-1:1;
+  const scale=abs===0?1:abs===1?.50:abs===2?.32:.24;
+  const x=abs===0?0: left*w*(abs===1?.35:abs===2?.48:.58);
+  const y=abs===0?0:abs===1?left*h*.055:abs===2?-left*h*.18:h*.25;
+  const rot=abs===0?-1.5:abs===1?left*13:abs===2?-left*18:left*25;
+  const visible=abs<=2?1:.13;
+  card.style.setProperty('--x',x.toFixed(1)+'px');
+  card.style.setProperty('--y',y.toFixed(1)+'px');
+  card.style.setProperty('--angle',rot.toFixed(1)+'deg');
   card.style.setProperty('--scale',String(scale));
   card.style.setProperty('--opacity',String(visible));
-  card.style.zIndex=String(10-abs);
-  card.dataset.active=String(i===activeIndex);
-  card.setAttribute('aria-label',projects[i].title+(i===activeIndex?' 상세 열기':' 카드로 이동'));
+  card.style.zIndex=String(20-abs);
+  card.dataset.active=String(abs===0);
   card.tabIndex=abs<=2?0:-1;
+  card.setAttribute('aria-label',projects[index].title+' 작품 상세 보기');
  });
  counter.textContent=String(activeIndex+1).padStart(2,'0')+' / 05';
  prev.disabled=activeIndex===0;next.disabled=activeIndex===cards.length-1;
@@ -182,7 +185,7 @@ function open(id,button){
  main.style.visibility='hidden';
  cover=document.createElement('div');cover.className='detail-cover';cover.style.setProperty('--theme',p.back);
  Object.assign(cover.style,{left:b.left+'px',top:b.top+'px',width:b.width+'px',height:b.height+'px',borderRadius:'20px'});
- cover.innerHTML='<span class="detail-cover-num">PROJECT '+p.n+' / 05</span><strong class="detail-cover-card">'+p.title+'</strong>';body.appendChild(cover);
+ cover.innerHTML='<img src="'+p.cover+'" alt="'+p.title+' 대표 작품"><span class="detail-cover-num">'+p.n+' / 05</span>';body.appendChild(cover);
  const anim=cover.animate([
  {left:b.left+'px',top:b.top+'px',width:b.width+'px',height:b.height+'px',borderRadius:'20px',transform:'rotate(-3deg)'},
  {left:'0px',top:'0px',width:innerWidth+'px',height:innerHeight+'px',borderRadius:'0px',transform:'rotate(0deg)'}
@@ -195,6 +198,6 @@ function close(){
  if(reduce.matches){detail.hidden=true;detail.innerHTML='';old?.focus?.({preventScroll:true});return;}
  setTimeout(()=>{if(active)return;detail.hidden=true;detail.innerHTML='';old?.focus?.({preventScroll:true});},630);
 }
-document.addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b){const index=projects.findIndex(p=>p.id===b.dataset.open);if(index!==activeIndex){scrollToCard(index);}else{open(b.dataset.open,b);}return;}if(e.target.closest('[data-close]'))close();});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b){open(b.dataset.open,b);return;}if(e.target.closest('[data-close]'))close();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active)close();});
 })();
