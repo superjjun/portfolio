@@ -265,3 +265,11 @@ body.garden-entering .garden-fireflies{transform:scale(2.4);opacity:0;transition
 #garden-transition.opening .tunnel-leaf{animation:leaf-whirl 1.7s cubic-bezier(.13,.57,.16,1) var(--delay,0s) both}
 @keyframes leaf-whirl{0%{opacity:0;transform:rotate(var(--angle)) scale(.15) translateY(50px)}24%{opacity:.85}75%{opacity:.86}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(660deg) scale(6.5)}}
 @media(prefers-reduced-motion:reduce){.tunnel-leaf{animation:none!important}#garden-transition{transition:none!important}}
+
+
+/* Restart the concentric tunnel animation on every entrance, never while hidden. */
+#garden-transition .tunnel-ring{animation:none;transform:translate(-50%,-50%) scale(.3)}
+#garden-transition .tunnel-text{animation:none;opacity:0}
+#garden-transition.opening .tunnel-ring{animation:tunnel-grow 1.85s cubic-bezier(.12,.65,.28,1) both}
+#garden-transition.opening .tunnel-ring.r2{animation:tunnel-grow 1.55s cubic-bezier(.12,.65,.28,1) .2s both}
+#garden-transition.opening .tunnel-text{animation:tunnel-word 1.25s ease-out .22s both}
