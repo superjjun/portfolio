@@ -1,138 +1,80 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080e18">
-<meta name="description" content="상상을 실현하는 디자이너 김준서의 포트폴리오. UI/UX, 웹, 인터랙션, 비주얼 디자인 작업을 소개합니다.">
-<title>KIM JUNSEO — DESIGN PORTFOLIO 2026</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050813">
+<meta name="description" content="KIM JUNSEO — Interactive designer portfolio. Beyond the ordinary. UI/UX, Web & Interaction.">
+<title>KIM JUNSEO — BEYOND THE ORDINARY / PORTFOLIO 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./portfolio-redesign.css?v=20261110c">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./garden.css?v=20261110e">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./event-horizon.css?v=20261110b">
+<script src="./event-horizon.js?v=20261110b" defer></script>
 </head>
-<body>
+<body class="gate-locked">
+<div class="universe-backdrop" aria-hidden="true"><div class="nebula nebula-one"></div><div class="nebula nebula-two"></div><div class="nebula nebula-three"></div><canvas id="universe-canvas"></canvas><div class="grain"></div></div>
 <div id="reading-progress" aria-hidden="true"></div>
 <header class="site-nav">
-<a class="brand" href="#top" aria-label="포트폴리오 첫 화면"><span class="brand-symbol">KJ</span><span class="brand-label">KIM JUNSEO<br>PORTFOLIO / 2026</span></a>
-<nav class="top-links" aria-label="주요 메뉴"><a href="#about">ABOUT</a><a href="#works">WORKS</a><a href="#contact">CONTACT ↗</a></nav>
+  <a href="#intro" class="wordmark" aria-label="맨 처음으로">K<span class="wordmark-dot">.</span>J<span class="wordmark-dot">.</span><span class="wordmark-rule"></span><small>KIM JUNSEO<br>PORTFOLIO 2026</small></a>
+  <nav class="main-nav" aria-label="포트폴리오 메뉴">
+    <a href="#about" class="nav-about">ABOUT</a><a href="#works" class="nav-works">WORKS</a><a href="#contact" class="nav-contact">CONTACT ↗</a>
+  </nav>
+  <span class="top-coordinate" aria-hidden="true">37° N · INFINITE IDEAS</span>
 </header>
 <main>
-<section id="top" class="screen-intro" aria-label="상상의 정원 포트폴리오 인트로">
-<svg class="garden-scenery" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-<defs>
- <linearGradient id="gardenSky" x1="0" y1="0" x2=".7" y2="1"><stop stop-color="#b7e1d6"/><stop offset=".52" stop-color="#d5eaf0"/><stop offset="1" stop-color="#ffe8cc"/></linearGradient>
- <linearGradient id="gardenHill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a5d3a9"/><stop offset="1" stop-color="#73ae85"/></linearGradient>
- <linearGradient id="gardenNear" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#a0c994"/><stop offset="1" stop-color="#5e9e7a"/></linearGradient>
- <radialGradient id="gardenSun"><stop stop-color="#fff8cd" stop-opacity=".85"/><stop offset=".5" stop-color="#fff6c5" stop-opacity=".38"/><stop offset="1" stop-color="#fff6c5" stop-opacity="0"/></radialGradient>
-</defs>
-<rect width="1440" height="900" fill="url(#gardenSky)"/>
-<circle cx="1163" cy="210" r="255" fill="url(#gardenSun)"/>
-<circle cx="1163" cy="210" r="91" fill="#fff7d7" opacity=".58"/>
-<g class="g-cloud cloud-a" fill="#fffdf1" opacity=".73">
-<ellipse cx="155" cy="173" rx="108" ry="32"/><ellipse cx="113" cy="159" rx="53" ry="49"/><ellipse cx="202" cy="153" rx="72" ry="44"/>
-</g>
-<g class="g-cloud cloud-b" fill="#fffdf3" opacity=".66">
-<ellipse cx="936" cy="118" rx="105" ry="31"/><ellipse cx="884" cy="109" rx="53" ry="43"/><ellipse cx="969" cy="98" rx="63" ry="52"/>
-</g>
-<g class="g-cloud cloud-c" fill="#fffff2" opacity=".48">
-<ellipse cx="1261" cy="368" rx="95" ry="20"/><ellipse cx="1238" cy="358" rx="40" ry="27"/><ellipse cx="1306" cy="357" rx="52" ry="31"/>
-</g>
-<g class="g-stars" fill="#fffef0"><path d="m350 142 6 15 15 6-15 6-6 15-6-15-15-6 15-6Z"/><path d="m1043 308 4 11 11 4-11 4-4 11-4-11-11-4 11-4Z"/><circle cx="749" cy="158" r="4"/><circle cx="491" cy="258" r="3"/></g>
-<path d="M-50 636C160 570 250 610 437 571c167-36 279-18 399 26 188 67 377 15 662-40v400H-50Z" fill="#bfdbc3" opacity=".8"/>
-<path d="M-40 725C185 634 332 693 513 665c210-32 321-89 500-35 153 46 269 12 472-36v319H-40Z" fill="url(#gardenHill)"/>
-<path d="M-40 808c249-108 368-44 563-80 198-37 328 42 503 4 171-38 261-22 467-68v260H-40Z" fill="url(#gardenNear)"/>
-<path d="M-80 866c231-82 396-63 539-44 248 34 417-70 634-27 148 29 249 14 438-43v201H-80Z" fill="#548a71" opacity=".65"/>
-<g class="g-branch" stroke="#4d9472" stroke-width="5" fill="none" stroke-linecap="round">
-<path d="M63 920Q39 786 69 641"/><path d="M64 793Q21 751 8 765"/><path d="M65 724Q123 688 126 654"/>
-<path d="M1382 931Q1359 784 1392 639"/><path d="M1367 783q-65-40-71-83"/><path d="M1380 733q32-29 65-29"/>
-</g>
-<g fill="#68a587"><ellipse cx="19" cy="751" rx="33" ry="13" transform="rotate(35 19 751)"/><ellipse cx="119" cy="690" rx="38" ry="13" transform="rotate(-46 119 690)"/><ellipse cx="1307" cy="713" rx="34" ry="13" transform="rotate(31 1307 713)"/><ellipse cx="1432" cy="711" rx="36" ry="14" transform="rotate(-39 1432 711)"/></g>
-<g class="g-branch alt" stroke="#34795d" stroke-width="4" fill="none" stroke-linecap="round">
-<path d="M238 905Q250 828 232 775"/><path d="M240 832q-41-20-55-52"/><path d="M241 815q37-23 50-52"/>
-<path d="M1212 915q-18-72 10-145"/><path d="M1215 853q-46-24-45-53"/><path d="M1215 820q37-33 42-60"/>
-</g>
-<g fill="#d3efb2"><ellipse cx="192" cy="786" rx="30" ry="12" transform="rotate(43 192 786)"/><ellipse cx="282" cy="772" rx="32" ry="13" transform="rotate(-45 282 772)"/><ellipse cx="1179" cy="805" rx="34" ry="13" transform="rotate(41 1179 805)"/><ellipse cx="1251" cy="773" rx="33" ry="13" transform="rotate(-45 1251 773)"/></g>
-<!-- Little daisies and their stems -->
-<g stroke="#397e61" stroke-width="3" stroke-linecap="round"><path d="M358 895v-104"/><path d="M371 899v-80"/><path d="M1102 916V794"/><path d="M1138 914v-72"/><path d="M849 923V857"/></g>
-<g fill="#fff8de" stroke="#e9d4aa" stroke-width="1">
-<g transform="translate(358 784)"><ellipse rx="14" ry="29" transform="rotate(0) translate(0 -18)"/><ellipse rx="14" ry="29" transform="rotate(72) translate(0 -18)"/><ellipse rx="14" ry="29" transform="rotate(144) translate(0 -18)"/><ellipse rx="14" ry="29" transform="rotate(216) translate(0 -18)"/><ellipse rx="14" ry="29" transform="rotate(288) translate(0 -18)"/><circle r="18" fill="#f4b66e" stroke="none"/></g>
-<g transform="translate(1102 789) scale(.8)"><ellipse rx="14" ry="29" transform="translate(0 -18)"/><ellipse rx="14" ry="29" transform="rotate(72) translate(0 -18)"/><ellipse rx="14" ry="29" transform="rotate(144) translate(0 -18)"/><ellipse rx="14" ry="29" transform="rotate(216) translate(0 -18)"/><ellipse rx="14" ry="29" transform="rotate(288) translate(0 -18)"/><circle r="18" fill="#f0b87d" stroke="none"/></g>
-</g>
-<g fill="#eec6cd"><circle cx="372" cy="824" r="13"/><circle cx="1139" cy="841" r="17"/><circle cx="852" cy="857" r="10"/></g>
-<g class="g-butterfly" transform="translate(1219 486)"><path fill="#f5c5a2" d="M0 0Q-55-61-66-13Q-61 9-8 12Q-44 42-16 49Q0 38 1 16Q28 52 47 24Q53 3 6 8Q52-48 12-49Q-10-35 0 0Z"/><path fill="none" stroke="#a16860" stroke-width="2" d="M0-9v45m0-30q-14-28-26-25m25 24q12-29 23-29"/></g>
-<g fill="#d5efcb" opacity=".68"><circle cx="775" cy="763" r="7"/><circle cx="719" cy="807" r="5"/><circle cx="664" cy="833" r="6"/><circle cx="1146" cy="706" r="5"/><circle cx="1307" cy="808" r="7"/></g>
-</svg>
-<div class="garden-skygrain" aria-hidden="true"></div>
-<div class="garden-noise" aria-hidden="true"></div>
-<div class="garden-decoration" id="garden-petals" aria-hidden="true"></div>
-<div class="intro-inner">
- <div class="intro-caption"><span class="garden-badge"><i>✿</i> KIM JUNSEO / PORTFOLIO 2026</span><span class="right">A LITTLE WORLD OF IDEAS</span></div>
- <div class="garden-hero-grid">
-  <button class="intro-trigger" id="enter-portfolio" type="button" aria-label="정원으로 들어가 디자이너 김준서 소개 보기">
-    <span class="garden-eyebrow">반가워요! 작은 상상들이 자라는 이곳에서,</span>
-    <h1>상상을 <span class="outline">키우는</span><br>디자이너<br><span class="emph">김준서</span>입니다.</h1>
-    <span class="garden-desc">아이디어는 작은 씨앗처럼 시작된다고 믿어요.<br>스크롤을 따라 제가 키워온 디자인을 만나보세요.</span>
-    <span class="intro-action"><span class="arrow" aria-hidden="true">↗</span> CLICK TO ENTER MY WORLD</span>
-  </button>
-  <button class="garden-gateway" id="garden-gateway" type="button" aria-label="나의 디자인 정원으로 입장하기">
-    <span class="portal-halo"></span><span class="portal-outer"></span><span class="portal-inner"></span>
-    <span class="portal-core">
-       <svg class="portal-character" viewBox="0 0 350 350" role="presentation" aria-hidden="true">
-        <defs><radialGradient id="sproutBody"><stop stop-color="#fffef4"/><stop offset="1" stop-color="#f4eacd"/></radialGradient><linearGradient id="sproutLeaf"><stop stop-color="#a4df97"/><stop offset="1" stop-color="#4f9d6c"/></linearGradient></defs>
-        <ellipse cx="174" cy="292" rx="99" ry="19" fill="#659875" opacity=".20"/>
-        <path d="M150 195Q139 166 169 128" fill="none" stroke="#4a9168" stroke-width="12" stroke-linecap="round"/>
-        <path d="M169 132Q114 107 100 48Q172 49 176 111Z" fill="url(#sproutLeaf)" stroke="#498969" stroke-width="4"/>
-        <path d="M170 132Q193 66 257 59Q250 136 182 147Z" fill="#80c991" stroke="#458a65" stroke-width="4"/>
-        <path d="M113 70Q139 80 166 118M238 75Q205 94 178 136" stroke="#d5efb6" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <path d="M96 176Q119 133 177 140Q251 132 272 201Q281 259 227 280Q188 296 130 279Q86 265 83 218Q82 191 96 176Z" fill="url(#sproutBody)" stroke="#e3e5c7" stroke-width="4"/>
-        <ellipse cx="141" cy="224" rx="6.5" ry="10" fill="#355b47"/><ellipse cx="210" cy="223" rx="6.5" ry="10" fill="#355b47"/>
-        <circle cx="143" cy="220" r="2.4" fill="#fff"/><circle cx="212" cy="219" r="2.4" fill="#fff"/>
-        <ellipse cx="115" cy="238" rx="16" ry="9" fill="#f2b4a7" opacity=".65"/><ellipse cx="232" cy="238" rx="16" ry="9" fill="#f2b4a7" opacity=".65"/>
-        <path d="M167 240Q175 251 185 239" stroke="#557762" stroke-width="4" fill="none" stroke-linecap="round"/>
-        <path d="M124 282Q114 297 110 299M225 282Q238 300 240 300" stroke="#3d8064" stroke-width="5" stroke-linecap="round"/>
-        <path d="M73 197Q58 181 48 187M274 199q17-24 28-16" stroke="#6bba84" stroke-width="6" fill="none" stroke-linecap="round"/>
-        <path d="m59 120 6 12 12 6-12 6-6 12-6-12-12-6 12-6Z" fill="#f6cb79"/><path d="m292 103 5 10 10 5-10 5-5 10-5-10-10-5 10-5Z" fill="#fff5ce"/>
-       </svg>
-    </span>
-    <span class="portal-float a">✿</span><span class="portal-float b">✧</span><span class="portal-float c">✦</span>
-    <span class="portal-caption">✦ A NEW WORLD AWAITS ✦</span><span class="gateway-hint">come in! ↙</span>
-  </button>
- </div>
-</div>
-<div class="screen-bottom"><span>01 / WELCOME TO MY LITTLE GARDEN</span><span class="hero-aside">SCROLL TO EXPLORE ↓</span></div>
-</section>
-<section id="about" class="screen-about" aria-label="디자이너 소개">
-<div class="about-wrap"><div class="about-aside"><span>01 / ABOUT ME</span><svg class="about-flower" viewBox="0 0 300 310" aria-hidden="true">
-<path d="M146 302q1-124 9-199" stroke="#4f956c" stroke-width="7" fill="none" stroke-linecap="round"/>
-<path d="M151 233q-88-55-100-17q5 38 100 37M151 190q91-70 105-32q-1 39-103 47" fill="#83c795" stroke="#3d8963" stroke-width="4"/>
-<g transform="translate(151 94)">
-<ellipse cx="0" cy="-43" rx="29" ry="56" fill="#ffddc8"/>
-<ellipse cx="0" cy="-43" rx="29" ry="56" fill="#f9d3a7" transform="rotate(60)"/>
-<ellipse cx="0" cy="-43" rx="29" ry="56" fill="#ffe3bf" transform="rotate(120)"/>
-<ellipse cx="0" cy="-43" rx="29" ry="56" fill="#ffddc8" transform="rotate(180)"/>
-<ellipse cx="0" cy="-43" rx="29" ry="56" fill="#f9d3a7" transform="rotate(240)"/>
-<ellipse cx="0" cy="-43" rx="29" ry="56" fill="#ffe3bf" transform="rotate(300)"/>
-<circle r="35" fill="#f0be72"/><circle cx="-10" cy="-5" r="3.6" fill="#4b5f45"/><circle cx="10" cy="-5" r="3.6" fill="#4b5f45"/><path d="M-8 11Q0 18 9 11" stroke="#4b5f45" fill="none" stroke-width="2.7" stroke-linecap="round"/>
-</g><path d="M254 61l4 12 13 4-13 4-4 13-5-13-13-4 13-4Z" fill="#deb77c"/>
-</svg><span>SEOUL, KR</span></div>
-<div class="about-main reveal"><h2>HELLO,<br>I'M <span>JUNSEO.</span></h2>
-<p class="ko">작은 아이디어를 발견하고, 경험으로 자라나는 과정을 좋아합니다. <strong>상상 속 아이디어를 실제 경험으로 연결하는 디자이너</strong>가 되고 싶습니다.</p>
-<p class="more">웹과 앱의 인터페이스를 설계하고, 사람들에게 오래 기억되는 경험을 만듭니다. 작은 디테일부터 전체 사용 흐름까지 하나의 관점으로 바라봅니다.</p>
-<div class="about-meta"><span>WEB DESIGN</span><span>UI / UX</span><span>INTERACTION</span><span>VISUAL</span></div>
-<a href="#works" class="about-next"><span aria-hidden="true">↓</span> EXPLORE MY WORK</a></div></div>
-</section>
-<section id="works" aria-label="선정된 디자인 작품">
-<div class="works-title reveal"><div><div class="kicker">02 / DESIGN PROJECTS — 2026</div><h2>SELECTED<br>WORKS<span>✿</span></h2></div><p>다섯 개의 아이디어가 자란 기록. 하나씩 천천히 살펴보고, 궁금한 작품을 누르면 자세한 이야기가 열려요.</p></div>
-<div id="work-list"></div>
-</section>
+  <section id="intro" class="intro" aria-label="포트폴리오 입장 화면">
+    <div class="intro-grid"></div><div class="cosmic-numbers" aria-hidden="true">KJ—2026 / 00:01</div>
+    <div class="intro-layout">
+      <div class="intro-copy">
+        <p class="eyebrow"><span class="eyebrow-line"></span> AN INTERACTIVE DESIGN PORTFOLIO <span class="eyebrow-number">01 — 06</span></p>
+        <h1>BEYOND<br><em>THE</em> ORDINARY<span class="period">.</span></h1>
+        <p class="intro-korean">상상을 실현하는 디자이너<br><strong>김준서의 세계에 오신 걸 환영합니다.</strong></p>
+        <div class="entry-action">
+          <button type="button" id="enter-world" class="enter-button"><span class="enter-graphic" aria-hidden="true">↗</span><span>ENTER MY UNIVERSE<small>CLICK TO EXPLORE</small></span></button>
+          <p class="entry-hint">이 화면은 입장 버튼을 누르면 열립니다.<br>CLICK TO CROSS THE EVENT HORIZON.</p>
+        </div>
+      </div>
+      <button type="button" class="singularity" id="singularity" aria-label="블랙홀을 클릭해 포트폴리오 입장하기">
+        <span class="singularity-glow"></span><span class="orbit-ring orbit-far"></span><span class="orbit-ring orbit-near"></span><span class="orbit-ring orbit-inner"></span>
+        <span class="accretion"><span class="accretion-light"></span></span><span class="black-core"></span>
+        <span class="star-spark spark-one"></span><span class="star-spark spark-two"></span><span class="star-spark spark-three"></span>
+        <span class="singularity-label">THE EVENT HORIZON <span>↘</span></span>
+      </button>
+    </div>
+    <div class="intro-bottom"><span>SCROLL UNAVAILABLE UNTIL ENTRY</span><span>DESIGN IS A JOURNEY INTO THE UNKNOWN</span><span class="intro-bottom-dot" aria-hidden="true">● LIVE UNIVERSE</span></div>
+  </section>
+  <section id="about" class="about-section">
+    <div class="chapter-bar"><span>01 / THE DESIGNER</span><span>WHO'S BEHIND THE IDEAS?</span><span>SEOUL, SOUTH KOREA</span></div>
+    <div class="about-layout">
+      <div class="about-text rise">
+        <div class="micro-heading"><span class="micro-star">✳</span> BEHIND THE UNIVERSE</div>
+        <h2>HELLO,<br>I'M <span>JUNSEO.</span></h2>
+        <p class="about-lead">상상에서 시작한 아이디어가<br>누군가의 <em>새로운 경험</em>이 되는 순간.</p>
+        <p class="about-detail">그 순간을 만들고 싶은 디자이너 김준서입니다. 웹과 앱의 경험을 설계하고, 직관적인 인터페이스와 기억에 남는 인터랙션을 고민합니다.</p>
+        <div class="about-skills"><span>UI / UX</span><span>WEB DESIGN</span><span>INTERACTION</span><span>VISUAL</span></div>
+        <a href="#works" class="about-continue">EXPLORE THE WORK <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="portrait-stage rise">
+        <div class="portrait-ambient"></div><div class="portrait-orbit portrait-orbit-one"></div><div class="portrait-orbit portrait-orbit-two"></div>
+        <figure class="portrait-card"><div class="portrait-photo">
+          <img src="./assets/junseo-headshot.jpg" alt="디자이너 김준서 이력서 증명사진" loading="lazy" width="174" height="199">
+        </div><figcaption><span>PORTRAIT / KIM JUNSEO</span><span>001 / 2026</span></figcaption></figure>
+        <span class="portrait-tag">THE PERSON<br>BEHIND THE SCREEN ↗</span>
+      </div>
+    </div>
+    <div class="about-bottom"><span>CREATIVE FOCUS / DIGITAL EXPERIENCES</span><span>01 — 05 SELECTED WORKS</span></div>
+  </section>
+  <section id="works" class="works-section">
+    <div class="works-intro"><p class="eyebrow"><span class="eyebrow-line"></span> 02 / THE WORK</p><h2>IDEAS<br>IN <span>ORBIT.</span></h2><div class="works-intro-bottom"><p>스크롤을 내리면 작업물이 하나씩 나타납니다.<br>궁금한 프로젝트를 클릭해 영상과 작업 과정을 확인하세요.</p><span>FIVE PROJECTS — ONE JOURNEY ↓</span></div></div>
+    <div id="work-stream" aria-label="작품 다섯 개 스크롤 탐색"></div>
+  </section>
 </main>
-<footer class="footer" id="contact"><div><div class="kicker">03 / CONTACT</div><h2>LET'S GROW<br>TOGETHER.</h2><div class="footer-links"><a href="mailto:mingjjun123@naver.com">EMAIL ↗</a><a href="https://github.com/superjjun" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="#top">BACK TO TOP ↑</a></div></div><div class="footer-bottom"><span>© 2026 KIM JUNSEO. ALL RIGHTS RESERVED.</span><span>FROM IMAGINATION TO REALITY.</span></div></footer>
-<div id="modal-root" hidden></div>
-<script src="./portfolio-redesign.js?v=20261110c" defer></script>
-<script src="./garden.js?v=20261110e" defer></script>
-<div id="garden-transition" aria-hidden="true"><div class="tunnel-art"><div class="tunnel-ring"></div><div class="tunnel-ring r2"></div><div class="tunnel-text">Here we grow.<small>✿ WELCOME TO MY LITTLE WORLD ✿</small></div></div></div>
-</body>
-</html>
+<footer id="contact" class="contact-section">
+  <div class="contact-glow"></div><p class="eyebrow"><span class="eyebrow-line"></span> 03 / CONTACT</p>
+  <div class="contact-content"><span class="contact-overline">THE NEXT IDEA STARTS HERE.</span><h2>LET'S CREATE<br><em>SOMETHING</em><br>UNEXPECTED.</h2><div class="contact-links"><a href="mailto:mingjjun123@naver.com">EMAIL ↗</a><a href="https://github.com/superjjun" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="#works">BACK TO WORKS ↑</a></div></div>
+  <div class="footer-bottom"><span>© 2026 KIM JUNSEO</span><span>FROM IMAGINATION TO REALITY</span><a href="#intro">BACK TO TOP ↑</a></div>
+</footer>
+<div id="warp-screen" class="warp-screen" aria-hidden="true"><canvas id="warp-canvas"></canvas><div class="warp-shape"><span class="warp-ring warp-ring-a"></span><span class="warp-ring warp-ring-b"></span><span class="warp-ring warp-ring-c"></span><span class="warp-dark"></span></div><div class="warp-caption"><small>TRAVELING BEYOND THE ORDINARY</small><strong>ENTERING<br>NEW DIMENSIONS.</strong><span class="warp-meter"><i></i></span></div></div>
+<div id="detail-root" hidden></div>
+<div id="mouse-orbit" class="mouse-orbit" aria-hidden="true"></div>
+</body></html>
