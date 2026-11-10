@@ -43,7 +43,7 @@ const ITEMS=[
 ];
 const q=new URLSearchParams(location.search),queryItem=Number(q.get('item')),item=Number.isInteger(queryItem)&&queryItem>=0&&queryItem<ITEMS.length?queryItem:0;
 let role=q.get('role')==='finder'?'finder':'owner',isInbox=q.get('view')==='inbox';
-const $=id=>document.getElementById(id),product=ITEMS[item],key='lostlink-chat-demo-v2-'+item;
+const $=id=>document.getElementById(id),product=[q.get('name')||ITEMS[item][0],q.get('place')||ITEMS[item][1],q.get('feature')||ITEMS[item][2],ITEMS[item][3]],key='lostlink-chat-demo-v2-'+item+'-'+(q.get('name')||'figma');
 function now(){const d=new Date();return d.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',hour12:false});}
 const SEED=[
 {from:'finder',body:'안녕하세요. 물건을 습득해서 등록했어요.',time:'14:18',seed:true},
