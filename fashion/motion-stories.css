@@ -152,7 +152,7 @@ body{background:#f5f8f2}
   display:grid;place-items:center;
   width:43px;height:43px;
   border-radius:50%;
-  background:currentColor;
+  background:var(--story-deep);
   transition:transform .25s;
   position:relative;
   color:var(--story-bg);
