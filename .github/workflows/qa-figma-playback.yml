@@ -1,0 +1,25 @@
+name: Verify Figma recordings and natural scroll animations
+on:
+  push:
+    paths:
+      - scripts/qa-figma-playback.cjs
+      - .github/workflows/qa-figma-playback.yml
+      - fashion/motion.js
+      - fashion/motion-growth.js
+      - fashion/motion-growth.css
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - run: node scripts/qa-figma-playback.cjs
