@@ -249,3 +249,19 @@ body.garden-entering .garden-cursor{opacity:0}
 .garden-gateway{max-height:310px}
 .garden-scenery{opacity:.9}
 }
+
+
+/* Cinematic bloom transition: leaves sweep past the viewer as the portal expands. */
+#garden-transition{transition:clip-path 1.42s cubic-bezier(.11,.78,.14,1),opacity .68s,visibility 0s}
+#garden-transition.opening{clip-path:circle(155vmax at 74% 47%)}
+#garden-transition.closing{clip-path:circle(155vmax at 74% 47%);transition:opacity .7s}
+body.garden-entering .garden-gateway{transform:scale(10) rotate(33deg);transition:transform 1.65s cubic-bezier(.16,.8,.16,1),filter 1.3s}
+body.garden-entering .garden-scenery{transform:scale(1.65);filter:blur(14px);transition:transform 1.7s cubic-bezier(.16,.8,.16,1),filter 1.5s}
+body.garden-entering .garden-fireflies{transform:scale(2.4);opacity:0;transition:transform 1.55s ease-in,opacity 1.55s}
+.tunnel-art .tunnel-ring{animation-duration:1.9s}
+.tunnel-art .tunnel-ring.r2{animation-duration:1.5s}
+.tunnel-art .tunnel-text{animation-duration:1.35s;z-index:3;text-shadow:0 4px 30px #e4f1cc77}
+.tunnel-leaf{position:absolute;left:var(--lx);top:var(--ly);height:clamp(28px,4vw,62px);width:clamp(13px,1.9vw,31px);background:var(--leafcolor,#c7e3ae);border-radius:94% 4% 88% 10%;box-shadow:inset 3px 0 0 #ffffff53,0 5px 20px #375f4249;transform-origin:50% 70%;opacity:0;pointer-events:none;z-index:2}
+#garden-transition.opening .tunnel-leaf{animation:leaf-whirl 1.7s cubic-bezier(.13,.57,.16,1) var(--delay,0s) both}
+@keyframes leaf-whirl{0%{opacity:0;transform:rotate(var(--angle)) scale(.15) translateY(50px)}24%{opacity:.85}75%{opacity:.86}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(660deg) scale(6.5)}}
+@media(prefers-reduced-motion:reduce){.tunnel-leaf{animation:none!important}#garden-transition{transition:none!important}}
