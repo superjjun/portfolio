@@ -22,6 +22,8 @@ jobs:
         run: |
           npm install --no-save playwright@1.56.1
           npx playwright install --with-deps chromium
+      - name: Install video encoder
+        run: sudo apt-get update -qq && sudo apt-get install -y ffmpeg
       - name: Record real user interactions
         run: node scripts/record-real-prototypes.cjs
       - name: Commit genuine recording clips
