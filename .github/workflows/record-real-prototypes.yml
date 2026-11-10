@@ -1,0 +1,35 @@
+name: Record real interactions in published prototypes
+on:
+  push:
+    paths:
+      - scripts/record-real-prototypes.cjs
+      - .github/workflows/record-real-prototypes.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Record real user interactions
+        run: node scripts/record-real-prototypes.cjs
+      - name: Commit genuine recording clips
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fashion/assets/demos/*-real.mp4
+          if ! git diff --cached --quiet; then
+            git commit -m "Add actual browser interaction recordings for 3 interactive works"
+            git push
+          fi
