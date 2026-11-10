@@ -37,6 +37,15 @@ const {chromium}=require('playwright');
   cards:document.querySelectorAll('.work-card').length,
   visible:document.querySelector('.deck-stage').getBoundingClientRect().top<=1
  }));
+ const galleryLayout=await page.evaluate(()=>{
+  const card=document.querySelector('.work-card[data-active="true"]');
+  const img=card.querySelector('img');
+  const b=img.getBoundingClientRect(),c=card.getBoundingClientRect(),stage=document.querySelector('.deck-stage').getBoundingClientRect();
+  const cx=b.left+b.width/2,cy=b.top+b.height/2,hit=document.elementFromPoint(cx,cy);
+  return {active:card.id,imageRect:{x:b.x,y:b.y,width:b.width,height:b.height},cardRect:{x:c.x,y:c.y,width:c.width,height:c.height},stageRect:{top:stage.top,height:stage.height},imageStyle:{display:getComputedStyle(img).display,opacity:getComputedStyle(img).opacity,visibility:getComputedStyle(img).visibility},topElement:hit?.tagName,topClass:hit?.className?.toString().slice(0,100),onscreen:cx>=0&&cx<innerWidth&&cy>=0&&cy<innerHeight};
+ });
+ const screenshotData=(await page.screenshot({type:'jpeg',quality:49})).toString('base64');
+ console.log('GALLERY_JPG_BEGIN'+screenshotData+'GALLERY_JPG_END');
  const imageTests=[];
  for(const card of await page.locator('.work-card').all()){
    await card.evaluate(n=>n.querySelector('img').loading='eager');
@@ -71,12 +80,13 @@ const {chromium}=require('playwright');
  const mbefore=await m.evaluate(()=>({buttonVisible:(()=>{const b=document.querySelector('#enter').getBoundingClientRect();return b.top>=0&&b.left>=0&&b.right<=innerWidth&&b.bottom<=innerHeight})(),overflow:document.documentElement.scrollWidth-innerWidth}));
  await m.locator('#enter').click();await m.waitForFunction(()=>!document.body.classList.contains('is-locked'),null,{timeout:10000});
  const mafter=await m.evaluate(()=>({profileContact:!!document.querySelector('.profile-facts a[href^="tel:"]'),horizontalOverflow:document.documentElement.scrollWidth-innerWidth}));
- console.log('CLEAN_PORTFOLIO_QA '+JSON.stringify({initial,beforeEntryScroll,about,mid,imageTests,detail,voltup,mbefore,mafter,errors,mobileErrors},null,2));
+ console.log('CLEAN_PORTFOLIO_QA '+JSON.stringify({initial,beforeEntryScroll,about,mid,galleryLayout,imageTests,detail,voltup,mbefore,mafter,errors,mobileErrors},null,2));
  await mobile.close();await context.close();await browser.close();
  if(!initial.locked||beforeEntryScroll>5)throw Error('Intro lock broken');
  if(!initial.noMenu||!initial.noFooter||!initial.noBigTitle||initial.cardImages!==6||initial.cards!==6)throw Error('Menu/footer/title or artwork gallery not correct');
  if(!about.hasContact||!about.portrait)throw Error('About contact or portrait missing');
  if(mid.current!=='junggonara')throw Error('Scroll-driven card activation failed');
+ if(!galleryLayout.onscreen||galleryLayout.imageRect.height<100||galleryLayout.imageRect.width<100)throw Error('Focused gallery artwork invisible');
  if(imageTests.some(x=>!x.loaded))throw Error('Submitted artwork loading failed: '+JSON.stringify(imageTests));
  if(!detail.opened||!detail.hasVideo||!detail.hasProjectImage)throw Error('Details failed to open');
  if(voltup.title!=='VOLT-UP'||voltup.hasFakeVideo||!voltup.poster?.includes('voltup-poster.webp'))throw Error('VoltUp poster detail invalid');
