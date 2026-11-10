@@ -63,13 +63,13 @@ if(glReady){
  uniforms={r:gl.getUniformLocation(shaderProgram,'r'),t:gl.getUniformLocation(shaderProgram,'t'),m:gl.getUniformLocation(shaderProgram,'m')};
  }catch(error){console.warn('CSS liquid fallback:',error);glReady=false;canvas.hidden=true;}
 }
-function resize(){if(!glReady)return;const b=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,1.6);canvas.width=Math.max(1,Math.round(b.width*d));canvas.height=Math.max(1,Math.round(b.height*d));gl.viewport(0,0,canvas.width,canvas.height);}
+function resize(){if(!glReady)return;const b=canvas.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,1.1);canvas.width=Math.max(1,Math.round(b.width*d));canvas.height=Math.max(1,Math.round(b.height*d));gl.viewport(0,0,canvas.width,canvas.height);}
 resize();addEventListener('resize',resize,{passive:true});
 const object=q('#liquid-object');
 object.addEventListener('pointermove',e=>{const b=object.getBoundingClientRect();pointer=[(e.clientX-b.left)/Math.max(b.width,1),1-(e.clientY-b.top)/Math.max(b.height,1)];},{passive:true});
 object.addEventListener('pointerleave',()=>pointer=[.5,.5]);
-let animationFrame;
-function draw(t){if(glReady&&!document.hidden){gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.useProgram(shaderProgram);gl.uniform2f(uniforms.r,canvas.width,canvas.height);gl.uniform1f(uniforms.t,(t-started)*.001);gl.uniform2f(uniforms.m,pointer[0],pointer[1]);gl.drawArrays(gl.TRIANGLES,0,6);}animationFrame=requestAnimationFrame(draw);}
+let animationFrame,lastWebglFrame=-1000;
+function draw(t){if(glReady&&!document.hidden&&!body.classList.contains('entering')&&!entered&&t-lastWebglFrame>=40){lastWebglFrame=t;gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.useProgram(shaderProgram);gl.uniform2f(uniforms.r,canvas.width,canvas.height);gl.uniform1f(uniforms.t,(t-started)*.001);gl.uniform2f(uniforms.m,pointer[0],pointer[1]);gl.drawArrays(gl.TRIANGLES,0,6);}animationFrame=requestAnimationFrame(draw);}
 if(glReady){animationFrame=requestAnimationFrame(draw);if(reduce.matches){setTimeout(()=>cancelAnimationFrame(animationFrame),100);}}
 
 // No scroll before a deliberate entrance click. The iris animation is staged, not skipped.
