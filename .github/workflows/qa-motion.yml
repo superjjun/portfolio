@@ -3,6 +3,10 @@ on:
   push:
     paths:
       - .github/workflows/qa-motion.yml
+      - scripts/qa-motion.cjs
+      - fashion/motion.js
+      - fashion/motion.css
+      - fashion/index.html
   workflow_dispatch:
 permissions:
   contents: read
