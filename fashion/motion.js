@@ -154,6 +154,7 @@ function detailHTML(p){
    '<div class="detail-video '+(p.mode==='mobile'?'phone':'')+'">'+
    '<div class="detail-video-fallback"><img src="./assets/demos/'+p.movie+'.gif" alt="'+p.title+' 영상 미리보기"></div>'+
    '<video muted autoplay loop playsinline controls preload="metadata" aria-label="'+p.title+' 시연 영상">'+
+   (['soundcloud','lostlink','junggonara','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.mp4?v=20261111-figma1" type="video/mp4">':'')+
    (['lostlink','junggonara','ppomppu'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-real.mp4?v=20261111-real1" type="video/mp4">':'')+
    '<source src="./assets/demos/'+p.movie+'.webm" type="video/webm"><source src="./assets/demos/'+p.movie+'.mp4" type="video/mp4"></video></div></div>'+
    '<p class="detail-tip" data-demo-status>화면녹화 영상을 불러오는 중입니다.</p>'
@@ -178,9 +179,11 @@ function open(id,button){
   const label=()=>{
    if(video.readyState>=2){
     video.style.opacity='1';
-    const genuine=video.currentSrc.includes('-real.mp4');
-    note.textContent=genuine?'실제 웹 프로토타입의 버튼을 클릭하며 브라우저에서 녹화한 영상입니다.':
-      (p.isDemo?'기존 인터랙션 시연 미리보기입니다.':'이 영상은 시안 무빙 프리뷰이며 실제 Figma 버튼 조작 영상은 아닙니다.');
+    const fromFigma=video.currentSrc.includes('-figma.mp4');
+    const fromWebsite=video.currentSrc.includes('-real.mp4');
+    note.textContent=fromFigma?'실제 Figma 프로토타입에서 버튼을 클릭하거나 화면을 스크롤하며 녹화한 영상입니다.':
+      (fromWebsite?'실제 웹 프로토타입에서 버튼을 조작하며 녹화한 영상입니다.':
+      (p.isDemo?'기존 인터랙션 시연 미리보기입니다.':'이 영상은 디자인 이미지의 모션 프리뷰로, 실제 버튼 조작 영상이 아닙니다.'));
    }
   };
   video.addEventListener('loadeddata',label);
