@@ -27,7 +27,7 @@ function projectHTML(p){
        '<button type="button" class="story-action" data-open="'+p.id+'" aria-label="'+safe(p.title)+' 상세와 영상 보기"><span>VIEW PROJECT</span><span class="action-arrow" aria-hidden="true"></span></button>'+
      '</div>'+
      '<button class="story-picture" type="button" data-open="'+p.id+'" aria-label="'+safe(p.title)+' 실제 대표 사진 크게 보기">'+
-       '<img src="'+p.cover+'" data-fallback="'+p.fallback+'" loading="lazy" decoding="async" alt="'+safe(p.title)+' 디자인 작품 전체 포스터">'+
+       '<img src="'+p.cover+'" data-fallback="'+p.fallback+'" loading="eager" decoding="async" alt="'+safe(p.title)+' 디자인 작품 전체 포스터">'+
      '</button>'+
    '</div>'+
    '<span class="story-corner">KIM JUNSEO / 2026</span>'+
