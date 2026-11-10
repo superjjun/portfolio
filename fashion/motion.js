@@ -157,7 +157,7 @@ function detailHTML(p){
    (['soundcloud','lostlink','junggonara','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.webm?v=20261111-webm-live4" type="video/webm">':'')+
    (['soundcloud','lostlink','junggonara','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.mp4?v=20261111-cropped2" type="video/mp4">':'')+
    (['lostlink','junggonara','ppomppu'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-real.mp4?v=20261111-real1" type="video/mp4">':'')+
-   '<source src="./assets/demos/'+p.movie+'.webm" type="video/webm"><source src="./assets/demos/'+p.movie+'.mp4" type="video/mp4"></video></div></div>'+
+   '</video></div></div>'+
    '<p class="detail-tip" data-demo-status>화면녹화 영상을 불러오는 중입니다.</p>'
  : '<div class="detail-no-video"><strong>VISUAL DESIGN</strong><p>정적 디자인 작품입니다. 조작형 프로토타입 영상은 없습니다.</p></div>';
  const source='<details class="detail-poster"><summary><span>원본 작품 이미지 전체 펼쳐보기</span><b aria-hidden="true">＋</b></summary>'+
@@ -189,7 +189,7 @@ function open(id,button){
   };
   video.addEventListener('loadeddata',label);
   video.addEventListener('playing',label);
-  video.addEventListener('error',()=>{note.textContent='영상 재생에 문제가 있습니다. 원본 작품 이미지를 펼쳐 확인해 주세요.';});
+  video.addEventListener('error',()=>{note.textContent='실제 Figma 녹화본을 재생할 수 없습니다. 원본 작품 이미지를 펼쳐 확인해 주세요.';});
   video.play().catch(()=>{note.textContent='화면을 눌러 영상 재생을 시작해 주세요.';});
   setTimeout(()=>{if(active===p&&video.readyState<2)note.textContent='로딩이 길어지고 있습니다. 잠시 뒤 재생을 눌러 주세요.';},6500);
  }
