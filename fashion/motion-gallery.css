@@ -1,0 +1,81 @@
+/* KIM JUNSEO / FLOATING WORKS — original Figma artwork, cinematic scroll collage */
+.works{height:510svh!important;background:linear-gradient(150deg,#e9edf0 0%,#f2f0e9 42%,#e8eff4 100%)!important}
+.deck-stage{min-height:580px;background:radial-gradient(ellipse 75% 85% at 53% 52%,#ffffffdb 0%,#f1f5f7dd 60%,#e7eced 100%)}
+.deck-stage:before{
+ content:"";inset:-30%;position:absolute;pointer-events:none;
+ background:radial-gradient(ellipse 26% 38% at 48% 45%,#c2cce95c,transparent 72%),radial-gradient(ellipse 28% 27% at 80% 30%,#d3e2db66,transparent 75%);
+ animation:gallery-breathe 18s ease-in-out infinite alternate
+}
+.deck-stage:after{
+ content:"";pointer-events:none;position:absolute;inset:0;
+ background:linear-gradient(120deg,#fff8,transparent 48%,#fff6);
+ opacity:.45;z-index:0
+}
+@keyframes gallery-breathe{to{transform:translate(-6%,5%) rotate(8deg) scale(1.12)}}
+.deck-heading{z-index:40;top:clamp(30px,6vh,64px);font-size:clamp(10px,.83vw,12px);color:#556c63;letter-spacing:.19em}
+.deck-heading span:first-child{font-weight:900;letter-spacing:.07em;font-size:clamp(19px,2vw,27px);color:#263c37}
+.project-deck{isolation:isolate;z-index:2;overflow:visible;perspective:1800px}
+.work-card.work-artwork{
+ left:50%;top:49%;width:min(59vw,920px);height:min(60svh,630px);
+ padding:clamp(8px,1.1vw,13px);border:1px solid #ffffffed;
+ border-radius:clamp(13px,1.7vw,23px);
+ background:linear-gradient(165deg,#ffffffef,#ffffffd7);box-shadow:0 26px 80px #23364d25,0 2px 8px #36566915;
+ overflow:hidden;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:0;
+ transform:translate(-50%,-50%) translate(var(--x,0px),var(--y,0px)) rotate(var(--angle,0deg)) scale(var(--scale,1));
+ opacity:var(--opacity,1);transition:transform 1s cubic-bezier(.13,.8,.2,1),opacity .8s,box-shadow .65s,filter .5s;
+ transform-origin:center;backface-visibility:hidden;will-change:transform,opacity;text-align:left;isolation:isolate
+}
+.work-card.work-artwork:before,.work-card.work-artwork:after{display:none}
+.work-card.work-artwork[data-aspect="mobile"]{width:min(35vw,470px);height:min(69svh,670px)}
+.work-card.work-artwork:focus-visible{outline:3px solid #51ad8c;outline-offset:8px}
+.artwork-surface{
+ display:grid;place-items:center;min-width:0;min-height:0;
+ border-radius:clamp(7px,1vw,14px);overflow:hidden;
+ background:linear-gradient(145deg,#f7f8f5,#e8eef1 78%);
+ position:relative;isolation:isolate
+}
+.artwork-surface:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,#ffffff24 0%,transparent 32%,#ffffff13 70%,transparent)}
+.artwork-image{display:block;width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;object-position:center;filter:none;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.work-card.work-artwork[data-active="true"]{box-shadow:0 36px 94px #273c492f,0 3px 15px #506c8222;filter:none}
+.work-card.work-artwork[data-active="true"]:hover .artwork-image{transform:scale(1.035)}
+.work-card.work-artwork[data-active="false"]{filter:saturate(.8);box-shadow:0 22px 60px #23364a24}
+.work-card.work-artwork:hover{filter:saturate(1);box-shadow:0 38px 92px #354e6230}
+.work-caption{
+ display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;
+ flex-shrink:0;min-height:clamp(43px,5.4vw,61px);padding:3px clamp(9px,1.1vw,18px);
+ color:#294039;letter-spacing:.05em;white-space:nowrap;overflow:hidden;
+ transition:opacity .5s ease;opacity:.93
+}
+.work-number{font:800 11px/1 "DM Sans",sans-serif;color:#849994;letter-spacing:.13em}
+.work-name{font:800 clamp(12px,1.22vw,18px)/1.1 "Space Grotesk","Noto Sans KR",sans-serif;letter-spacing:-.035em;overflow:hidden;text-overflow:ellipsis}
+.work-role{font:700 clamp(9px,.82vw,12px)/1 "DM Sans",sans-serif;color:#638179;letter-spacing:.06em;overflow:hidden;text-overflow:ellipsis}
+.work-card.work-artwork[data-active="false"] .work-caption{opacity:.68}
+.deck-controls{bottom:clamp(25px,6vh,63px);gap:34px;z-index:40}
+.deck-arrow{background:#ffffffc9;color:#2b4e47;border-color:#c6d8d1;box-shadow:0 7px 20px #24493f19}
+.deck-arrow:hover:not(:disabled){background:#284c48;color:#fff}
+.deck-count{color:#2c4f48;font-weight:900}
+@media(max-width:1050px){
+ .work-card.work-artwork{width:min(68vw,810px);height:min(57svh,580px)}
+ .work-card.work-artwork[data-aspect="mobile"]{width:min(44vw,420px);height:min(66svh,640px)}
+ .work-role{display:none}
+ .work-caption{grid-template-columns:auto 1fr}
+}
+@media(max-width:640px){
+ .works{height:470svh!important}
+ .deck-stage{min-height:520px}
+ .deck-heading{top:34px;left:21px;right:21px}
+ .deck-heading span:first-child{font-size:20px}
+ .deck-heading span:last-child{font-size:9px}
+ .work-card.work-artwork{top:48%;width:min(84vw,450px);height:min(50svh,480px);padding:7px;border-radius:15px}
+ .work-card.work-artwork[data-aspect="mobile"]{width:min(63vw,320px);height:min(59svh,560px)}
+ .artwork-surface{border-radius:9px}
+ .work-caption{min-height:42px;padding:4px 9px;gap:9px}
+ .work-name{font-size:12px}
+ .work-number{font-size:9px}
+ .deck-controls{bottom:32px;gap:24px}
+ .deck-arrow{height:44px;width:44px}
+}
+@media(prefers-reduced-motion:reduce){
+ .deck-stage:before{animation:none!important}
+ .work-card.work-artwork,.artwork-image{transition:none!important}
+}
