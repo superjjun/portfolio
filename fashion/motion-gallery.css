@@ -79,3 +79,41 @@
  .deck-stage:before{animation:none!important}
  .work-card.work-artwork,.artwork-image{transition:none!important}
 }
+
+
+/* 2026.11.10 — exact six user-submitted project posters, staggered editorial carousel */
+.works{height:610svh!important}
+.deck-stage{background:radial-gradient(ellipse 76% 82% at 51% 47%,#fffefc 0%,#eff2f1 65%,#e4eae9 100%)}
+.deck-stage:before{opacity:.5}
+.work-card.work-artwork{border:1px solid #ffffffeb;background:#fff;box-shadow:0 34px 95px #21313b28,0 7px 27px #1a2d3222}
+.work-card.work-artwork .artwork-surface{background:color-mix(in srgb,var(--card) 42%,white)}
+.work-card.work-artwork[data-aspect="portrait"]{width:min(40vw,525px);height:min(73svh,730px)}
+.work-card.work-artwork[data-aspect="landscape"]{width:min(63vw,960px);height:min(56svh,590px)}
+.work-card.work-artwork .artwork-image{object-fit:contain;object-position:center top}
+.work-card.work-artwork[data-active="true"]{box-shadow:0 43px 110px #243b453a,0 11px 20px #16292718}
+.work-card.work-artwork .work-caption{border-top:1px solid #e4eae6}
+.work-card.work-artwork .work-number{color:#668579}
+.work-card.work-artwork[data-active="false"]{filter:saturate(.76) brightness(.96)}
+/* Full original artwork: no crop and no arbitrary max-height; tall Figma boards scroll naturally. */
+.detail-original{display:flex;flex-direction:column;align-items:center;gap:21px;padding:clamp(26px,4vw,75px);background:linear-gradient(135deg,#f3f5f0,#e9efe9);border:1px solid #e5ebe5;border-radius:23px;overflow:hidden;margin:0 auto 46px}
+.detail-original img{display:block;width:auto;height:auto;max-width:100%;max-height:none;object-fit:contain;box-shadow:0 18px 54px #1a322b26;background:#fff}
+.detail-original span{font:800 10px "DM Sans",sans-serif;letter-spacing:.16em;color:#61796c}
+.detail-content .detail-video{margin-top:44px}
+.detail-content .detail-columns{margin-top:52px}
+.detail-cover{background:var(--theme,#f2f5ef)}
+#detail .detail-cover img{object-fit:contain}
+@media(max-width:1050px){
+ .work-card.work-artwork[data-aspect="portrait"]{width:min(46vw,480px);height:min(69svh,670px)}
+ .work-card.work-artwork[data-aspect="landscape"]{width:min(71vw,850px);height:min(52svh,570px)}
+}
+@media(max-width:640px){
+ .works{height:585svh!important}
+ .work-card.work-artwork[data-aspect="portrait"]{width:min(74vw,340px);height:min(61svh,565px)}
+ .work-card.work-artwork[data-aspect="landscape"]{width:min(88vw,460px);height:min(42svh,405px)}
+ .artwork-surface{border-radius:7px}
+ .detail-original{padding:14px;border-radius:14px}
+ .detail-original span{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){
+ .work-card.work-artwork{transition:none!important}
+}
