@@ -30,6 +30,7 @@ function projectHTML(p){
        '<img src="'+p.cover+'" data-fallback="'+p.fallback+'" loading="eager" decoding="async" alt="'+safe(p.title)+' 디자인 작품 전체 포스터">'+
      '</button>'+
    '</div>'+
+   '<span class="nature-leaf leaf-one" aria-hidden="true"></span><span class="nature-leaf leaf-two" aria-hidden="true"></span><span class="nature-leaf leaf-three" aria-hidden="true"></span>'+
    '<span class="story-corner">KIM JUNSEO / 2026</span>'+
    '<span class="story-scroll">SCROLL TO EXPLORE ↓</span>'+
  '</section>';
@@ -126,13 +127,18 @@ let pending=false;
 function onScroll(){
  const y=window.scrollY,max=root.scrollHeight-innerHeight;
  progress.style.width=(max>0?Math.min(100,100*y/max):0)+'%';
- // Use very subtle image movement; no second image or carousel appears in a chapter.
+ // Real scroll-linked depth and organic motion, not an automatic slideshow.
  if(!reduce.matches)stories.forEach(section=>{
   const rect=section.getBoundingClientRect();
   if(rect.bottom<0||rect.top>innerHeight)return;
-  const offset=(innerHeight/2-(rect.top+rect.height/2))/innerHeight;
-  const picture=q('.story-picture img',section);
-  if(picture)picture.style.translate='0 '+(offset*10).toFixed(1)+'px';
+  const t=Math.max(0,Math.min(1,(innerHeight-rect.top)/(innerHeight+rect.height)));
+  const near=(t-.5)*2;
+  section.style.setProperty('--scene',t.toFixed(4));
+  section.style.setProperty('--drift',(-near*37).toFixed(2));
+  section.style.setProperty('--roll',(near*2.1).toFixed(3));
+  section.style.setProperty('--zoom',(1.025-Math.abs(near)*.036).toFixed(4));
+  section.style.setProperty('--leaf-drift',(near*92).toFixed(2));
+  section.style.setProperty('--parallax-copy',(-near*19).toFixed(2));
  });
  pending=false;
 }
@@ -142,17 +148,22 @@ onScroll();
 // Project detail is a sheet that physically expands from the clicked project artwork.
 const detail=q('#detail');let active=null,origin=null,cover=null;
 function detailHTML(p){
- const recording=p.movie
- ? '<div class="detail-video '+(p.mode==='mobile'?'phone':'')+'">'+
-   '<div class="detail-video-fallback"><img src="./assets/demos/'+p.movie+'.gif" alt="'+p.title+' 움직이는 작업 화면"><a href="./assets/demos/'+p.movie+'.mp4" target="_blank" rel="noopener noreferrer">WATCH VIDEO ↗</a></div>'+
-   '<video muted autoplay loop playsinline controls preload="metadata" aria-label="'+p.title+' 시연 영상"><source src="./assets/demos/'+p.movie+'.webm" type="video/webm"><source src="./assets/demos/'+p.movie+'.mp4" type="video/mp4"></video></div>'+
-   '<p class="detail-tip">'+(p.isDemo?'실제 GitHub 웹 프로토타입을 조작하며 화면 녹화한 영상입니다.':'디자인 이미지를 활용한 무빙 프리뷰입니다. 실제 피그마 조작 영상은 아닙니다.')+'</p>'
- : '';
+ const hasVideo=!!p.movie;
+ const clip=hasVideo
+ ? '<div class="detail-screen"><div class="detail-screen-top"><span>PROTOTYPE / MOTION</span><span>'+(p.mode==='mobile'?'MOBILE':'DESKTOP')+'</span></div>'+
+   '<div class="detail-video '+(p.mode==='mobile'?'phone':'')+'">'+
+   '<div class="detail-video-fallback"><img src="./assets/demos/'+p.movie+'.gif" alt="'+p.title+' 영상 미리보기"></div>'+
+   '<video muted autoplay loop playsinline controls preload="metadata" aria-label="'+p.title+' 시연 영상">'+
+   (['lostlink','junggonara','ppomppu'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-real.mp4?v=20261111-real1" type="video/mp4">':'')+
+   '<source src="./assets/demos/'+p.movie+'.webm" type="video/webm"><source src="./assets/demos/'+p.movie+'.mp4" type="video/mp4"></video></div></div>'+
+   '<p class="detail-tip" data-demo-status>화면녹화 영상을 불러오는 중입니다.</p>'
+ : '<div class="detail-no-video"><strong>VISUAL DESIGN</strong><p>정적 디자인 작품입니다. 조작형 프로토타입 영상은 없습니다.</p></div>';
+ const source='<details class="detail-poster"><summary><span>원본 작품 이미지 전체 펼쳐보기</span><b aria-hidden="true">＋</b></summary>'+
+ '<div class="detail-original"><img src="'+p.cover+'" data-fallback="'+p.fallback+'" loading="lazy" alt="'+p.title+' 실제 Figma 디자인 전체"><span>ORIGINAL DESIGN / '+p.n+' OF 06</span></div></details>';
  return '<div class="detail-main" role="dialog" aria-modal="true" aria-label="'+safe(p.title)+' 프로젝트 상세" tabindex="-1">'+
- '<div class="detail-top"><span>KIM JUNSEO / PROJECT '+p.n+' / 06</span><button class="detail-close" data-close type="button">CLOSE <b>×</b></button></div>'+
+ '<div class="detail-top"><span>KIM JUNSEO / '+p.n+' / 06</span><button class="detail-close" data-close type="button">CLOSE <b>×</b></button></div>'+
  '<div class="detail-content"><div class="detail-headerline">'+p.kind+' / 2026</div><h2>'+p.title+'</h2><p class="detail-sub">'+safe(p.short)+'</p>'+
- '<div class="detail-original"><img src="'+p.cover+'" data-fallback="'+p.fallback+'" alt="'+p.title+' 사용자가 제공한 실제 작품 이미지 전체"><span>ORIGINAL PROJECT ARTWORK / '+p.n+' OF 06</span></div>'+
- recording+
+ clip+source+
  '<div class="detail-columns"><section><span>01 / THE CHALLENGE</span><h3>문제와 목표</h3><p>'+safe(p.challenge)+'</p></section><section><span>02 / MY APPROACH</span><h3>디자인 접근</h3><p>'+safe(p.solution)+'</p></section></div>'+
  '<button class="detail-back" type="button" data-close>← BACK TO WORKS</button></div></div>';
 }
@@ -163,12 +174,22 @@ function open(id,button){
  detail.innerHTML=detailHTML(p);detail.hidden=false;body.classList.add('detail-open');bindFallback(detail);
  const main=q('.detail-main',detail),video=q('video',detail);
  if(video){
-  video.addEventListener('loadeddata',()=>{if(video.readyState>=2)video.style.opacity='1';});
-  video.addEventListener('playing',()=>{if(video.readyState>=2)video.style.opacity='1';});
-  video.addEventListener('error',()=>{video.hidden=true;});
-  video.play().catch(()=>{video.hidden=true;});
-  setTimeout(()=>{if(active===p&&video.readyState<2)video.hidden=true;},5000);
+  const note=q('[data-demo-status]',detail);
+  const label=()=>{
+   if(video.readyState>=2){
+    video.style.opacity='1';
+    const genuine=video.currentSrc.includes('-real.mp4');
+    note.textContent=genuine?'실제 웹 프로토타입의 버튼을 클릭하며 브라우저에서 녹화한 영상입니다.':
+      (p.isDemo?'기존 인터랙션 시연 미리보기입니다.':'이 영상은 시안 무빙 프리뷰이며 실제 Figma 버튼 조작 영상은 아닙니다.');
+   }
+  };
+  video.addEventListener('loadeddata',label);
+  video.addEventListener('playing',label);
+  video.addEventListener('error',()=>{note.textContent='영상 재생에 문제가 있습니다. 원본 작품 이미지를 펼쳐 확인해 주세요.';});
+  video.play().catch(()=>{note.textContent='화면을 눌러 영상 재생을 시작해 주세요.';});
+  setTimeout(()=>{if(active===p&&video.readyState<2)note.textContent='로딩이 길어지고 있습니다. 잠시 뒤 재생을 눌러 주세요.';},6500);
  }
+
  if(reduce.matches){detail.classList.add('open');main.focus({preventScroll:true});return;}
  main.style.visibility='hidden';
  cover=document.createElement('div');cover.className='detail-cover';cover.style.setProperty('--theme',p.back);
