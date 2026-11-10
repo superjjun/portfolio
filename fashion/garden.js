@@ -126,22 +126,35 @@ function enterGarden(){
   about.scrollIntoView({behavior:'instant',block:'start'});
   history.replaceState(history.state,'',window.location.pathname+window.location.search+'#about');
   body.classList.add('garden-entered');
- },970);
+ },1370);
  window.setTimeout(()=>{
   opening.classList.add('closing');
   body.classList.remove('garden-entering');
- },1220);
+ },1840);
  window.setTimeout(()=>{
   opening.classList.remove('closing','opening');
   portal.style.translate='0 0';
   portalBusy=false;
- },2050);
+ },2850);
 }
 document.addEventListener('click',e=>{
  const target=e.target.closest('#enter-portfolio,#garden-gateway');
  if(!target)return;
  e.preventDefault();e.stopImmediatePropagation();enterGarden();
 },true);
+
+
+// Leaves spiral past the viewer during the zoom, giving a sense of depth.
+const tunnelArt=opening.querySelector('.tunnel-art');
+if(tunnelArt){
+ const colors=['#c7e3ae','#f1dd9f','#d4f0c2','#a3cea6','#f6edc6','#9fcaad'];
+ for(let i=0;i<15;i++){
+  const el=document.createElement('i');el.className='tunnel-leaf';
+  const ang=rnd()*Math.PI*2,dist=12+rnd()*26;
+  el.style.cssText='--lx:'+(15+rnd()*72).toFixed(1)+'%;--ly:'+(10+rnd()*80).toFixed(1)+'%;--dx:'+(Math.cos(ang)*dist).toFixed(1)+'vw;--dy:'+(Math.sin(ang)*dist).toFixed(1)+'vh;--angle:'+Math.round(ang*57.3)+'deg;--delay:'+(rnd()*.35).toFixed(2)+'s;--leafcolor:'+colors[i%colors.length]+';';
+  tunnelArt.append(el);
+ }
+}
 
 // About flower, scroll sections and decorations.
 const aboutSection=document.querySelector('.screen-about');
