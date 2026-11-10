@@ -1,0 +1,36 @@
+name: Record portfolio demos
+on:
+  push:
+    paths:
+      - .github/workflows/record-portfolio-demos.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install browser and recording dependencies
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg
+      - name: Capture own project websites
+        run: node scripts/record-portfolio-demos.cjs
+      - name: Commit and publish video files
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fashion/assets/demos/*.mp4
+          if ! git diff --cached --quiet; then
+            git commit -m "Add prototype walkthrough videos to portfolio"
+            git push origin HEAD:main
+          fi
