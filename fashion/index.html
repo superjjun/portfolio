@@ -1,80 +1,77 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#050813">
-<meta name="description" content="KIM JUNSEO — Interactive designer portfolio. Beyond the ordinary. UI/UX, Web & Interaction.">
-<title>KIM JUNSEO — BEYOND THE ORDINARY / PORTFOLIO 2026</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0b10">
+<meta name="description" content="김준서 디자인 포트폴리오 — 상상을 실현하는 디자이너. 웹디자인, UI/UX, 인터랙션, 비주얼 디자인.">
+<title>KIM JUNSEO — DESIGN IN MOTION.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="./event-horizon.css?v=20261110b">
-<script src="./event-horizon.js?v=20261110b" defer></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./motion.css?v=20261110a">
+<script src="./motion.js?v=20261110a" defer></script>
 </head>
-<body class="gate-locked">
-<div class="universe-backdrop" aria-hidden="true"><div class="nebula nebula-one"></div><div class="nebula nebula-two"></div><div class="nebula nebula-three"></div><canvas id="universe-canvas"></canvas><div class="grain"></div></div>
-<div id="reading-progress" aria-hidden="true"></div>
-<header class="site-nav">
-  <a href="#intro" class="wordmark" aria-label="맨 처음으로">K<span class="wordmark-dot">.</span>J<span class="wordmark-dot">.</span><span class="wordmark-rule"></span><small>KIM JUNSEO<br>PORTFOLIO 2026</small></a>
-  <nav class="main-nav" aria-label="포트폴리오 메뉴">
-    <a href="#about" class="nav-about">ABOUT</a><a href="#works" class="nav-works">WORKS</a><a href="#contact" class="nav-contact">CONTACT ↗</a>
-  </nav>
-  <span class="top-coordinate" aria-hidden="true">37° N · INFINITE IDEAS</span>
+<body class="is-locked">
+<div class="reading-progress" id="reading-progress" aria-hidden="true"></div>
+<header class="header">
+ <a class="identity" href="#top" aria-label="처음으로"><span class="identity-logo">KJ<span>.</span></span><span class="identity-detail">KIM JUNSEO<br>DESIGN PORTFOLIO</span></a>
+ <nav class="nav" aria-label="메인 메뉴"><a href="#about">ABOUT</a><a href="#works">WORKS</a><a href="#contact">CONTACT</a></nav>
+ <span class="nav-index">2026 ©</span>
 </header>
 <main>
-  <section id="intro" class="intro" aria-label="포트폴리오 입장 화면">
-    <div class="intro-grid"></div><div class="cosmic-numbers" aria-hidden="true">KJ—2026 / 00:01</div>
-    <div class="intro-layout">
-      <div class="intro-copy">
-        <p class="eyebrow"><span class="eyebrow-line"></span> AN INTERACTIVE DESIGN PORTFOLIO <span class="eyebrow-number">01 — 06</span></p>
-        <h1>BEYOND<br><em>THE</em> ORDINARY<span class="period">.</span></h1>
-        <p class="intro-korean">상상을 실현하는 디자이너<br><strong>김준서의 세계에 오신 걸 환영합니다.</strong></p>
-        <div class="entry-action">
-          <button type="button" id="enter-world" class="enter-button"><span class="enter-graphic" aria-hidden="true">↗</span><span>ENTER MY UNIVERSE<small>CLICK TO EXPLORE</small></span></button>
-          <p class="entry-hint">이 화면은 입장 버튼을 누르면 열립니다.<br>CLICK TO CROSS THE EVENT HORIZON.</p>
-        </div>
-      </div>
-      <button type="button" class="singularity" id="singularity" aria-label="블랙홀을 클릭해 포트폴리오 입장하기">
-        <span class="singularity-glow"></span><span class="orbit-ring orbit-far"></span><span class="orbit-ring orbit-near"></span><span class="orbit-ring orbit-inner"></span>
-        <span class="accretion"><span class="accretion-light"></span></span><span class="black-core"></span>
-        <span class="star-spark spark-one"></span><span class="star-spark spark-two"></span><span class="star-spark spark-three"></span>
-        <span class="singularity-label">THE EVENT HORIZON <span>↘</span></span>
-      </button>
+ <section class="hero" id="top" aria-label="포트폴리오 인트로">
+  <div class="hero-grain" aria-hidden="true"></div><div class="hero-light" aria-hidden="true"></div>
+  <div class="hero-body">
+   <div class="hero-copy">
+    <span class="hero-mini">KIM JUNSEO / INTERACTIVE PORTFOLIO</span>
+    <h1>DESIGN<br><span>IN MOTION</span><b>.</b></h1>
+    <p>상상을 실현하는 디자이너, 김준서.</p>
+    <button class="enter" id="enter" type="button"><span class="enter-icon" aria-hidden="true">↗</span><span>ENTER PORTFOLIO</span></button>
+   </div>
+   <button class="liquid-object" id="liquid-object" type="button" aria-label="움직이는 오브제를 클릭하여 포트폴리오 입장하기">
+    <span class="liquid-shadow"></span><span class="liquid-fallback"></span>
+    <canvas id="liquid-canvas" aria-hidden="true"></canvas>
+    <span class="liquid-ring ring-a"></span><span class="liquid-ring ring-b"></span>
+   </button>
+  </div>
+  <div class="hero-foot"><span>AN INTERACTIVE JOURNEY</span><span>CLICK ANYWHERE TO BEGIN</span></div>
+ </section>
+ <section class="about" id="about" aria-labelledby="about-heading">
+  <div class="section-top"><span>01 / ABOUT</span><span>THE DESIGNER</span></div>
+  <div class="about-layout">
+   <div class="about-portrait reveal">
+    <div class="photo-halo"></div><div class="photo-ring"></div>
+    <div class="photo-surface">
+      <img src="./assets/junseo-headshot.jpg" alt="디자이너 김준서 증명사진" id="profile-photo" loading="lazy">
+      <div class="photo-glint" aria-hidden="true"></div>
     </div>
-    <div class="intro-bottom"><span>SCROLL UNAVAILABLE UNTIL ENTRY</span><span>DESIGN IS A JOURNEY INTO THE UNKNOWN</span><span class="intro-bottom-dot" aria-hidden="true">● LIVE UNIVERSE</span></div>
-  </section>
-  <section id="about" class="about-section">
-    <div class="chapter-bar"><span>01 / THE DESIGNER</span><span>WHO'S BEHIND THE IDEAS?</span><span>SEOUL, SOUTH KOREA</span></div>
-    <div class="about-layout">
-      <div class="about-text rise">
-        <div class="micro-heading"><span class="micro-star">✳</span> BEHIND THE UNIVERSE</div>
-        <h2>HELLO,<br>I'M <span>JUNSEO.</span></h2>
-        <p class="about-lead">상상에서 시작한 아이디어가<br>누군가의 <em>새로운 경험</em>이 되는 순간.</p>
-        <p class="about-detail">그 순간을 만들고 싶은 디자이너 김준서입니다. 웹과 앱의 경험을 설계하고, 직관적인 인터페이스와 기억에 남는 인터랙션을 고민합니다.</p>
-        <div class="about-skills"><span>UI / UX</span><span>WEB DESIGN</span><span>INTERACTION</span><span>VISUAL</span></div>
-        <a href="#works" class="about-continue">EXPLORE THE WORK <span aria-hidden="true">↓</span></a>
-      </div>
-      <div class="portrait-stage rise">
-        <div class="portrait-ambient"></div><div class="portrait-orbit portrait-orbit-one"></div><div class="portrait-orbit portrait-orbit-two"></div>
-        <figure class="portrait-card"><div class="portrait-photo">
-          <img src="./assets/junseo-headshot.jpg" alt="디자이너 김준서 이력서 증명사진" loading="lazy" width="174" height="199">
-        </div><figcaption><span>PORTRAIT / KIM JUNSEO</span><span>001 / 2026</span></figcaption></figure>
-        <span class="portrait-tag">THE PERSON<br>BEHIND THE SCREEN ↗</span>
-      </div>
-    </div>
-    <div class="about-bottom"><span>CREATIVE FOCUS / DIGITAL EXPERIENCES</span><span>01 — 05 SELECTED WORKS</span></div>
-  </section>
-  <section id="works" class="works-section">
-    <div class="works-intro"><p class="eyebrow"><span class="eyebrow-line"></span> 02 / THE WORK</p><h2>IDEAS<br>IN <span>ORBIT.</span></h2><div class="works-intro-bottom"><p>스크롤을 내리면 작업물이 하나씩 나타납니다.<br>궁금한 프로젝트를 클릭해 영상과 작업 과정을 확인하세요.</p><span>FIVE PROJECTS — ONE JOURNEY ↓</span></div></div>
-    <div id="work-stream" aria-label="작품 다섯 개 스크롤 탐색"></div>
-  </section>
+    <span class="photo-sign">KIM JUNSEO.</span>
+   </div>
+   <div class="about-copy reveal">
+    <span class="eyebrow">HELLO, I'M JUNSEO.</span>
+    <h2 id="about-heading">IMAGINE.<br><em>CREATE.</em><br>REPEAT.</h2>
+    <p class="about-korean">상상을 실현하는 디자이너<br><strong>김준서입니다.</strong></p>
+    <p class="about-description">아이디어를 화면으로 옮기고, 그 안에서 새로운 경험을 만드는 일을 좋아합니다.</p>
+    <div class="skills" aria-label="작업 분야"><span>UI / UX</span><span>WEB DESIGN</span><span>INTERACTION</span><span>VISUAL</span></div>
+    <a href="#works" class="continue">VIEW MY WORKS <span>↓</span></a>
+   </div>
+  </div>
+ </section>
+ <section class="works" id="works" aria-label="선정된 디자인 작품">
+   <div class="works-heading reveal"><span>02 / SELECTED WORKS</span><h2>THE WORK<span>.</span></h2><p>다섯 개의 아이디어, 다섯 개의 결과.</p></div>
+   <div id="project-list"></div>
+ </section>
 </main>
-<footer id="contact" class="contact-section">
-  <div class="contact-glow"></div><p class="eyebrow"><span class="eyebrow-line"></span> 03 / CONTACT</p>
-  <div class="contact-content"><span class="contact-overline">THE NEXT IDEA STARTS HERE.</span><h2>LET'S CREATE<br><em>SOMETHING</em><br>UNEXPECTED.</h2><div class="contact-links"><a href="mailto:mingjjun123@naver.com">EMAIL ↗</a><a href="https://github.com/superjjun" target="_blank" rel="noopener noreferrer">GITHUB ↗</a><a href="#works">BACK TO WORKS ↑</a></div></div>
-  <div class="footer-bottom"><span>© 2026 KIM JUNSEO</span><span>FROM IMAGINATION TO REALITY</span><a href="#intro">BACK TO TOP ↑</a></div>
+<footer class="contact" id="contact">
+ <span class="eyebrow">03 / CONTACT</span>
+ <h2>HAVE AN IDEA<span>?</span><br>LET'S MAKE IT REAL.</h2>
+ <div class="contact-actions"><a href="mailto:mingjjun123@naver.com">GET IN TOUCH ↗</a><a href="https://github.com/superjjun" target="_blank" rel="noopener noreferrer">GITHUB ↗</a></div>
+ <div class="copyright"><span>© 2026 KIM JUNSEO</span><span>FROM IMAGINATION TO REALITY</span><a href="#top">BACK TO TOP ↑</a></div>
 </footer>
-<div id="warp-screen" class="warp-screen" aria-hidden="true"><canvas id="warp-canvas"></canvas><div class="warp-shape"><span class="warp-ring warp-ring-a"></span><span class="warp-ring warp-ring-b"></span><span class="warp-ring warp-ring-c"></span><span class="warp-dark"></span></div><div class="warp-caption"><small>TRAVELING BEYOND THE ORDINARY</small><strong>ENTERING<br>NEW DIMENSIONS.</strong><span class="warp-meter"><i></i></span></div></div>
-<div id="detail-root" hidden></div>
-<div id="mouse-orbit" class="mouse-orbit" aria-hidden="true"></div>
+<div class="transition" id="transition" aria-hidden="true">
+  <div class="transition-circle"></div><div class="transition-copy"><span>KIM JUNSEO</span><strong>LET'S<br>BEGIN.</strong></div>
+</div>
+<div id="detail" hidden></div>
+<div class="cursor" id="cursor" aria-hidden="true">↗</div>
 </body></html>
