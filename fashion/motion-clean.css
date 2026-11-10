@@ -1,0 +1,128 @@
+/* KIM JUNSEO — simplified portfolio, 10 Nov 2026
+   One personal information card followed by an animated no-image work deck. */
+:root{--paper:#f5f6f1;--cream:#f7f7f1;--pine:#141c16;--mint:#7bc99a}
+html{scroll-padding-top:0}
+body{background:var(--paper)}
+/* Clear out the old menu typography and decorative fillers. */
+.header,.nav,.nav-index,.hero-foot,.hero-mini,.works-heading,.contact{display:none!important}
+.hero{padding:40px var(--pad);min-height:620px}
+.hero-body{width:100%;max-width:1600px}
+.hero h1{font-size:clamp(74px,10vw,165px)}
+.hero-copy>p{font-weight:600}
+.hero-light{opacity:.45}
+.enter{background:#18241c96}
+/* About becomes a single clean resume-style introduction rather than another hero. */
+.about{
+ background:#f3f4ef!important;min-height:100svh!important;
+ display:flex!important;align-items:center;justify-content:center;
+ padding:clamp(45px,8vh,100px) clamp(18px,4vw,72px)!important;
+}
+.about:after{display:none}
+.profile-sheet{
+ width:min(1270px,100%);
+ min-height:min(74svh,720px);
+ display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);
+ gap:clamp(35px,6vw,115px);align-items:center;
+ background:#fff;border:1px solid #e8eee8;
+ border-radius:27px;box-shadow:0 23px 70px #12281d19;
+ padding:clamp(38px,5vw,83px);
+}
+.profile-portrait{display:grid;place-items:center;position:relative;min-height:470px}
+.profile-portrait:before{content:"";position:absolute;z-index:0;inset:8% 6%;border-radius:50%;background:radial-gradient(ellipse,#d6e9da,#fff0 73%);filter:blur(30px)}
+.portrait-outline{position:absolute;z-index:1;width:min(100%,400px);height:100%;max-height:500px;border-radius:50%;border:1px solid #d7e2da;transform:rotate(-10deg) scale(1.035)}
+.profile-portrait img{
+ display:block;position:relative;z-index:2;width:min(96%,370px);height:min(58vw,490px);max-height:500px;
+ border-radius:50%;object-fit:cover;object-position:center top;
+ background:#d9e7e7;box-shadow:0 18px 36px #18362d1e;
+ transform:translateY(0);transition:transform .7s cubic-bezier(.16,1,.3,1);
+}
+.profile-portrait:hover img{transform:translateY(-9px) scale(1.014)}
+.profile-details{min-width:0}
+.profile-label{font:800 11px "DM Sans",sans-serif;letter-spacing:.16em;color:#5d9371;margin:0 0 18px}
+.profile-details h2{font-family:"Noto Sans KR","DM Sans",sans-serif;font-size:clamp(32px,3.15vw,49px);line-height:1.25;letter-spacing:-.06em;margin:0 0 23px;font-weight:800}
+.profile-details h2 span{display:block;font:700 12px "DM Sans",sans-serif;letter-spacing:.18em;color:#7d9183;margin-top:12px}
+.profile-description{font-size:clamp(15px,1.32vw,18px);line-height:1.75;font-weight:600;letter-spacing:-.03em;color:#4a6253;margin:0 0 32px;word-break:keep-all}
+.profile-facts{display:grid;gap:0;margin:0}
+.profile-facts>div{display:grid;grid-template-columns:105px minmax(0,1fr);gap:18px;align-items:start;border-top:1px solid #e5ebe4;padding:17px 0}
+.profile-facts dt{font:800 11px "DM Sans",sans-serif;letter-spacing:.09em;color:#849489}
+.profile-facts dd{margin:0;color:#25352c;font-size:clamp(12px,1.05vw,15px);line-height:1.6;font-weight:600;overflow-wrap:anywhere}
+.profile-facts a{color:#236941;text-decoration:none}
+.profile-facts a:hover{text-decoration:underline;text-underline-offset:4px}
+.profile-next{display:inline-flex;align-items:center;gap:65px;border-bottom:2px solid #365a43;padding:0 0 12px;margin-top:24px;font-size:13px;font-weight:800;color:#23442f;transition:gap .3s ease}
+.profile-next:hover{gap:80px}.profile-next span{font-size:22px}
+/* The works section is a scroll-controlled carousel/fan. No pictures appear until opening a folder. */
+.works{height:500svh!important;position:relative;overflow:visible!important;isolation:isolate;background:#f7f7f2!important}
+.deck-stage{height:100svh;min-height:580px;position:sticky;top:0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.deck-stage:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 42% 44% at 50% 55%,#fff 0%,#f9f9f5 68%,transparent 100%);pointer-events:none}
+.deck-heading{position:absolute;z-index:20;top:clamp(40px,8vh,85px);left:var(--pad);right:var(--pad);display:flex;justify-content:space-between;font:800 11px "DM Sans",sans-serif;letter-spacing:.15em;color:#77837a}
+.deck-heading span:first-child{color:#273c2e}
+.project-deck{position:relative;width:100%;height:100%;perspective:1100px;overflow:visible}
+.work-card{
+ position:absolute;z-index:4;left:50%;top:52%;width:clamp(295px,27vw,415px);height:clamp(360px,48vh,485px);
+ padding:clamp(31px,3vw,46px);border:1px solid #141a1550;border-radius:21px;
+ background:var(--card,#e3e7d8);color:#18221b;box-shadow:0 20px 48px #1f322724;
+ text-align:left;display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;
+ transform-origin:50% 85%;backface-visibility:hidden;
+ transform:translate(-50%,-50%) translateX(var(--x,0px)) translateY(var(--y,0px)) rotate(var(--angle,0deg)) scale(var(--scale,1));
+ transition:transform .8s cubic-bezier(.18,.88,.22,1),opacity .65s,box-shadow .35s,filter .5s;
+ opacity:var(--opacity,1);
+ cursor:pointer;will-change:transform;
+}
+.work-card:before{content:"";position:absolute;right:26px;top:-11px;width:34px;height:53px;background:#18211c;transform:rotate(-13deg);box-shadow:0 3px 3px #0001;clip-path:polygon(10% 0,90% 0,93% 100%,7% 100%);pointer-events:none}
+.work-card:after{content:"";position:absolute;inset:13px;border:1px solid #ffffff55;border-radius:13px;pointer-events:none}
+.work-card .work-card-top{display:flex;justify-content:space-between;align-items:center;width:100%;font:700 14px "DM Sans",sans-serif;letter-spacing:.07em}
+.work-card .card-arrow{font-size:22px;opacity:.78}
+.work-card .work-card-label{display:flex;flex-direction:column;align-items:flex-start;gap:12px;width:100%}
+.work-card .card-title{display:block;font-family:"Space Grotesk","Noto Sans KR",sans-serif;font-size:clamp(31px,3vw,52px);line-height:1.05;font-weight:700;letter-spacing:-.068em;overflow-wrap:anywhere}
+.work-card .card-sub{display:block;font-size:clamp(12px,1.05vw,15px);line-height:1.6;letter-spacing:-.02em;font-weight:600;color:#39483e;max-width:280px;word-break:keep-all}
+.work-card[data-active="true"]{box-shadow:0 36px 80px #1f352a31}
+.work-card[data-active="true"]:hover{box-shadow:0 45px 95px #21372b3d}
+.work-card[data-active="false"]{filter:saturate(.91)}
+.work-card:focus-visible{outline:3px solid #279c59;outline-offset:7px}
+.deck-controls{position:absolute;z-index:20;bottom:clamp(27px,7vh,75px);left:0;right:0;display:flex;justify-content:center;align-items:center;gap:clamp(30px,5vw,75px);pointer-events:none}
+.deck-arrow{pointer-events:auto;display:grid;place-items:center;width:52px;height:52px;border:1px solid #9aada0;border-radius:50%;background:#ffffffdc;color:#294b36;font-size:27px;transition:background .25s,color .25s,transform .25s}
+.deck-arrow:hover:not(:disabled){background:#274833;color:white;transform:scale(1.08)}
+.deck-arrow:disabled{opacity:.26;cursor:default}
+.deck-count{font:800 13px "DM Sans",sans-serif;letter-spacing:.14em;color:#41594a}
+.deck-instruction{position:absolute;z-index:20;bottom:22px;font:600 11px "Noto Sans KR",sans-serif;color:#84968a;letter-spacing:.02em}
+#detail .detail-cover{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:30px}
+.detail-cover-card{font:800 clamp(35px,5vw,75px) "Space Grotesk",sans-serif;line-height:1.1;letter-spacing:-.07em;overflow-wrap:anywhere;max-width:100%}
+.detail-cover-num{font-size:12px;font-weight:800;letter-spacing:.15em;margin-bottom:25px}
+#detail .detail-main{background:#fbfcf8}
+#detail .detail-content{padding-top:clamp(60px,7vw,110px)}
+/* Slim the text: the actual work details remain only inside the modal. */
+@media(max-width:850px){
+.profile-sheet{grid-template-columns:.92fr 1.08fr;padding:32px;gap:24px}
+.profile-portrait{min-height:350px}
+.profile-portrait img{height:380px;width:290px}
+.profile-facts>div{grid-template-columns:80px minmax(0,1fr)}
+.work-card{width:clamp(275px,39vw,350px);height:clamp(365px,54vh,455px)}
+}
+@media(max-width:640px){
+.hero{padding:65px 20px}
+.about{padding:36px 16px!important}
+.profile-sheet{display:flex;flex-direction:column;gap:16px;align-items:stretch;border-radius:20px;padding:24px 23px 33px}
+.profile-portrait{min-height:0;height:290px;width:100%}
+.portrait-outline{max-height:265px;width:250px}
+.profile-portrait img{height:270px;width:230px}
+.profile-label{margin-bottom:12px;font-size:10px}
+.profile-details h2{font-size:32px;margin-bottom:15px}
+.profile-details h2 span{margin-top:8px}
+.profile-description{font-size:14px;margin-bottom:24px}
+.profile-facts>div{grid-template-columns:80px minmax(0,1fr);gap:11px;padding:12px 0}
+.profile-facts dd{font-size:12px}
+.profile-facts dt{font-size:10px}
+.profile-next{margin-top:20px;font-size:12px}
+.deck-stage{min-height:520px}
+.deck-heading{top:45px;font-size:10px}
+.work-card{width:min(78vw,320px);height:min(55svh,420px);padding:28px;border-radius:19px}
+.work-card .card-title{font-size:clamp(30px,8vw,42px)}
+.work-card .card-sub{font-size:12px}
+.deck-controls{bottom:55px}
+.deck-arrow{width:43px;height:43px;font-size:23px}
+.deck-instruction{bottom:17px}
+}
+@media(prefers-reduced-motion:reduce){
+.work-card{transition:none!important}
+.profile-portrait img{transition:none!important}
+}
