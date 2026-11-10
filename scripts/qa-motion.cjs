@@ -34,7 +34,7 @@ const {chromium}=require('playwright');
    i.loading='eager';
    if(!i.complete)await new Promise(resolve=>{i.addEventListener('load',resolve,{once:true});i.addEventListener('error',resolve,{once:true});setTimeout(resolve,9000)});
    const r=i.getBoundingClientRect(),natural=i.naturalWidth/i.naturalHeight;
-   return {id:el.dataset.project,loaded:i.naturalWidth>0,displayRatio:r.width/r.height,naturalRatio:natural,
+   return {id:el.dataset.project,loaded:i.naturalWidth>0,displayRatio:i.clientWidth/i.clientHeight,naturalRatio:natural,
      visible:r.top<innerHeight&&r.bottom>0&&r.left<innerWidth&&r.right>0,
      sectionHeight:el.getBoundingClientRect().height,
      imageWidth:r.width,imageHeight:r.height};
@@ -56,6 +56,7 @@ const {chromium}=require('playwright');
  const mobileIntro=await mp.evaluate(()=>{const r=document.querySelector('#enter').getBoundingClientRect();return {buttonVisible:r.top>=0&&r.bottom<=innerHeight&&r.left>=0&&r.right<=innerWidth,overflow:document.documentElement.scrollWidth-innerWidth};});
  await mp.locator('#enter').click();await mp.waitForFunction(()=>!document.body.classList.contains('is-locked'),null,{timeout:9000});
  await mp.locator('[data-project="roundlab"]').scrollIntoViewIfNeeded();
+ await mp.waitForFunction(()=>{const img=document.querySelector('[data-project="roundlab"] .story-picture img');return img&&img.naturalWidth>0&&img.getBoundingClientRect().width>0},null,{timeout:11000});
  const mobileEnd=await mp.evaluate(()=>{const el=document.querySelector('[data-project="roundlab"] img');const r=el.getBoundingClientRect();return {overflow:document.documentElement.scrollWidth-innerWidth,visible:r.top<innerHeight&&r.bottom>0,width:r.width,height:r.height};});
  console.log('STORY_QA '+JSON.stringify({initial,lockedScroll,profile,shots,voltup,lostlink,mobileIntro,mobileEnd,errors,mobileErrors},null,2));
  await mobile.close();await ctx.close();await browser.close();
