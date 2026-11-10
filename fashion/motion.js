@@ -15,16 +15,32 @@ const projects=[
  {id:'roundlab',cover:'./assets/submitted/roundlab-poster.webp',posterAspect:'portrait',n:'06',title:'ROUND LAB',kind:'VISUAL / DETAIL PAGE',short:'촉촉함을 시각적인 경험으로 전달하다.',color:'#b1dff1',shade:'#b8e5e9',back:'#e3f2f4',img:'./assets/submitted/roundlab-poster.webp',fallback:'./assets/work-roundlab-screen.png',mode:'mobile',movie:'roundlab',isDemo:false,sub:'Birch Juice Sunscreen',challenge:'수분감과 산뜻함을 설명보다 감각적인 이미지로 전달하고자 했습니다.',solution:'블루·화이트, 물방울, 제품 컷을 결합한 스크롤형 상세페이지를 제작했습니다.'}
 ];
 // User-supplied presentation posters become the focal artwork; original aspect ratios are preserved.
+
 function projectHTML(p){
- return '<button class="work-card work-artwork" id="card-'+p.id+'" data-open="'+p.id+'" data-active="false" data-aspect="'+p.mode+'" '+
-   'style="--card:'+p.back+';--shade:'+p.shade+'" type="button" aria-label="'+p.title+' 대표 작품 보기">'+
-   '<span class="artwork-surface"><img class="artwork-image" src="'+p.cover+'" data-fallback="'+p.fallback+'" alt="'+safe(p.title)+' 피그마 실제 대표 이미지" loading="lazy"></span>'+
-   '<span class="work-caption"><span class="work-number">'+p.n+' / 06</span><strong class="work-name">'+p.title+'</strong><span class="work-role">'+p.kind+' · VIEW WORK ↗</span></span>'+
- '</button>';
+ const format=p.posterAspect==='landscape'?'landscape':'portrait';
+ return '<section class="story-project" id="work-'+p.id+'" data-project="'+p.id+'" data-format="'+format+'" aria-label="'+safe(p.title)+' 프로젝트">'+
+   '<div class="story-shell">'+
+     '<div class="story-copy">'+
+       '<p class="story-eyebrow">PROJECT '+p.n+' / 06 &nbsp;·&nbsp; '+p.kind+'</p>'+
+       '<h2 class="story-title">'+p.title+'</h2>'+
+       '<p class="story-sub">'+safe(p.short)+'</p>'+
+       '<button type="button" class="story-action" data-open="'+p.id+'" aria-label="'+safe(p.title)+' 상세와 영상 보기"><span>VIEW PROJECT</span><span class="action-arrow" aria-hidden="true"></span></button>'+
+     '</div>'+
+     '<button class="story-picture" type="button" data-open="'+p.id+'" aria-label="'+safe(p.title)+' 실제 대표 사진 크게 보기">'+
+       '<img src="'+p.cover+'" data-fallback="'+p.fallback+'" loading="lazy" decoding="async" alt="'+safe(p.title)+' 디자인 작품 전체 포스터">'+
+     '</button>'+
+   '</div>'+
+   '<span class="story-corner">KIM JUNSEO / 2026</span>'+
+   '<span class="story-scroll">SCROLL TO EXPLORE ↓</span>'+
+ '</section>';
 }
 q('#project-list').innerHTML=projects.map(projectHTML).join('');
 bindFallback(document);
-function bindFallback(area){qa('img[data-fallback]',area).forEach(img=>img.addEventListener('error',()=>{if(!img.dataset.failed){img.dataset.failed='yes';img.src=img.dataset.fallback;}},{once:true}));}
+function bindFallback(area){
+ qa('img[data-fallback]',area).forEach(img=>img.addEventListener('error',()=>{
+  if(!img.dataset.failed){img.dataset.failed='yes';img.src=img.dataset.fallback;}
+ },{once:true}));
+}
 
 // The hero is rendered live in WebGL. Its shape refracts colour and morphs over time.
 const canvas=q('#liquid-canvas'),gl=canvas.getContext('webgl',{alpha:true,premultipliedAlpha:false})||canvas.getContext('experimental-webgl');
@@ -93,70 +109,35 @@ addEventListener('wheel',prevent,{passive:false});addEventListener('touchmove',p
 document.addEventListener('keydown',e=>{if(!entered&&['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(e.key))e.preventDefault();});
 document.addEventListener('click',e=>{if(!entered&&e.target.closest('a[href^="#"]')){e.preventDefault();enter();}},true);
 
-// Scroll position rotates the fan of five no-image folders, with optional arrow navigation.
-const works=q('#works'),cards=qa('.work-card'),reveals=qa('.reveal'),counter=q('#deck-count');
-const prev=q('#deck-prev'),next=q('#deck-next'),progress=q('#reading-progress');
-let activeIndex=0,pending=false;
+// One full chapter per work; each poster appears as the user scrolls into view.
+const works=q('#works'),stories=qa('.story-project'),reveals=qa('.reveal'),progress=q('#reading-progress');
 if('IntersectionObserver' in window){
- const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{
-  if(entry.isIntersecting)entry.target.classList.add('visible');
- }),{threshold:.12,rootMargin:'0px 0px -7% 0px'});
- reveals.forEach(el=>observer.observe(el));
-}else reveals.forEach(el=>el.classList.add('visible'));
-function layoutDeck(){
- const w=innerWidth,h=innerHeight;
- cards.forEach((card,index)=>{
-  const diff=index-activeIndex,abs=Math.abs(diff);
-  const left=diff<0?-1:1;
-  const scale=abs===0?1:abs===1?.50:abs===2?.32:.24;
-  const x=abs===0?0: left*w*(abs===1?.35:abs===2?.48:.58);
-  const y=abs===0?0:abs===1?left*h*.055:abs===2?-left*h*.18:h*.25;
-  const rot=abs===0?-1.5:abs===1?left*13:abs===2?-left*18:left*25;
-  const visible=abs<=2?1:.08;
-  card.style.setProperty('--x',x.toFixed(1)+'px');
-  card.style.setProperty('--y',y.toFixed(1)+'px');
-  card.style.setProperty('--angle',rot.toFixed(1)+'deg');
-  card.style.setProperty('--scale',String(scale));
-  card.style.setProperty('--opacity',String(visible));
-  card.style.zIndex=String(20-abs);
-  card.dataset.active=String(abs===0);
-  card.tabIndex=abs<=2?0:-1;
-  card.setAttribute('aria-label',projects[index].title+' 작품 상세 보기');
- });
- counter.textContent=String(activeIndex+1).padStart(2,'0')+' / 06';
- prev.disabled=activeIndex===0;next.disabled=activeIndex===cards.length-1;
+ const appear=new IntersectionObserver(entries=>entries.forEach(entry=>{
+  if(entry.isIntersecting){
+   entry.target.classList.add(entry.target.classList.contains('story-project')?'is-visible':'visible');
+  }
+ }),{threshold:.14,rootMargin:'0px 0px -8% 0px'});
+ stories.concat(reveals).forEach(el=>appear.observe(el));
+}else{
+ stories.forEach(el=>el.classList.add('is-visible'));
+ reveals.forEach(el=>el.classList.add('visible'));
 }
-function scrollToCard(i){
- const n=Math.max(0,Math.min(cards.length-1,i));
- const length=Math.max(1,works.offsetHeight-innerHeight);
- scrollTo({top:works.offsetTop+length*n/(cards.length-1),behavior:reduce.matches?'auto':'smooth'});
-}
-function setActive(i){
- const n=Math.max(0,Math.min(cards.length-1,i));
- if(n===activeIndex)return;
- activeIndex=n;layoutDeck();
-}
+let pending=false;
 function onScroll(){
- const y=scrollY,max=root.scrollHeight-innerHeight;
+ const y=window.scrollY,max=root.scrollHeight-innerHeight;
  progress.style.width=(max>0?Math.min(100,100*y/max):0)+'%';
- const available=Math.max(1,works.offsetHeight-innerHeight);
- const fraction=Math.max(0,Math.min(1,(y-works.offsetTop)/available));
- setActive(Math.round(fraction*(cards.length-1)));
+ // Use very subtle image movement; no second image or carousel appears in a chapter.
+ if(!reduce.matches)stories.forEach(section=>{
+  const rect=section.getBoundingClientRect();
+  if(rect.bottom<0||rect.top>innerHeight)return;
+  const offset=(innerHeight/2-(rect.top+rect.height/2))/innerHeight;
+  const picture=q('.story-picture img',section);
+  if(picture)picture.style.translate='0 '+(offset*10).toFixed(1)+'px';
+ });
  pending=false;
 }
 addEventListener('scroll',()=>{if(!pending){pending=true;requestAnimationFrame(onScroll);}},{passive:true});
-addEventListener('resize',()=>{layoutDeck();onScroll();},{passive:true});
-prev.addEventListener('click',()=>scrollToCard(activeIndex-1));
-next.addEventListener('click',()=>scrollToCard(activeIndex+1));
-let startX=null,startY=null;
-works.addEventListener('pointerdown',e=>{if(!e.target.closest('.work-card'))return;startX=e.clientX;startY=e.clientY;},{passive:true});
-works.addEventListener('pointerup',e=>{
- if(startX===null)return;
- const dx=e.clientX-startX,dy=e.clientY-startY;
- startX=null;startY=null;
- if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.25)scrollToCard(activeIndex+(dx<0?1:-1));
-},{passive:true});
-layoutDeck();onScroll();
+onScroll();
 
 // Project detail is a sheet that physically expands from the clicked project artwork.
 const detail=q('#detail');let active=null,origin=null,cover=null;
@@ -178,7 +159,7 @@ function detailHTML(p){
 function removeCover(){if(cover){cover.remove();cover=null;}}
 function open(id,button){
  if(active)return;const p=projects.find(x=>x.id===id);if(!p)return;active=p;origin=button;
- const scene=button.closest('.work-card')||button;const b=scene.getBoundingClientRect();
+ const scene=button.closest('.story-picture')||button;const b=scene.getBoundingClientRect();
  detail.innerHTML=detailHTML(p);detail.hidden=false;body.classList.add('detail-open');bindFallback(detail);
  const main=q('.detail-main',detail),video=q('video',detail);
  if(video){
