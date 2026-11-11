@@ -62,8 +62,8 @@ $('apply').addEventListener('click',()=>{if(!active)return;const payload={type:'
  if(embed&&window.parent!==window){window.parent.postMessage(payload,location.origin);notify('분실 장소에 주소를 적용했어요.');return;}
  try{sessionStorage.setItem('lostlink:selected-address',JSON.stringify(payload));}catch(e){}
  notify('주소를 선택했어요. 이제 이 주소를 앱에 적용하거나 복사할 수 있어요.');
- if(!document.getElementById('return')){const b=document.createElement('button');b.type='button';b.className='primary';b.id='return';b.textContent='LOST LINK 등록 화면으로 돌아가기';b.onclick=()=>location.assign('../#register');document.querySelector('.actions').prepend(b);}
+ if(!document.getElementById('return')){const b=document.createElement('button');b.type='button';b.className='primary';b.id='return';b.textContent='LOST LINK 등록 화면으로 돌아가기';b.onclick=()=>location.assign('../#register-lost');document.querySelector('.actions').prepend(b);}
 });
-window.addEventListener('load',()=>init(''));
+window.addEventListener('load',()=>{const q=new URLSearchParams(location.search).get('q')||'';if(q){$('keyword').value=q;}init(q);});
 })();
 </script></body></html>
