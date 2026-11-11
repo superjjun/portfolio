@@ -44,6 +44,21 @@ const {chromium}=require('playwright');
  await page.locator('[data-project="voltup"] .story-picture').click();
  await page.waitForFunction(()=>document.querySelector('#detail')?.classList.contains('open'),null,{timeout:13000});
  const voltup=await page.evaluate(()=>({title:document.querySelector('#detail h2')?.textContent,fullPoster:document.querySelector('#detail .detail-original img')?.naturalWidth>0,video:!!document.querySelector('#detail video')}));
+ const slideStart=await page.evaluate(()=>{
+  const g=document.querySelector('[data-voltup-gallery]');
+  const img=g?.querySelector('[data-vu-image]');
+  return {exists:!!g,index:g?.dataset.index,counter:g?.querySelector('[data-vu-counter]')?.textContent,
+    src:img?.getAttribute('src'),width:img?.naturalWidth,height:img?.naturalHeight};
+ });
+ await page.locator('#detail [data-vu-step="1"]').click();
+ await page.waitForFunction(()=>document.querySelector('[data-vu-counter]')?.textContent==='02 / 02',null,{timeout:5000});
+ const slideNext=await page.evaluate(()=>({index:document.querySelector('[data-voltup-gallery]')?.dataset.index,
+  src:document.querySelector('[data-vu-image]')?.getAttribute('src'),
+  counter:document.querySelector('[data-vu-counter]')?.textContent,
+  width:document.querySelector('[data-vu-image]')?.naturalWidth}));
+ await page.locator('#detail [data-vu-step="-1"]').click();
+ await page.waitForFunction(()=>document.querySelector('[data-vu-counter]')?.textContent==='01 / 02',null,{timeout:5000});
+ const slideBack=await page.evaluate(()=>({index:document.querySelector('[data-voltup-gallery]')?.dataset.index, counter:document.querySelector('[data-vu-counter]')?.textContent}));
  await page.locator('#detail [data-close]').first().click();await page.waitForFunction(()=>document.querySelector('#detail').hidden,null,{timeout:10000});
  await page.locator('[data-project="lostlink"] .story-picture').click();
  await page.waitForFunction(()=>document.querySelector('#detail')?.classList.contains('open'),null,{timeout:13000});
@@ -58,12 +73,15 @@ const {chromium}=require('playwright');
  await mp.locator('[data-project="roundlab"]').scrollIntoViewIfNeeded();
  await mp.waitForFunction(()=>{const img=document.querySelector('[data-project="roundlab"] .story-picture img');return img&&img.naturalWidth>0&&img.getBoundingClientRect().width>0},null,{timeout:11000});
  const mobileEnd=await mp.evaluate(()=>{const el=document.querySelector('[data-project="roundlab"] img');const r=el.getBoundingClientRect();return {overflow:document.documentElement.scrollWidth-innerWidth,visible:r.top<innerHeight&&r.bottom>0,width:r.width,height:r.height};});
- console.log('STORY_QA '+JSON.stringify({initial,lockedScroll,profile,shots,voltup,lostlink,mobileIntro,mobileEnd,errors,mobileErrors},null,2));
+ console.log('STORY_QA '+JSON.stringify({initial,lockedScroll,profile,shots,voltup,slideStart,slideNext,slideBack,lostlink,mobileIntro,mobileEnd,errors,mobileErrors},null,2));
  await mobile.close();await ctx.close();await browser.close();
  if(!initial.locked||lockedScroll!==0||!initial.galleryGone||!initial.avatar?.includes('junseo-first-avatar'))throw Error('Intro/avatar/gallery change failed');
  if(!profile.photoLoaded||!profile.info)throw Error('Profile avatar/contact failed');
  if(shots.some(s=>!s.loaded||!s.visible||s.imageHeight<120||Math.abs(s.displayRatio-s.naturalRatio)>.012))throw Error('Missing, cropped, or invisible submitted artwork: '+JSON.stringify(shots));
  if(voltup.title!=='VOLT-UP'||voltup.video||!voltup.fullPoster||!lostlink.video)throw Error('Work detail failed');
+ if(!slideStart.exists||slideStart.counter!=='01 / 02'||!slideStart.src?.includes('voltup-captured-1.jpg')||slideStart.width<250)throw Error('First captured VOLT-UP post missing');
+ if(slideNext.counter!=='02 / 02'||!slideNext.src?.includes('voltup-captured-2.jpg')||slideNext.width<250)throw Error('Next VOLT-UP slide broken');
+ if(slideBack.counter!=='01 / 02'||slideBack.index!=='0')throw Error('Previous VOLT-UP slide broken');
  if(!mobileIntro.buttonVisible||mobileIntro.overflow>3||!mobileEnd.visible||mobileEnd.overflow>3)throw Error('Mobile layout or works failed');
  if(errors.length||mobileErrors.length)throw Error('JS errors '+errors.concat(mobileErrors).join('|'));
 })().catch(e=>{console.error(e.stack||e);process.exit(1)});
