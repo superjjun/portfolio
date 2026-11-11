@@ -1,0 +1,33 @@
+/* VOLT-UP — authentic Instagram post gallery (screenshot-sourced) */
+.voltup-gallery{--vu-accent:#d9fd28;margin:clamp(28px,4vw,56px) 0 55px;padding:clamp(22px,4vw,50px);border-radius:22px;background:#131812;color:#ebf4d7;overflow:hidden;box-shadow:0 30px 70px #1c2b2024}
+.voltup-gallery-header{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;border-bottom:1px solid #ffffff27;padding-bottom:18px;margin-bottom:28px}
+.voltup-gallery-header strong{font-size:clamp(13px,1.25vw,17px);letter-spacing:.12em;color:var(--vu-accent);font-weight:800}
+.voltup-gallery-header span{font-size:10px;letter-spacing:.13em;color:#c2cbb7;font-weight:700}
+.voltup-gallery-stage{min-height:460px;display:grid;grid-template-columns:58px minmax(0,1fr) 58px;align-items:center;justify-items:center;gap:clamp(8px,2vw,28px)}
+.voltup-gallery-artwork{display:flex;align-items:center;justify-content:center;min-width:0;width:100%;height:100%;position:relative}
+.voltup-gallery-artwork img{display:block;width:auto;max-width:min(100%,430px);height:auto;max-height:min(68vh,650px);aspect-ratio:299/397;object-fit:contain;border-radius:10px;box-shadow:0 25px 55px #050907aa;background:#0b0d0b;transition:opacity .2s ease,transform .35s ease}
+.voltup-gallery-artwork img.is-changing{opacity:.2;transform:scale(.965)}
+.voltup-gallery-arrow{width:48px;height:48px;border-radius:50%;border:1px solid #78923c;background:#1c2713;color:var(--vu-accent);font-family:"Space Grotesk",sans-serif;font-size:28px;display:grid;place-items:center;line-height:1;transition:transform .2s,background .2s}
+.voltup-gallery-arrow:hover{transform:scale(1.08);background:#334b15}
+.voltup-gallery-footer{display:flex;gap:15px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.voltup-gallery-page{font:800 12px "Space Grotesk",sans-serif;letter-spacing:.12em;color:var(--vu-accent)}
+.voltup-gallery-dots{display:flex;align-items:center;gap:8px}
+.voltup-gallery-dot{width:8px;height:8px;border:0;border-radius:50%;padding:0;background:#73806d;cursor:pointer;transition:transform .2s,background .2s}
+.voltup-gallery-dot[aria-current="true"]{background:var(--vu-accent);transform:scale(1.35)}
+.voltup-gallery-caption{text-align:center;margin:14px 0 0;font-size:clamp(12px,1vw,15px);font-weight:700;color:#c8d4bd}
+.voltup-gallery-origin{text-align:center;margin:15px 0 0;font-size:11px;line-height:1.65;color:#8d9c86}
+.voltup-gallery-photos{display:flex;justify-content:center;gap:10px;margin-top:20px}
+.voltup-gallery-thumb{border:2px solid transparent;border-radius:8px;background:transparent;padding:2px;cursor:pointer;opacity:.56;transition:opacity .2s,border-color .2s}
+.voltup-gallery-thumb[aria-current="true"]{opacity:1;border-color:var(--vu-accent)}
+.voltup-gallery-thumb img{display:block;width:51px;height:66px;object-fit:cover;border-radius:4px}
+@media(max-width:700px){
+ .voltup-gallery{padding:20px 12px;border-radius:14px}
+ .voltup-gallery-header{padding:0 6px 15px;margin-bottom:12px}
+ .voltup-gallery-stage{grid-template-columns:32px minmax(0,1fr) 32px;gap:2px;min-height:300px}
+ .voltup-gallery-arrow{width:32px;height:32px;font-size:21px}
+ .voltup-gallery-artwork img{max-width:100%;max-height:66svh}
+ .voltup-gallery-footer{margin-top:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .voltup-gallery-artwork img{transition:none}
+}
