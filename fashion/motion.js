@@ -148,6 +148,28 @@ onScroll();
 // Project detail is a sheet that physically expands from the clicked project artwork.
 const detail=q('#detail');let active=null,origin=null,cover=null;
 function detailHTML(p){
+ const voltupGallery=p.id==='voltup' ? `
+ <section class="voltup-gallery" data-voltup-gallery data-index="0" aria-label="VOLT-UP 인스타그램 캠페인 게시물 슬라이드">
+  <div class="voltup-gallery-header"><strong>VOLT-UP / SNS CAMPAIGN</strong><span>CAPTURED POSTS · 02</span></div>
+  <div class="voltup-gallery-stage">
+   <button class="voltup-gallery-arrow" type="button" data-vu-step="-1" aria-label="이전 VOLT-UP 게시물">‹</button>
+   <div class="voltup-gallery-artwork"><img data-vu-image src="./assets/instagram/voltup-captured-1.jpg?v=20261111a" alt="VOLT-UP 첫 번째 SNS 캠페인 게시물, 운동을 완성하는 루틴"></div>
+   <button class="voltup-gallery-arrow" type="button" data-vu-step="1" aria-label="다음 VOLT-UP 게시물">›</button>
+  </div>
+  <div class="voltup-gallery-footer">
+   <span class="voltup-gallery-page" data-vu-counter aria-live="polite">01 / 02</span>
+   <div class="voltup-gallery-dots" aria-label="게시물 선택">
+    <button type="button" class="voltup-gallery-dot" data-vu-go="0" aria-current="true" aria-label="첫 번째 게시물"></button>
+    <button type="button" class="voltup-gallery-dot" data-vu-go="1" aria-current="false" aria-label="두 번째 게시물"></button>
+   </div>
+  </div>
+  <p class="voltup-gallery-caption" data-vu-caption>운동을 완성하는 루틴</p>
+  <div class="voltup-gallery-photos">
+   <button class="voltup-gallery-thumb" data-vu-go="0" aria-current="true" type="button" aria-label="첫 번째 게시물 미리보기"><img src="./assets/instagram/voltup-captured-1.jpg?v=20261111a" alt=""></button>
+   <button class="voltup-gallery-thumb" data-vu-go="1" aria-current="false" type="button" aria-label="두 번째 게시물 미리보기"><img src="./assets/instagram/voltup-captured-2.jpg?v=20261111a" alt=""></button>
+  </div>
+  <p class="voltup-gallery-origin">인스타그램 계정 스크린샷에서 VOLT-UP 게시물 영역을 추출한 이미지입니다.</p>
+ </section>` : '';
  const hasVideo=!!p.movie;
  const clip=hasVideo
  ? '<div class="detail-screen"><div class="detail-screen-top"><span>PROTOTYPE / MOTION</span><span>'+(p.mode==='mobile'?'MOBILE':'DESKTOP')+'</span></div>'+
@@ -165,7 +187,7 @@ function detailHTML(p){
  return '<div class="detail-main" role="dialog" aria-modal="true" aria-label="'+safe(p.title)+' 프로젝트 상세" tabindex="-1">'+
  '<div class="detail-top"><span>KIM JUNSEO / '+p.n+' / 06</span><button class="detail-close" data-close type="button">CLOSE <b>×</b></button></div>'+
  '<div class="detail-content"><div class="detail-headerline">'+p.kind+' / 2026</div><h2>'+p.title+'</h2><p class="detail-sub">'+safe(p.short)+'</p>'+
- clip+source+
+ clip+voltupGallery+source+
  '<div class="detail-columns"><section><span>01 / THE CHALLENGE</span><h3>문제와 목표</h3><p>'+safe(p.challenge)+'</p></section><section><span>02 / MY APPROACH</span><h3>디자인 접근</h3><p>'+safe(p.solution)+'</p></section></div>'+
  '<button class="detail-back" type="button" data-close>← BACK TO WORKS</button></div></div>';
 }
@@ -211,6 +233,47 @@ function close(){
  if(reduce.matches){detail.hidden=true;detail.innerHTML='';old?.focus?.({preventScroll:true});return;}
  setTimeout(()=>{if(active)return;detail.hidden=true;detail.innerHTML='';old?.focus?.({preventScroll:true});},630);
 }
+// VOLT-UP: show the actual two Instagram post crops, not invented slides.
+function switchVoltup(index){
+ const gallery=q('[data-voltup-gallery]',detail);
+ if(!gallery)return;
+ const i=(index+2)%2;
+ gallery.dataset.index=String(i);
+ const picture=q('[data-vu-image]',gallery);
+ picture.classList.add('is-changing');
+ picture.src='./assets/instagram/voltup-captured-'+(i+1)+'.jpg?v=20261111a';
+ picture.alt=i===0?'VOLT-UP 첫 번째 SNS 게시물, 운동을 완성하는 루틴':'VOLT-UP 두 번째 SNS 게시물, 운동 전 10초';
+ q('[data-vu-counter]',gallery).textContent=String(i+1).padStart(2,'0')+' / 02';
+ q('[data-vu-caption]',gallery).textContent=i===0?'운동을 완성하는 루틴':'운동 전 10초, 텐션을 깨우다';
+ qa('[data-vu-go]',gallery).forEach(button=>button.setAttribute('aria-current',String(Number(button.dataset.vuGo)===i)));
+ if(reduce.matches){picture.classList.remove('is-changing');}
+ else setTimeout(()=>picture.classList.remove('is-changing'),120);
+}
+document.addEventListener('click',e=>{
+ const go=e.target.closest('[data-vu-go]');
+ if(go){switchVoltup(Number(go.dataset.vuGo));return;}
+ const move=e.target.closest('[data-vu-step]');
+ if(move){const gallery=q('[data-voltup-gallery]',detail);if(gallery)switchVoltup(Number(gallery.dataset.index)+Number(move.dataset.vuStep));}
+});
+let voltupTouchX=null;
+document.addEventListener('touchstart',e=>{
+ if(e.target.closest('[data-voltup-gallery]'))voltupTouchX=e.touches[0].clientX;
+},{passive:true});
+document.addEventListener('touchend',e=>{
+ if(voltupTouchX===null)return;
+ const gallery=e.target.closest('[data-voltup-gallery]');
+ if(gallery){const dx=e.changedTouches[0].clientX-voltupTouchX;
+  if(Math.abs(dx)>45)switchVoltup(Number(gallery.dataset.index)+(dx<0?1:-1));}
+ voltupTouchX=null;
+},{passive:true});
+document.addEventListener('keydown',e=>{
+ if(!active||active.id!=='voltup')return;
+ if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
+ const gallery=q('[data-voltup-gallery]',detail);
+ if(!gallery)return;
+ e.preventDefault();
+ switchVoltup(Number(gallery.dataset.index)+(e.key==='ArrowRight'?1:-1));
+});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b){open(b.dataset.open,b);return;}if(e.target.closest('[data-close]'))close();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active)close();});
 })();
