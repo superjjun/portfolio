@@ -18,6 +18,13 @@
     if(event.origin!==location.origin || event.source!==frame.contentWindow)return;
     const data=event.data;
     if(!data || typeof data!=='object')return;
+    if(data.type==='KJ_ATELIER_SCROLL'){
+      if(document.body.classList.contains('detail-open'))return;
+      const requested=Number(data.deltaY);
+      if(!Number.isFinite(requested))return;
+      window.scrollBy({top:Math.max(-320,Math.min(320,requested)),left:0,behavior:'instant'});
+      return;
+    }
     if(data.type==='KJ_ATELIER_READY'){
       works.classList.add('showroom-ready');
       works.setAttribute('aria-label','인터랙티브 3D 디자인 전시장 — 여섯 개의 실제 작품');
