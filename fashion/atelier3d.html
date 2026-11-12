@@ -13,7 +13,13 @@
 :root{color-scheme:dark;--bg:#0b0b0d;--white:#eeeae4;--muted:#b0aaa4;--line:#77716b55;--lime:#d9f989}
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:radial-gradient(ellipse at center,#304c32,#0f2017 75%);font-family:"DM Sans","Noto Sans KR",sans-serif;color:var(--white)}
 button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
-#scene{position:fixed;inset:0;touch-action:pan-y;cursor:grab}#scene.grabbing{cursor:grabbing}#scene canvas{display:block;width:100%;height:100%}
+#scene{position:fixed;inset:0;touch-action:pan-y;cursor:grab}
+.quick-art{position:fixed;left:55%;top:50%;z-index:2;width:min(43vw,610px);height:min(70vh,710px);border:0;padding:0;background:transparent;display:grid;place-items:center;cursor:pointer;pointer-events:auto;perspective:1100px;opacity:1;transition:opacity .42s ease}
+.quick-art img{display:block;width:auto;max-width:100%;height:auto;max-height:100%;object-fit:contain;box-shadow:0 24px 70px #0009;transform:rotateY(-7deg) translate3d(0,0,0);transition:opacity .15s,transform .7s cubic-bezier(.18,.7,.3,1);backface-visibility:hidden}
+.quick-art img.is-changing{opacity:.35}
+.quick-art:hover img{transform:rotateY(0deg) translateY(-8px)}
+.quick-art.is-webgl-loaded{opacity:0;pointer-events:none}
+@media(max-width:850px){.quick-art{left:50%;top:42%;width:78vw;height:45vh}.quick-art img{max-height:100%}}#scene.grabbing{cursor:grabbing}#scene canvas{display:block;width:100%;height:100%}
 .veil{position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,#0d2411b3 0%,transparent 31%,transparent 76%,#0e24116e 100%),linear-gradient(0deg,#0d2015d9 0%,transparent 30%,transparent 78%,#0c2615b8 100%);z-index:1}
 header{position:fixed;left:4.1vw;right:4.1vw;top:32px;display:flex;align-items:flex-start;justify-content:space-between;z-index:3;gap:16px}
 .brand{display:flex;align-items:center;gap:15px;text-decoration:none}.brand-mark{font-size:27px;line-height:1;font-weight:700;letter-spacing:-.16em;transform:skewX(-9deg)}.brand-word{font-size:11px;line-height:1.4;letter-spacing:.1em;font-weight:700}
@@ -58,6 +64,9 @@ body.embedded .brand-word{color:#e7e2d9}
 <body>
 <div id="scene" aria-label="실제 WebGL 3D 공간. 좌우 화살표, 마우스 드래그, 휠로 탐색하고 선택된 작품은 Enter로 열 수 있습니다." tabindex="0"></div>
 <div class="veil"></div>
+<button class="quick-art" id="quick-art" aria-label="선택한 프로젝트 상세 보기" type="button">
+<img id="quick-art-img" src="./assets/submitted/soundcloud-poster.webp" alt="SOUNDCLOUD 실제 디자인 작품 미리보기" fetchpriority="high" decoding="async">
+</button>
 <header>
  <a class="brand" href="./index.html" aria-label="기존 포트폴리오로 돌아가기"><span class="brand-mark">KJ.</span><span class="brand-word">KIM JUNSEO<br>DESIGN ATELIER</span></a>
  <div class="head-right"><span><i class="live-dot"></i>LIVE 3D / FOREST</span><a href="./index.html">ORIGINAL PORTFOLIO ↗</a></div>
@@ -87,27 +96,41 @@ body.embedded .brand-word{color:#e7e2d9}
 <div class="fallback" id="fallback"></div>
 <script type="module">
 const projects=[
- {id:"soundcloud",title:"SOUNDCLOUD",kind:"WEB / PROMOTION",short:"음악 발견과 참여를 연결하는 새로운 경험.",img:"./assets/figma-original/soundcloud-figma.png",color:"#f9a875",challenge:"음악 재생을 넘어 아티스트와 사용자가 만나는 새로운 접점이 필요했습니다.",solution:"음악을 발견하고 감상하며 참여와 보상으로 이어지는 프로모션 흐름을 기획했습니다."},
- {id:"lostlink",title:"LOST LINK",kind:"UI/UX / MOBILE APP",short:"잃어버린 물건을 다시 연결하는 디자인.",img:"./assets/figma-original/lostlink-figma.png",color:"#b4c6f8",challenge:"수많은 게시글에서 분실물을 직접 찾아야 했던 불편함에 집중했습니다.",solution:"물건의 특징과 장소, 시간을 연결하여 등록부터 매칭 결과까지 단계별로 설계했습니다."},
- {id:"voltup",title:"VOLT-UP",kind:"VISUAL / CAMPAIGN",short:"운동 전 10초, 오늘의 텐션을 켜다.",img:"./assets/figma-original/voltup-figma.png",color:"#d2ef61",challenge:"에너지 부스터의 특징을 짧고 강렬한 시각 경험으로 전달하는 것이 목표였습니다.",solution:"블랙·라임 컬러와 역동적인 연출을 이용해 패키지와 카드뉴스 캠페인을 제작했습니다."},
- {id:"junggonara",title:"JUNGGO NARA",kind:"UI/UX / REDESIGN",short:"상품 탐색부터 안전거래까지, 더 직관적으로.",img:"./assets/figma-original/junggonara-figma-hires.png",color:"#b2e6bb",challenge:"복잡한 탐색 구조와 중고 거래의 신뢰도를 개선하고자 했습니다.",solution:"브랜드 탐색, 검수, 후기, 안전결제를 하나의 자연스러운 사용자 흐름으로 연결했습니다."},
- {id:"ppomppu",title:"PPOMPPU",kind:"RESPONSIVE / WEB",short:"복잡한 커뮤니티를 쉽고 빠르게.",img:"./assets/figma-original/ppomppu-figma.png",color:"#dfc7ff",challenge:"커뮤니티 정보와 게시판의 우선순위가 명확하지 않았습니다.",solution:"카테고리, 검색, 인기 정보의 시각적 위계를 재설계했습니다."},
- {id:"roundlab",title:"ROUND LAB",kind:"VISUAL / DETAIL PAGE",short:"촉촉함을 시각적인 경험으로 전달하다.",img:"./assets/figma-original/roundlab-figma-hires.png",color:"#b1dff1",challenge:"수분감과 산뜻함을 감각적인 이미지로 표현할 필요가 있었습니다.",solution:"블루·화이트, 물방울, 제품 컷을 결합한 스크롤형 상세페이지를 제작했습니다."}
+ {id:"soundcloud",preview:"./assets/submitted/soundcloud-poster.webp",title:"SOUNDCLOUD",kind:"WEB / PROMOTION",short:"음악 발견과 참여를 연결하는 새로운 경험.",img:"./assets/figma-original/soundcloud-figma.png",color:"#f9a875",challenge:"음악 재생을 넘어 아티스트와 사용자가 만나는 새로운 접점이 필요했습니다.",solution:"음악을 발견하고 감상하며 참여와 보상으로 이어지는 프로모션 흐름을 기획했습니다."},
+ {id:"lostlink",preview:"./assets/submitted/lostlink-poster.webp",title:"LOST LINK",kind:"UI/UX / MOBILE APP",short:"잃어버린 물건을 다시 연결하는 디자인.",img:"./assets/figma-original/lostlink-figma.png",color:"#b4c6f8",challenge:"수많은 게시글에서 분실물을 직접 찾아야 했던 불편함에 집중했습니다.",solution:"물건의 특징과 장소, 시간을 연결하여 등록부터 매칭 결과까지 단계별로 설계했습니다."},
+ {id:"voltup",preview:"./assets/submitted/voltup-poster.webp",title:"VOLT-UP",kind:"VISUAL / CAMPAIGN",short:"운동 전 10초, 오늘의 텐션을 켜다.",img:"./assets/figma-original/voltup-figma.png",color:"#d2ef61",challenge:"에너지 부스터의 특징을 짧고 강렬한 시각 경험으로 전달하는 것이 목표였습니다.",solution:"블랙·라임 컬러와 역동적인 연출을 이용해 패키지와 카드뉴스 캠페인을 제작했습니다."},
+ {id:"junggonara",preview:"./assets/submitted/junggonara-poster.webp",title:"JUNGGO NARA",kind:"UI/UX / REDESIGN",short:"상품 탐색부터 안전거래까지, 더 직관적으로.",img:"./assets/figma-original/junggonara-figma-hires.png",color:"#b2e6bb",challenge:"복잡한 탐색 구조와 중고 거래의 신뢰도를 개선하고자 했습니다.",solution:"브랜드 탐색, 검수, 후기, 안전결제를 하나의 자연스러운 사용자 흐름으로 연결했습니다."},
+ {id:"ppomppu",preview:"./assets/submitted/ppomppu-poster.webp",title:"PPOMPPU",kind:"RESPONSIVE / WEB",short:"복잡한 커뮤니티를 쉽고 빠르게.",img:"./assets/figma-original/ppomppu-figma.png",color:"#dfc7ff",challenge:"커뮤니티 정보와 게시판의 우선순위가 명확하지 않았습니다.",solution:"카테고리, 검색, 인기 정보의 시각적 위계를 재설계했습니다."},
+ {id:"roundlab",preview:"./assets/submitted/roundlab-poster.webp",title:"ROUND LAB",kind:"VISUAL / DETAIL PAGE",short:"촉촉함을 시각적인 경험으로 전달하다.",img:"./assets/figma-original/roundlab-figma-hires.png",color:"#b1dff1",challenge:"수분감과 산뜻함을 감각적인 이미지로 표현할 필요가 있었습니다.",solution:"블루·화이트, 물방울, 제품 컷을 결합한 스크롤형 상세페이지를 제작했습니다."}
 ];
 const $=id=>document.getElementById(id);
 const isEmbedded=new URLSearchParams(location.search).get("embed")==="1";
 if(isEmbedded)document.body.classList.add("embedded");
 let index=0,detailOpen=false;
+const quickImg=$("quick-art-img"),quickArt=$("quick-art");
+const renderedPosters=new Set();
+function showQuickImage(){
+ const p=projects[index];
+ quickArt.classList.toggle("is-webgl-loaded",renderedPosters.has(p.id));
+ quickImg.classList.add("is-changing");
+ if(quickImg.getAttribute("src")!==p.preview)quickImg.src=p.preview;
+ quickImg.alt=p.title+" 실제 디자인 미리보기";
+ if(quickImg.decode)quickImg.decode().catch(()=>{}).then(()=>quickImg.classList.remove("is-changing"));
+ else quickImg.classList.remove("is-changing");
+}
+quickArt.addEventListener("click",()=>openDetail());
+// Cache lightweight previews (~100-400 KB), not multi-megabyte original exports.
+projects.forEach(p=>{const im=new Image();im.decoding="async";im.src=p.preview;});
 const count=()=>String(index+1).padStart(2,"0");
 function sync(){
  const p=projects[index];
  $("work-title").textContent=p.title;$("work-category").textContent=p.kind;$("work-description").textContent=p.short;
  $("number").textContent=count();
  $("d-number").textContent=count()+" / 06";$("d-title").textContent=p.title;$("d-type").textContent=p.kind;$("d-desc").textContent=p.short;
- $("d-challenge").textContent=p.challenge;$("d-solution").textContent=p.solution;$("d-img").src=p.img;$("d-link").href="./index.html#work-"+p.id;
+ $("d-challenge").textContent=p.challenge;$("d-solution").textContent=p.solution;$("d-link").href="./index.html#work-"+p.id;showQuickImage();
 }
 function setIndex(i){index=(i+projects.length)%projects.length;sync();}
-function openDetail(){detailOpen=true;sync();
+function openDetail(){detailOpen=true;sync();if(!isEmbedded)$("d-img").src=projects[index].img;
  if(isEmbedded){
    // Allow the exhibition object to move closer before the original portfolio's full case study opens.
    window.setTimeout(()=>window.parent.postMessage({type:"KJ_ATELIER_OPEN",project:projects[index].id},location.origin),330);
@@ -134,7 +157,7 @@ window.addEventListener("message",event=>{
 });
 const fallback=$("fallback");
 projects.forEach((p,i)=>{
- const btn=document.createElement("button");btn.innerHTML="<img src='"+p.img+"' alt=''><b>"+p.title+"</b><small>"+p.kind+"</small>";
+ const btn=document.createElement("button");btn.innerHTML="<img loading='lazy' src='"+p.preview+"' alt=''><b>"+p.title+"</b><small>"+p.kind+"</small>";
  btn.addEventListener("click",()=>{setIndex(i);openDetail();});fallback.appendChild(btn);
 });
 let THREE;
@@ -148,6 +171,9 @@ try{
  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.17));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
  $("scene").appendChild(renderer.domElement);
+ renderer.domElement.addEventListener("webglcontextlost",event=>{
+   event.preventDefault();quickArt.classList.remove("is-webgl-loaded");
+ });
  scene.add(new THREE.HemisphereLight(0xf4ebcc,0x1c3623,2.6));
  const mainLight=new THREE.DirectionalLight(0xf4e8bb,2.4);mainLight.position.set(-4,9,8);scene.add(mainLight);
  const sideLight=new THREE.PointLight(0xb5de91,55,22,2);sideLight.position.set(5,5,2);scene.add(sideLight);
@@ -220,13 +246,19 @@ try{
   label.position.set(0,-2.11,.08);group.add(label);
   const pillar=new THREE.Mesh(new THREE.BoxGeometry(.10,.65,.10),woodMat);pillar.position.set(0,-2.19,-.15);group.add(pillar);
   const base=new THREE.Mesh(new THREE.CylinderGeometry(.83,.83,.1,32),woodMat);base.position.set(0,-2.48,-.15);group.add(base);
-  textureLoader.load(p.img,tex=>{
+  textureLoader.load(p.preview,tex=>{
    tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),8);
    const ratio=tex.image.width/tex.image.height,availableW=2.52,availableH=3.48;
    let w=availableW,h=w/ratio;if(h>availableH){h=availableH;w=h*ratio;}
    const poster=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide,toneMapped:false}));
    poster.position.z=.104;poster.userData.index=i;hitMeshes.push(poster);group.add(poster);
-  },undefined,()=>{console.warn("Could not load poster",p.img);});
+   renderedPosters.add(p.id);
+   if(i===index){
+     requestAnimationFrame(()=>requestAnimationFrame(()=>{
+       if(index===i && !renderer.getContext().isContextLost())quickArt.classList.add("is-webgl-loaded");
+     }));
+   }
+  },undefined,()=>{console.warn("Could not load poster",p.preview);quickArt.classList.remove("is-webgl-loaded");});
  }
  function countFor(i){return String(i+1).padStart(2,"0");}
  const raycaster=new THREE.Raycaster(),mouse2=new THREE.Vector2();
