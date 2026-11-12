@@ -30,11 +30,18 @@ waypointPreview.setAttribute('aria-hidden','true');
 waypointPreview.innerHTML='<img alt="" loading="lazy" decoding="async"><div><span>PROJECT PREVIEW</span><strong></strong><small>CLICK TO EXPLORE ↗</small></div>';
 hud.appendChild(waypointPreview);
 const waypointImage=waypointPreview.querySelector('img'),waypointTitle=waypointPreview.querySelector('strong');
+const waypointThumbs=['soundcloud','lostlink','voltup','junggonara','ppomppu','roundlab'].map(id=>'./assets/submitted/'+id+'-poster.webp');
+waypointImage.addEventListener('error',()=>{
+ const i=Number(waypointPreview.dataset.index||0),original=sections[i]?.querySelector('.story-picture img');
+ if(original && waypointImage.dataset.failed!=='1'){waypointImage.dataset.failed='1';waypointImage.src=original.currentSrc||original.src;}
+});
 const showWaypoint=i=>{
-  const img=sections[i]?.querySelector('.story-picture img');if(!img)return;
-  waypointImage.src=img.currentSrc||img.src;
-  waypointTitle.textContent=labels[i];
-  waypointPreview.classList.add('is-visible');
+ const img=sections[i]?.querySelector('.story-picture img');if(!img)return;
+ waypointPreview.dataset.index=String(i);
+ waypointImage.dataset.failed='0';
+ waypointImage.src=waypointThumbs[i];
+ waypointTitle.textContent=labels[i];
+ waypointPreview.classList.add('is-visible');
 };
 const hideWaypoint=()=>waypointPreview.classList.remove('is-visible');
 stops.forEach((button,i)=>{
