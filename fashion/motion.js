@@ -85,7 +85,7 @@ const object=q('#liquid-object');
 object.addEventListener('pointermove',e=>{const b=object.getBoundingClientRect();pointer=[(e.clientX-b.left)/Math.max(b.width,1),1-(e.clientY-b.top)/Math.max(b.height,1)];},{passive:true});
 object.addEventListener('pointerleave',()=>pointer=[.5,.5]);
 let animationFrame,lastWebglFrame=-1000;
-function draw(t){if(glReady&&!document.hidden&&!body.classList.contains('entering')&&!entered&&t-lastWebglFrame>=40){lastWebglFrame=t;gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.useProgram(shaderProgram);gl.uniform2f(uniforms.r,canvas.width,canvas.height);gl.uniform1f(uniforms.t,(t-started)*.001);gl.uniform2f(uniforms.m,pointer[0],pointer[1]);gl.drawArrays(gl.TRIANGLES,0,6);}animationFrame=requestAnimationFrame(draw);}
+function draw(t){if(entered){animationFrame=0;return;}if(glReady&&!document.hidden&&!body.classList.contains('entering')&&!entered&&t-lastWebglFrame>=85){lastWebglFrame=t;gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);gl.useProgram(shaderProgram);gl.uniform2f(uniforms.r,canvas.width,canvas.height);gl.uniform1f(uniforms.t,(t-started)*.001);gl.uniform2f(uniforms.m,pointer[0],pointer[1]);gl.drawArrays(gl.TRIANGLES,0,6);}animationFrame=requestAnimationFrame(draw);}
 if(glReady){animationFrame=requestAnimationFrame(draw);if(reduce.matches){setTimeout(()=>cancelAnimationFrame(animationFrame),100);}}
 
 // No scroll before a deliberate entrance click. The iris animation is staged, not skipped.
@@ -100,8 +100,8 @@ function enter(){
  if(reduce.matches){completeEntrance();busy=false;return;}
  body.classList.add('entering');const overlay=q('#transition');overlay.classList.add('arming');overlay.offsetWidth;
  requestAnimationFrame(()=>overlay.classList.add('opening'));
- setTimeout(()=>{completeEntrance();overlay.classList.add('fading');},2630);
- setTimeout(()=>{overlay.classList.remove('arming','opening','fading');busy=false;},3400);
+ setTimeout(()=>{completeEntrance();overlay.classList.add('fading');},900);
+ setTimeout(()=>{overlay.classList.remove('arming','opening','fading');busy=false;},1250);
 }
 q('#enter').addEventListener('click',enter);object.addEventListener('click',enter);
 q('#top').addEventListener('click',e=>{if(!entered&&!e.target.closest('a,button'))enter();});
