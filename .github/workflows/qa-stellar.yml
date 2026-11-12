@@ -1,0 +1,27 @@
+name: QA stellar case studies
+on:
+  push:
+    paths:
+      - "scripts/qa-stellar.cjs"
+      - ".github/workflows/qa-stellar.yml"
+      - "fashion/stellar-case-studies.js"
+      - "fashion/stellar-case-studies.css"
+      - "fashion/index.html"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Chromium
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Test desktop and mobile staged case studies
+        run: node scripts/qa-stellar.cjs
