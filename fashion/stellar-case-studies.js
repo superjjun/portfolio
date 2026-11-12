@@ -97,8 +97,8 @@ function caseMarkup(p){
  const sources=artwork[p.id]||[p.cover,p.cover,p.cover,p.cover];
  if(p.id==='lostlink'){
  const screens=[
-  {number:'01',eng:'REGISTER',heading:'분실 정보 등록',description:'분실자는 색상·형태·스티커·흠집 같은 물건의 특징과 분실 장소 및 시간을 입력합니다.',src:'./assets/figma-lostlink/lostlink-location.png',alt:'피그마 원본 로스트 링크 분실 시간 및 장소 등록 화면'},
-  {number:'02',eng:'AI MATCHING',heading:'AI로 특징 비교',description:'AI가 분실자의 설명과 습득자의 등록 정보를 비교해 특징·장소·시간이 유사한 물건을 일치도 순으로 제시합니다.',src:'./assets/figma-lostlink/lostlink-match.png',alt:'피그마 원본 로스트 링크 93% MATCH 후보 비교 화면'},
+  {number:'01',eng:'REGISTER',heading:'분실 정보 등록',description:'분실자는 색상·형태·스티커·흠집 같은 물건의 특징과 분실 장소 및 시간을 입력합니다.',src:'./assets/figma-lostlink/lostlink-location-clean.png',alt:'실제 LOST LINK 앱 분실 장소와 시간 등록 화면'},
+  {number:'02',eng:'AI MATCHING',heading:'AI로 특징 비교',description:'AI가 분실자의 설명과 습득자의 등록 정보를 비교해 특징·장소·시간이 유사한 물건을 일치도 순으로 제시합니다.',src:'./assets/figma-lostlink/lostlink-match-clean.png',alt:'실제 LOST LINK 앱 93% MATCH 매칭 결과 화면'},
   {number:'03',eng:'DIRECT CHAT',heading:'습득자와 1:1 채팅',description:'높은 일치도의 물건을 발견하면 습득자와 채팅하며 스티커나 흠집 등 세부 특징을 직접 확인하도록 설계했습니다.',src:'./assets/figma-lostlink/lostlink-chat.png',alt:'피그마 원본 로스트 링크 습득자 일대일 채팅 화면'}
  ];
  return '<div class="case-story" data-project-case="lostlink">'+

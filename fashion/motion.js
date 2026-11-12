@@ -183,12 +183,16 @@ function detailHTML(p){
    '</video></div></div>'+
    '<p class="detail-tip" data-demo-status>화면녹화 영상을 불러오는 중입니다.</p>'
  : '<div class="detail-no-video"><strong>VISUAL DESIGN</strong><p>정적 디자인 작품입니다. 조작형 프로토타입 영상은 없습니다.</p></div>';
+ const lostlinkTry=p.id==='lostlink'
+  ? '<a class="lostlink-tryout" href="https://superjjun.github.io/portfolio/lostlink/" target="_blank" rel="noopener noreferrer" aria-label="LOST LINK 앱 프로토타입 새 탭에서 체험하기">'+
+    '<span class="lostlink-tryout-copy"><small>INTERACTIVE PROTOTYPE / LOST LINK</small><strong>어플 체험하기 <span aria-hidden="true">↗</span></strong><em>분실물 등록부터 AI 매칭, 습득자 채팅까지 직접 살펴보세요.</em></span>'+
+    '<span class="lostlink-tryout-arrow" aria-hidden="true">↗</span></a>' : '';
  const source='<details class="detail-poster"><summary><span>원본 작품 이미지 전체 펼쳐보기</span><b aria-hidden="true">＋</b></summary>'+
  '<div class="detail-original"><img src="'+p.img+'" data-fallback="'+p.fallback+'" loading="lazy" alt="'+p.title+' 실제 Figma 디자인 전체"><span>ORIGINAL DESIGN / '+p.n+' OF 06</span></div></details>';
  return '<div class="detail-main" data-project-detail="'+safe(p.id)+'" role="dialog" aria-modal="true" aria-label="'+safe(p.title)+' 프로젝트 상세" tabindex="-1">'+
  '<div class="detail-top"><span>KIM JUNSEO / '+p.n+' / 06</span><button class="detail-close" data-close type="button">CLOSE <b>×</b></button></div>'+
  '<div class="detail-content"><div class="detail-headerline">'+p.kind+' / 2026</div><h2>'+p.title+'</h2><p class="detail-sub">'+safe(p.short)+'</p>'+
- clip+voltupGallery+source+
+ clip+voltupGallery+source+lostlinkTry+
  '<div class="detail-columns"><section><span>01 / THE CHALLENGE</span><h3>문제와 목표</h3><p>'+safe(p.challenge)+'</p></section><section><span>02 / MY APPROACH</span><h3>디자인 접근</h3><p>'+safe(p.solution)+'</p></section></div>'+
  '<button class="detail-back" type="button" data-close>← BACK TO WORKS</button></div></div>';
 }
