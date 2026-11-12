@@ -44,7 +44,8 @@ function bindFallback(area){
 }
 
 // The hero is rendered live in WebGL. Its shape refracts colour and morphs over time.
-const canvas=q('#liquid-canvas'),gl=canvas.getContext('webgl',{alpha:true,premultipliedAlpha:false})||canvas.getContext('experimental-webgl');
+// Hero stays lightweight: its forest form uses CSS; real WebGL runs only when 3D works are reached.
+const canvas=q('#liquid-canvas'),gl=null;
 let glReady=!!gl,shaderProgram,uniforms={},pointer=[.5,.5],started=performance.now();
 if(glReady){
  try{
