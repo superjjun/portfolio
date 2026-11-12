@@ -1,0 +1,10 @@
+/* Integrated live 3D work showroom — original sections and project data remain intact. */
+#works{position:relative}
+#works .showroom-frame{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#0b0b0d;opacity:0;visibility:hidden;pointer-events:none;z-index:10;transition:opacity .65s ease,visibility .65s}
+#works.showroom-ready{height:100svh!important;min-height:640px!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#0b0b0d!important;isolation:isolate}
+#works.showroom-ready .showroom-frame{opacity:1;visibility:visible;pointer-events:auto}
+#works.showroom-ready .work-stream{display:none!important}
+#works .showroom-proxy{position:absolute;left:38%;top:25%;width:28%;height:50%;border:0;opacity:0;pointer-events:none;z-index:0;padding:0}
+body.detail-open #works .showroom-frame{pointer-events:none}
+@media(max-width:720px){#works.showroom-ready{min-height:520px!important}#works .showroom-proxy{left:24%;top:20%;width:54%;height:54%}}
+@media(prefers-reduced-motion:reduce){#works .showroom-frame{transition:none}}
