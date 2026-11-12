@@ -77,6 +77,7 @@ function update(){
  }
  const whole=clamp((h*.5-wh.top)/Math.max(1,wh.height),0,1);
  line.style.height=(whole*100).toFixed(2)+'%';
+ hud.style.setProperty('--voyage-mobile-progress',(whole*100).toFixed(2));
 }
 function requestUpdate(){if(scheduled)return;scheduled=true;requestAnimationFrame(update);}
 addEventListener('scroll',requestUpdate,{passive:true});
@@ -112,7 +113,7 @@ function setupChapterNavigation(){
   let nearest=0,shortest=Infinity;
   targets.forEach((t,i)=>{const r=t.getBoundingClientRect();const d=Math.abs((r.top+r.bottom)*.5-anchor);if(d<shortest){shortest=d;nearest=i;}});
   if(nearest!==lastChapter){lastChapter=nearest;buttons.forEach((b,i)=>{b.classList.toggle('is-active',i===nearest);b.setAttribute('aria-current',i===nearest?'step':'false');});}
-  fill.style.height=String(((nearest+1)/targets.length*100).toFixed(1))+'%';
+  fill.style.width=String(((nearest+1)/targets.length*100).toFixed(1))+'%';
  }
  function onCaseScroll(){if(!pending){pending=true;requestAnimationFrame(updateCase);}}
  main.addEventListener('scroll',onCaseScroll,{passive:true});
