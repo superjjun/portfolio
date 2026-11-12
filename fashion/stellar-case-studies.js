@@ -74,7 +74,7 @@ function issueMarkup(issue,index,total,p){
  '<div class="case-constellations" aria-hidden="true"><i></i><i></i><i></i><i></i></div>'+
  '<div class="case-chapter-inner">'+
  '<div class="case-side"><span class="case-kicker">DESIGN DIAGNOSIS / '+num+' OF '+String(total).padStart(2,'0')+'</span>'+
- '<strong class="case-num" aria-hidden="true">'+num+'</strong><div class="case-orbit" aria-hidden="true"><span></span></div>'+
+ '<strong class="case-num" aria-hidden="true">'+num+'</strong><div class="case-orbit" aria-hidden="true"><span></span></div>'+ '<figure class="case-evidence" aria-hidden="true"><div class="case-evidence-window"><img src="'+safe(p.cover)+'" alt="" loading="lazy"></div><span class="case-evidence-focus">FOCUS '+num+'</span><figcaption>MY DESIGN / '+safe(tag)+'</figcaption></figure>'+
  '<span class="case-side-bottom">SCROLL TO EXPLORE <b>↓</b></span></div>'+
  '<div class="case-body"><span class="case-tag">PROBLEM '+num+' / '+safe(tag)+'</span>'+
  '<h3 id="issue-'+p.id+'-'+num+'">'+safe(title)+'</h3>'+
