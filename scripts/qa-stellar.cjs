@@ -18,16 +18,20 @@ const { chromium } = require('playwright');
    const sec=document.querySelector('#work-ppomppu');
    const title=sec.querySelector('.story-title');
    const css=getComputedStyle(sec);
-   return {hasOrbit:!!sec.querySelector('.stellar-orbit-art'),hasIndex:!!sec.querySelector('.stellar-work-index'),background:css.backgroundImage,color:css.color,stellarCssRules:[...document.styleSheets].filter(s=>s.href&&s.href.includes('stellar-case')).map(s=>s.href),titlesOverflow:title.scrollWidth>title.clientWidth+3,screenOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth};
+   const hud=document.querySelector('.voyage-hud');
+   return {hasOrbit:!!sec.querySelector('.stellar-orbit-art'),hasIndex:!!sec.querySelector('.stellar-work-index'),background:css.backgroundImage,color:css.color,stellarCssRules:[...document.styleSheets].filter(s=>s.href&&s.href.includes('stellar-case')).map(s=>s.href),voyageHud:!!hud,orbitProgressCount:hud?.querySelectorAll('[data-voyage-go]').length,activeVoyage:document.body.classList.contains('voyage-active'),planetDepth:sec.style.getPropertyValue('--voyage-img-scale'),titlesOverflow:title.scrollWidth>title.clientWidth+3,screenOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth};
   });
   await page.locator('#work-ppomppu .story-action').click();
   await page.waitForFunction(()=>!document.querySelector('#detail').hidden,null,{timeout:10000});
   const detail=await page.evaluate(()=>{
    const main=document.querySelector('#detail .detail-main');
    const story=main.querySelector('.case-story');
-   return {hasStory:!!story,issueCount:main.querySelectorAll('.case-issue').length,sequence:[...main.querySelectorAll('.case-intro,.case-issue,.case-result,.detail-screen,.detail-poster')].map(x=>x.className),caseHeading:story?.querySelector('.case-intro h3')?.textContent.trim(),scrollHeight:main.scrollHeight,viewHeight:main.clientHeight,overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth};
+   return {hasStory:!!story,issueCount:main.querySelectorAll('.case-issue').length,sequence:[...main.querySelectorAll('.case-intro,.case-issue,.case-result,.detail-screen,.detail-poster')].map(x=>x.className),caseHeading:story?.querySelector('.case-intro h3')?.textContent.trim(),caseNavCount:document.querySelectorAll('#detail .voyage-case-steps [data-voyage-chapter]').length,scrollHeight:main.scrollHeight,viewHeight:main.clientHeight,overflow:document.documentElement.scrollWidth-document.documentElement.clientWidth};
   });
   if(detail.hasStory){
+   await page.locator('#detail [data-voyage-chapter="2"]').click();
+   await page.waitForTimeout(200);
+   detail.chapterNavWorked=await page.evaluate(()=>{const m=document.querySelector('#detail .detail-main'),i=document.querySelectorAll('#detail .case-issue')[1];return Math.abs(i.getBoundingClientRect().top-m.getBoundingClientRect().top)<100;});
    await page.locator('#detail .case-issue').nth(1).scrollIntoViewIfNeeded();
    await page.waitForTimeout(280);
    detail.issue2Shown=await page.locator('#detail .case-issue').nth(1).evaluate(e=>e.classList.contains('case-in'));
@@ -36,9 +40,9 @@ const { chromium } = require('playwright');
   await page.waitForFunction(()=>document.querySelector('#detail').hidden,null,{timeout:8000});
   console.log('STELLAR_QA '+JSON.stringify({mobile,intro,works,detail,errors}));
   await context.close();
-  if(!works.hasOrbit||!works.hasIndex||works.background.includes('250, 239, 228'))throw Error('Stellar work stage not visible '+JSON.stringify(works));
+  if(!works.hasOrbit||!works.hasIndex||!works.voyageHud||works.orbitProgressCount!==6||!works.activeVoyage||works.background.includes('250, 239, 228'))throw Error('Stellar work stage not visible '+JSON.stringify(works));
   if(works.screenOverflow>5||detail.overflow>5)throw Error('Horizontal overflow '+JSON.stringify({works,detail}));
-  if(!detail.hasStory||detail.issueCount!==2||!detail.sequence[0].includes('case-intro')||!detail.sequence[3].includes('case-result')||!detail.issue2Shown)throw Error('Case study sequence/animation missing '+JSON.stringify(detail));
+  if(!detail.hasStory||detail.issueCount!==2||!detail.sequence[0].includes('case-intro')||!detail.sequence[3].includes('case-result')||!detail.issue2Shown||detail.caseNavCount!==5||!detail.chapterNavWorked)throw Error('Case study sequence/animation missing '+JSON.stringify(detail));
   if(errors.length)throw Error('Browser errors '+errors.join('; '));
  }
  await check(false);
