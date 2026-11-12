@@ -14,12 +14,12 @@ const studies={
   result:'새로운 음악을 발견하고, 듣고, 응원하는 행동이 자연스럽게 이어지도록 구성했습니다.'
  },
  lostlink:{
-  group:'NEW SERVICE · APP UX',scope:'분실물 등록과 AI 매칭을 결합한 신규 앱 서비스 설계',
+  group:'NEW SERVICE · APP UX',scope:'분실자와 습득자의 물건 특징을 AI로 비교하고 1:1 채팅으로 연결하는 분실물 찾기 서비스 설계',
   issues:[
    ['분실물 찾기 과정이 막막하다','분실 장소와 시간, 물건의 특징이 각각 다른 게시물에 흩어져 있으면 단서를 비교하기 어렵습니다.','종류·위치·시간·특징을 입력하는 구조화된 분실물 등록 화면을 설계했습니다.','REGISTRATION'],
-   ['찾은 물건인지 판단하기 어렵다','비슷한 물건이 여러 개 발견될 때 사진만으로 내 물건인지 확신하기 어렵습니다.','특징 일치도와 매칭 결과를 한 화면에서 비교하도록 구성했습니다.','MATCH RESULT']
+   ['찾은 물건인지 판단하기 어렵다','비슷한 물건이 여러 개 발견될 때 사진만으로 내 물건인지 확신하기 어렵습니다.','특징·장소·시간을 비교해 높은 일치도의 물건을 추천하고, 습득자와 직접 채팅하도록 연결했습니다.','MATCH RESULT']
   ],
-  result:'등록 → 매칭 → 결과 확인으로 이어지는 단계별 경험을 만들었습니다.'
+  result:'분실자와 습득자가 입력한 물건의 색상·형태·스티커·흠집 등 특징을 AI로 비교합니다. 분실 시간과 장소를 함께 고려해 유사도가 높은 후보를 추천하고, 습득자와의 1:1 채팅으로 물건이 맞는지 확인하도록 설계했습니다.'
  },
  voltup:{
   group:'ORIGINAL BRAND · CAMPAIGN',scope:'에너지 부스터 제품의 패키지와 캠페인 비주얼 디자인',
@@ -95,6 +95,25 @@ function issueMarkup(issue,index,total,p){
 function caseMarkup(p){
  const d=studies[p.id];if(!d)return '';
  const sources=artwork[p.id]||[p.cover,p.cover,p.cover,p.cover];
+ if(p.id==='lostlink'){
+ const screens=[
+  {number:'01',eng:'REGISTER',heading:'분실 정보 등록',description:'분실자는 색상·형태·스티커·흠집 같은 물건의 특징과 분실 장소 및 시간을 입력합니다.',src:'./assets/figma-lostlink/lostlink-location.png',alt:'피그마 원본 로스트 링크 분실 시간 및 장소 등록 화면'},
+  {number:'02',eng:'AI MATCHING',heading:'AI로 특징 비교',description:'AI가 분실자의 설명과 습득자의 등록 정보를 비교해 특징·장소·시간이 유사한 물건을 일치도 순으로 제시합니다.',src:'./assets/figma-lostlink/lostlink-match.png',alt:'피그마 원본 로스트 링크 93% MATCH 후보 비교 화면'},
+  {number:'03',eng:'DIRECT CHAT',heading:'습득자와 1:1 채팅',description:'높은 일치도의 물건을 발견하면 습득자와 채팅하며 스티커나 흠집 등 세부 특징을 직접 확인하도록 설계했습니다.',src:'./assets/figma-lostlink/lostlink-chat.png',alt:'피그마 원본 로스트 링크 습득자 일대일 채팅 화면'}
+ ];
+ return '<div class="case-story" data-project-case="lostlink">'+
+ '<section class="case-intro case-chapter" data-case-reveal><div class="case-intro-copy"><span class="case-kicker">PROJECT '+p.n+'</span><h3>IDEA TO<br><em>EXPERIENCE.</em></h3><p>'+safe(d.scope)+'</p></div>'+
+ '<div class="case-intro-image"><img src="'+safe(sources[0])+'" alt="LOST LINK 대표 디자인" loading="lazy" decoding="async"></div></section>'+
+ d.issues.map((a,i)=>issueMarkup(a,i,d.issues.length,p)).join('')+
+ '<section class="case-chapter ll-final" data-case-reveal aria-label="로스트 링크 AI 특징 비교부터 채팅까지">'+
+ '<div class="ll-final-head"><div><span class="case-kicker">DESIGN SOLUTION / LOST LINK</span>'+
+ '<h3>단서를 비교해,<br><em>사람을 연결하다.</em></h3></div>'+
+ '<p>분실자와 습득자가 등록한 <strong>물건의 특징을 AI로 분석</strong>하고, 높은 일치도의 물건을 찾으면 <strong>습득자와 1:1 채팅</strong>으로 직접 확인할 수 있도록 설계했습니다.</p></div>'+
+ '<div class="ll-final-grid">'+screens.map(step=>'<article class="ll-final-card"><div class="ll-final-label"><b>'+step.number+' / 03</b><small>'+step.eng+'</small></div>'+
+ '<div class="ll-final-image"><img src="'+step.src+'" alt="'+step.alt+'" loading="lazy" decoding="async"></div>'+
+ '<h4>'+step.heading+'</h4><p>'+step.description+'</p></article>').join('')+'</div>'+
+ '<div class="ll-final-note"><strong>LOST LINK</strong><span>특징 등록 → AI 일치도 분석 → 습득자 채팅</span></div></section></div>';
+ }
  return '<div class="case-story" data-project-case="'+p.id+'">'+
  '<section class="case-intro case-chapter" data-case-reveal>'+
   '<div class="case-intro-copy"><span class="case-kicker">PROJECT '+p.n+'</span>'+

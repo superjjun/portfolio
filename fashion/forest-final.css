@@ -172,3 +172,35 @@ body:has(#works.showroom-ready) .voyage-waypoint-preview,
 body:has(#works.showroom-ready) .scene-progress{display:none!important}
 #liquid-canvas{display:none!important}
 #detail .detail-poster img,#detail .detail-original img{clip-path:none!important;transform:none!important;object-fit:contain!important}
+
+/* LOST LINK: original Figma screenshots and a clear three-stage AI match / chat result. */
+#detail .case-chapter.ll-final{
+ display:block!important;min-height:0!important;height:auto!important;
+ padding:clamp(30px,5vw,67px)!important;border:1px solid #7f9f8360!important;
+ border-radius:16px!important;overflow:visible!important;
+ background:radial-gradient(ellipse at 80% 4%,#284436,#172c21 55%,#102018)!important;
+}
+#detail .ll-final::after{display:none!important}
+#detail .ll-final-head{display:grid;grid-template-columns:1.12fr .88fr;align-items:end;gap:clamp(24px,4vw,70px);margin-bottom:48px}
+#detail .ll-final-head h3{font-size:clamp(37px,4vw,64px);line-height:1.21;letter-spacing:-.078em;margin:19px 0 0;color:#f3f6ed;word-break:keep-all}
+#detail .ll-final-head h3 em{font-style:normal;color:#c6e6ad}
+#detail .ll-final-head>p{margin:0;font-size:clamp(14px,1.15vw,17px);line-height:1.85;color:#cfdeca;word-break:keep-all}
+#detail .ll-final-head>p strong{color:#d6f1b8}
+#detail .ll-final-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.8vw,25px)}
+#detail .ll-final-card{min-width:0;display:flex;flex-direction:column;padding:clamp(14px,1.7vw,22px);background:#22382b;border:1px solid #88aa8a59;border-radius:13px}
+#detail .ll-final-label{display:flex;justify-content:space-between;align-items:center;gap:8px;padding-bottom:14px}
+#detail .ll-final-label b{font-size:12px;letter-spacing:.12em;color:#c0dbb4}
+#detail .ll-final-label small{font-size:10px;letter-spacing:.1em;color:#a5c39e;font-weight:700}
+#detail .ll-final-image{width:100%;height:clamp(305px,37vw,460px);background:#0b1220;display:grid;place-items:center;overflow:hidden;border-radius:10px}
+#detail .ll-final-image img{width:auto!important;height:auto!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center!important;transform:none!important;box-shadow:none!important;filter:none!important;border-radius:7px}
+#detail .ll-final-card h4{margin:20px 0 8px;color:#f5f7f0;font-size:clamp(17px,1.6vw,23px);letter-spacing:-.04em}
+#detail .ll-final-card p{font-size:clamp(12px,1.04vw,15px);line-height:1.75;color:#c7d7c5;word-break:keep-all;margin:0;flex:1}
+#detail .ll-final-note{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:35px;padding-top:20px;border-top:1px solid #77997880;color:#b6c8ae;font-size:11px}
+#detail .ll-final-note strong{color:#d3eabf;letter-spacing:.15em}
+@media(max-width:900px){
+ #detail .ll-final-head{grid-template-columns:1fr;gap:19px}
+ #detail .ll-final-grid{grid-template-columns:1fr}
+ #detail .ll-final-image{height:clamp(350px,58svh,535px)}
+ #detail .ll-final-card p{font-size:14px}
+ #detail .ll-final{padding:clamp(20px,5vw,35px)!important}
+}
