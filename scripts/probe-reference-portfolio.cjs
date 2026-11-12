@@ -51,10 +51,11 @@ const {chromium}=require('playwright');
    const x=await page.evaluate(()=>({selected:[...document.querySelectorAll('#orbit-detail-nav button')].findIndex(x=>x.classList.contains('is-active')),scroll:document.querySelector('#orbit-detail-scroll').scrollTop}));
    observations.push({click:i,...x});
   }
-  await page.locator('#orbit-detail-close').click({force:true,timeout:5000});
+  console.log('REFERENCE_CHAPTERS '+JSON.stringify(observations));
+  await page.locator('#orbit-detail-close').evaluate(el=>el.click()).catch(e=>console.log('CLOSE_ERROR '+e.message));
   await page.waitForTimeout(800);
  }
- console.log('REFERENCE_CHAPTERS '+JSON.stringify(observations));
+ if(!observations.length)console.log('REFERENCE_CHAPTERS []');
  console.log('REFERENCE_RETURN '+JSON.stringify(await page.evaluate(()=>({detailHidden:document.querySelector('#orbit-project-detail').hidden,exploreVisible:!document.querySelector('#explore').hidden,state:window.__CLEAR_ORBIT_STATE}))));
  console.log('REFERENCE_END '+JSON.stringify({errors,authenticDetail,chapterCount:detail.chapters?.length||0,visited:observations.length}));
  await browser.close();
