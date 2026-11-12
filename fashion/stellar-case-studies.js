@@ -6,12 +6,12 @@
 'use strict';
 const studies={
  soundcloud:{
-  group:'PROMOTION · EXPERIENCE DESIGN',scope:'음악 발견과 이용자 참여를 늘리기 위한 프로모션 UX 기획',
+  group:'PROMOTION · EXPERIENCE DESIGN',scope:'새로운 음악 발견과 사용자 참여를 높이기 위한 프로모션 UX 디자인',
   issues:[
-   ['숨겨진 아티스트를 발견하기 어렵다','익숙한 차트와 인기곡을 반복해서 탐색하면 새로운 아티스트를 만날 기회가 적어집니다.','DISCOVER DROP으로 신인 아티스트와 신곡에 접근하는 진입점을 제안했습니다.','DISCOVERY'],
-   ['참여 동기가 한눈에 전달되지 않는다','음악을 듣는 경험과 아티스트를 응원하는 경험이 분리되면 참여 행동으로 이어지기 어렵습니다.','FIRST LISTENER 배지와 Hidden Stage 참여 흐름을 하나의 프로모션 경험으로 연결했습니다.','PARTICIPATION']
+   ['새로운 아티스트를 접할 기회가 적다','인기곡 위주의 탐색에서는 잘 알려지지 않은 아티스트와 신곡을 발견하기 어렵습니다.','DISCOVER DROP을 통해 덜 알려진 아티스트와 신곡을 쉽게 발견할 수 있도록 했습니다.','DISCOVERY'],
+   ['아티스트를 응원할 계기가 부족하다','음악을 듣는 것 외에 아티스트를 응원하거나 프로모션에 참여할 만한 요소가 부족합니다.','FIRST LISTENER 배지와 Hidden Stage를 통해 음악 감상에서 응원과 참여로 이어지는 흐름을 만들었습니다.','PARTICIPATION']
   ],
-  result:'새로운 음악을 발견하고, 듣고, 응원하는 행동이 자연스럽게 이어지도록 구성했습니다.'
+  result:'새로운 음악을 발견하고 감상한 뒤, 아티스트 응원과 참여까지 자연스럽게 이어지도록 설계했습니다.'
  },
  lostlink:{
   group:'NEW SERVICE · APP UX',scope:'분실자와 습득자의 물건 특징을 AI로 비교하고 1:1 채팅으로 연결하는 분실물 찾기 서비스 설계',
