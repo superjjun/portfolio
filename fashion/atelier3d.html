@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0b0d">
-<title>KIM JUNSEO — 3D DESIGN ATELIER</title>
+<meta name="theme-color" content="#14251a">
+<title>KIM JUNSEO — 3D FOREST GALLERY</title>
 <meta name="description" content="김준서의 실제 디자인 작품을 3D 패션 전시장처럼 탐색하는 웹 포트폴리오.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark;--bg:#0b0b0d;--white:#eeeae4;--muted:#b0aaa4;--line:#77716b55;--lime:#d9f989}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:"DM Sans","Noto Sans KR",sans-serif;color:var(--white)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:radial-gradient(ellipse at center,#304c32,#0f2017 75%);font-family:"DM Sans","Noto Sans KR",sans-serif;color:var(--white)}
 button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
 #scene{position:fixed;inset:0;touch-action:pan-y;cursor:grab}#scene.grabbing{cursor:grabbing}#scene canvas{display:block;width:100%;height:100%}
-.veil{position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,#080809aa 0%,transparent 24%,transparent 76%,#08080966 100%),linear-gradient(0deg,#0b0b0de8 0%,transparent 27%,transparent 76%,#0b0b0da8 100%);z-index:1}
+.veil{position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,#0d2411b3 0%,transparent 31%,transparent 76%,#0e24116e 100%),linear-gradient(0deg,#0d2015d9 0%,transparent 30%,transparent 78%,#0c2615b8 100%);z-index:1}
 header{position:fixed;left:4.1vw;right:4.1vw;top:32px;display:flex;align-items:flex-start;justify-content:space-between;z-index:3;gap:16px}
 .brand{display:flex;align-items:center;gap:15px;text-decoration:none}.brand-mark{font-size:27px;line-height:1;font-weight:700;letter-spacing:-.16em;transform:skewX(-9deg)}.brand-word{font-size:11px;line-height:1.4;letter-spacing:.1em;font-weight:700}
 .head-right{display:flex;align-items:center;gap:32px;text-align:right;font-size:10px;letter-spacing:.14em;color:#c6c0b9}.live-dot{display:inline-block;width:7px;height:7px;border-radius:100%;background:#d9f989;margin-right:8px;box-shadow:0 0 14px #d9f98988}
@@ -60,7 +60,7 @@ body.embedded .brand-word{color:#e7e2d9}
 <div class="veil"></div>
 <header>
  <a class="brand" href="./index.html" aria-label="기존 포트폴리오로 돌아가기"><span class="brand-mark">KJ.</span><span class="brand-word">KIM JUNSEO<br>DESIGN ATELIER</span></a>
- <div class="head-right"><span><i class="live-dot"></i>LIVE WEBGL / INTERACTIVE 3D</span><a href="./index.html">ORIGINAL PORTFOLIO ↗</a></div>
+ <div class="head-right"><span><i class="live-dot"></i>LIVE 3D / FOREST</span><a href="./index.html">ORIGINAL PORTFOLIO ↗</a></div>
 </header>
 <div class="head-rule"></div>
 <div class="copy" aria-live="polite">
@@ -68,12 +68,12 @@ body.embedded .brand-word{color:#e7e2d9}
  <p class="category" id="work-category">WEB / PROMOTION</p><p class="description" id="work-description">음악 발견과 참여를 연결하는 새로운 경험.</p>
  <a class="worklink" href="#" id="inspect">EXPLORE THIS PROJECT &nbsp; ↗</a>
 </div>
-<div class="right-edge">AN INTERACTIVE 3D DESIGN SHOWROOM — NOT A SPACE THEME</div>
+<div class="right-edge">NATURE, MOTION AND ORIGINAL DESIGN</div>
 <div class="foot">
  <div class="instructions"><strong>DRAG</strong> TO LOOK &nbsp; / &nbsp; <strong>SCROLL</strong> TO MOVE<br>CLICK ARTWORK TO INSPECT &nbsp;·&nbsp; ESC TO CLOSE</div>
  <div class="nav"><button id="prev" aria-label="이전 작품">←</button><span class="index"><b id="number">01</b> / 06</span><button id="next" aria-label="다음 작품">→</button></div>
 </div>
-<div class="loading" id="loading"><div class="spinner"></div>BUILDING 3D SHOWROOM</div>
+<div class="loading" id="loading"><div class="spinner"></div>ENTERING FOREST</div>
 <aside class="detail" role="dialog" aria-modal="true" aria-label="프로젝트 상세" id="detail" inert>
  <div class="detail-head"><span>STUDIO / SELECTED WORK</span><button class="detail-close" id="close" aria-label="상세 닫기">×</button></div>
  <div class="number" id="d-number">01 / 06</div><h2 id="d-title">SOUNDCLOUD</h2><div class="subtitle" id="d-type">WEB / PROMOTION</div>
@@ -142,50 +142,84 @@ try{THREE=await import("https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.m
 catch(error){console.warn("3D engine unavailable",error);document.body.classList.add("no3d","ready");}
 if(THREE){
 try{
- const scene=new THREE.Scene();scene.background=new THREE.Color(0x101012);scene.fog=new THREE.Fog(0x101012,9,33);
+ const scene=new THREE.Scene();scene.background=new THREE.Color(0x13241a);scene.fog=new THREE.FogExp2(0x1a3020,.050);
  const camera=new THREE.PerspectiveCamera(36,innerWidth/innerHeight,.1,120);camera.position.set(0,1.45,10.2);
  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:"high-performance"});
- renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.65));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;
+ renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.17));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;
  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
  $("scene").appendChild(renderer.domElement);
- scene.add(new THREE.HemisphereLight(0xc8c9ca,0x171719,2.25));
- const mainLight=new THREE.DirectionalLight(0xffefde,2.6);mainLight.position.set(-4,9,8);scene.add(mainLight);
- const sideLight=new THREE.PointLight(0xdbe4ff,130,25,2);sideLight.position.set(5,4,2);scene.add(sideLight);
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0x171719,roughness:.84,metalness:.15}));
+ scene.add(new THREE.HemisphereLight(0xf4ebcc,0x1c3623,2.6));
+ const mainLight=new THREE.DirectionalLight(0xf4e8bb,2.4);mainLight.position.set(-4,9,8);scene.add(mainLight);
+ const sideLight=new THREE.PointLight(0xb5de91,55,22,2);sideLight.position.set(5,5,2);scene.add(sideLight);
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshLambertMaterial({color:0x203b25}));
  floor.rotation.x=-Math.PI/2;floor.position.y=-1.7;scene.add(floor);
- const rear=new THREE.Mesh(new THREE.PlaneGeometry(70,24),new THREE.MeshStandardMaterial({color:0x1a1a1d,roughness:1}));
+ const rear=new THREE.Mesh(new THREE.PlaneGeometry(70,24),new THREE.MeshLambertMaterial({color:0x1a3020}));
  rear.position.set(0,3,-11);scene.add(rear);
- const groundLines=new THREE.Group();scene.add(groundLines);
- const lineMat=new THREE.LineBasicMaterial({color:0x4f4d4b,transparent:true,opacity:.20});
- for(let i=-8;i<=8;i++){
-  const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(i*1.75,-1.68,9),new THREE.Vector3(i*1.75,-1.68,-27)]);
-  groundLines.add(new THREE.Line(geo,lineMat));
+
+ // Real 3D woodland: instanced trunks, layered foliage and a moss walking path.
+ // All individual leaves are GPU instanced; avoid heavy textures and shadows.
+ const path=new THREE.Mesh(new THREE.PlaneGeometry(5.6,62),new THREE.MeshLambertMaterial({color:0x596746}));
+ path.rotation.x=-Math.PI/2;path.position.set(0,-1.681,-8);scene.add(path);
+ const barkMat=new THREE.MeshLambertMaterial({color:0x4b3828});
+ const foliageMat=new THREE.MeshLambertMaterial({color:0x477648,roughness:1});
+ const treeCount=36;
+ const trunks=new THREE.InstancedMesh(new THREE.CylinderGeometry(.09,.16,1,7),barkMat,treeCount);
+ const crowns=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1,1),foliageMat,treeCount*3);
+ trunks.frustumCulled=false;crowns.frustumCulled=false;
+ const treeDummy=new THREE.Object3D();
+ const greens=[0x4b7d45,0x37683f,0x668850,0x31583a,0x789258];
+ let canopyIndex=0;
+ for(let i=0;i<treeCount;i++){
+   const side=i%2?-1:1,row=Math.floor(i/2);
+   const z=7-row*2.65;
+   const x=side*(4.8+(row%4)*.63+(i%3)*.35);
+   const height=3.5+(i%5)*.48;
+   treeDummy.position.set(x,-1.69+height/2,z);
+   treeDummy.scale.set(1,height,1);treeDummy.rotation.set(0,0,0);
+   treeDummy.updateMatrix();trunks.setMatrixAt(i,treeDummy.matrix);
+   for(let layer=0;layer<3;layer++){
+     treeDummy.position.set(x+Math.sin(i*7+layer)*.22,1.35+layer*.83+(i%4)*.15,z);
+     treeDummy.scale.set(1.5-layer*.24,1.08-layer*.13,1.4-layer*.18);
+     treeDummy.rotation.y=i*.61+layer;
+     treeDummy.updateMatrix();crowns.setMatrixAt(canopyIndex,treeDummy.matrix);
+     crowns.setColorAt(canopyIndex,new THREE.Color(greens[(i+layer)%greens.length]));
+     canopyIndex++;
+   }
  }
- for(let j=-5;j<=15;j++){
-  const z=7-j*1.6;const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-22,-1.68,z),new THREE.Vector3(22,-1.68,z)]);
-  groundLines.add(new THREE.Line(geo,lineMat));
+ scene.add(trunks,crowns);
+ const leafShape=new THREE.Shape();
+ leafShape.moveTo(0,-.22);leafShape.quadraticCurveTo(-.16,-.07,-.10,.07);
+ leafShape.quadraticCurveTo(0,.22,.02,.22);
+ leafShape.quadraticCurveTo(.21,.06,.12,-.08);leafShape.quadraticCurveTo(.06,-.18,0,-.22);
+ const leafGeometry=new THREE.ShapeGeometry(leafShape);
+ const leafMaterial=new THREE.MeshBasicMaterial({color:0xb6d287,side:THREE.DoubleSide,transparent:true,opacity:.65,depthWrite:false});
+ const leafCount=innerWidth<700?16:34;
+ const driftingLeaves=new THREE.InstancedMesh(leafGeometry,leafMaterial,leafCount);
+ driftingLeaves.frustumCulled=false;driftingLeaves.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+ const leafItems=[];
+ for(let i=0;i<leafCount;i++){
+  leafItems.push({x:(Math.random()-.5)*13,y:Math.random()*8-1.2,z:(Math.random()-.5)*13,
+   speed:.22+Math.random()*.42,spin:Math.random()*6.28,sway:Math.random()*6.28,size:.45+Math.random()*.6});
+  driftingLeaves.setColorAt(i,new THREE.Color(greens[i%greens.length]));
  }
- const wallMat=new THREE.MeshStandardMaterial({color:0x343439,roughness:.36,metalness:.50});
- for(let k=-6;k<=6;k++){
-  const strip=new THREE.Mesh(new THREE.BoxGeometry(.075,9,.22),wallMat);
-  strip.position.set(k*3.4,2.3,-9.8);scene.add(strip);
- }
+ scene.add(driftingLeaves);
+ const woodMat=new THREE.MeshStandardMaterial({color:0x302a20,roughness:.87,metalness:.02});
  const artGroups=[],hitMeshes=[],textureLoader=new THREE.TextureLoader();
- const boardMat=new THREE.MeshStandardMaterial({color:0x171719,roughness:.48,metalness:.35});
- const edgeMat=new THREE.MeshStandardMaterial({color:0x8e8882,roughness:.34,metalness:.78});
+ const boardMat=new THREE.MeshStandardMaterial({color:0x302a20,roughness:.86,metalness:.02});
+ const edgeMat=new THREE.MeshStandardMaterial({color:0x9c8d68,roughness:.74,metalness:.08});
  for(let i=0;i<projects.length;i++){
   const p=projects[i],group=new THREE.Group();group.userData.index=i;scene.add(group);artGroups.push(group);
   const board=new THREE.Mesh(new THREE.BoxGeometry(2.72,3.70,.17),boardMat);group.add(board);board.userData.index=i;hitMeshes.push(board);
   const outer=new THREE.Mesh(new THREE.BoxGeometry(2.79,3.77,.055),edgeMat);outer.position.z=-.081;group.add(outer);
-  const backing=new THREE.Mesh(new THREE.PlaneGeometry(2.61,3.57),new THREE.MeshBasicMaterial({color:0x232325,side:THREE.DoubleSide}));
+  const backing=new THREE.Mesh(new THREE.PlaneGeometry(2.61,3.57),new THREE.MeshBasicMaterial({color:0x243729,side:THREE.DoubleSide}));
   backing.position.z=.094;group.add(backing);
   const labelMat=new THREE.MeshBasicMaterial({color:0xf0efe8});
   const numCanvas=document.createElement("canvas");numCanvas.width=512;numCanvas.height=96;const ctx=numCanvas.getContext("2d");
   ctx.clearRect(0,0,512,96);ctx.fillStyle="#ede8e0";ctx.font="700 36px Arial";ctx.fillText(countFor(i)+" / KIM JUNSEO",18,52);
   const label=new THREE.Mesh(new THREE.PlaneGeometry(2.67,.31),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(numCanvas),transparent:true,depthWrite:false}));
   label.position.set(0,-2.11,.08);group.add(label);
-  const pillar=new THREE.Mesh(new THREE.BoxGeometry(.10,.65,.10),wallMat);pillar.position.set(0,-2.19,-.15);group.add(pillar);
-  const base=new THREE.Mesh(new THREE.CylinderGeometry(.83,.83,.1,48),wallMat);base.position.set(0,-2.48,-.15);group.add(base);
+  const pillar=new THREE.Mesh(new THREE.BoxGeometry(.10,.65,.10),woodMat);pillar.position.set(0,-2.19,-.15);group.add(pillar);
+  const base=new THREE.Mesh(new THREE.CylinderGeometry(.83,.83,.1,32),woodMat);base.position.set(0,-2.48,-.15);group.add(base);
   textureLoader.load(p.img,tex=>{
    tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),8);
    const ratio=tex.image.width/tex.image.height,availableW=2.52,availableH=3.48;
@@ -225,12 +259,28 @@ try{
   e.preventDefault();const now=performance.now();
   if(Math.abs(e.deltaY)>7&&now-wheelTime>520){wheelTime=now;setIndex(index+(e.deltaY>0?1:-1));}
  },{passive:false});
- function resize(){const w=innerWidth,h=innerHeight;camera.aspect=w/h;camera.fov=w<650?49:36;camera.updateProjectionMatrix();renderer.setSize(w,h);renderer.setPixelRatio(Math.min(devicePixelRatio||1,w<650?1.3:1.65));}
+ function resize(){const w=innerWidth,h=innerHeight;camera.aspect=w/h;camera.fov=w<650?49:36;camera.updateProjectionMatrix();renderer.setSize(w,h);renderer.setPixelRatio(Math.min(devicePixelRatio||1,w<650?1:1.17));}
  window.addEventListener("resize",resize,{passive:true});resize();
  const clock=new THREE.Clock(),lowMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ let renderVisible=true,lastRender=0;
+ window.addEventListener("message",event=>{
+  if(!isEmbedded||event.origin!==location.origin||event.source!==window.parent)return;
+  if(event.data?.type==="KJ_ATELIER_VISIBILITY")renderVisible=Boolean(event.data.visible);
+ });
  const interpolate=(a,b,t)=>a+(b-a)*t;
  function tick(){
-  requestAnimationFrame(tick);if(document.hidden)return;
+  requestAnimationFrame(tick);
+  if(document.hidden || !renderVisible)return;
+  const now=performance.now(),interval=innerWidth<700?50:33;
+  if(now-lastRender<interval)return;lastRender=now;
+  for(let li=0;li<leafItems.length;li++){
+   const leaf=leafItems[li],time=now*.001;
+   const y=((leaf.y-time*leaf.speed+30)%8)-1.5;
+   treeDummy.position.set(leaf.x+Math.sin(time*.9+leaf.sway)*.36,y,leaf.z);
+   treeDummy.rotation.set(Math.sin(time+leaf.sway)*.42,time*.52+leaf.spin,Math.sin(time*.8+leaf.spin)*.34);
+   treeDummy.scale.setScalar(leaf.size);treeDummy.updateMatrix();driftingLeaves.setMatrixAt(li,treeDummy.matrix);
+  }
+  driftingLeaves.instanceMatrix.needsUpdate=true;
   const dt=Math.min(clock.getDelta(),.05),t=lowMotion?1:1-Math.exp(-dt*5.5);
   artGroups.forEach((group,i)=>{
    const diff=i-index,focused=diff===0;
