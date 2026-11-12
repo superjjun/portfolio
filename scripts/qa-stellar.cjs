@@ -23,6 +23,13 @@ const { chromium } = require('playwright');
   });
   await page.waitForTimeout(220);
   if(!mobile){
+    await page.locator('.voyage-stop[data-voyage-go="2"]').hover();
+    await page.waitForFunction(()=>{const p=document.querySelector('.voyage-waypoint-preview');return p?.classList.contains('is-visible')&&p.querySelector('img')?.naturalWidth>0;},null,{timeout:7000});
+    const preview=await page.evaluate(()=>({title:document.querySelector('.voyage-waypoint-preview strong').textContent,imageWidth:document.querySelector('.voyage-waypoint-preview img').naturalWidth}));
+    if(preview.title!=='VOLT-UP'||preview.imageWidth<100)throw Error('Artwork hover preview failed '+JSON.stringify(preview));
+    await page.mouse.move(755,700);
+  }
+  if(!mobile){
     const workShot=(await page.screenshot({type:'jpeg',quality:49})).toString('base64');
     console.log('VOYAGE_WORK_DESKTOP_BEGIN'+workShot+'VOYAGE_WORK_DESKTOP_END');
   }else{
