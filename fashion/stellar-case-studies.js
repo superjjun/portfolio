@@ -1,4 +1,4 @@
-/* KIM JUNSEO / STELLAR CASE STUDIES 2026
+/* KIM JUNSEO / FOREST CASE STUDIES 2026
    Portfolio artwork, existing Figma videos, About profile and original user files
    remain unchanged. Adds a cinematic selected-work stage and project storytelling.
 */
@@ -55,6 +55,16 @@ const studies={
  }
 };
 const safe=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+// Original artwork sources, not synthetic or repeated hero posters.
+// Each chapter uses a different existing file from the author's own portfolio assets.
+const artwork={
+ soundcloud:['./assets/submitted/soundcloud-poster.webp','./assets/figma/soundcloud-figma-cover.png','./assets/work-soundcloud.png','./assets/figma-original/soundcloud-figma.png'],
+ lostlink:['./assets/submitted/lostlink-poster.webp','./assets/figma/lostlink-figma-cover.png','./assets/work-lostlink.png','./assets/figma-original/lostlink-figma.png'],
+ voltup:['./assets/submitted/voltup-poster.webp','./assets/instagram/voltup-captured-1.jpg','./assets/instagram/voltup-captured-2.jpg','./assets/figma-original/voltup-figma.png'],
+ junggonara:['./assets/submitted/junggonara-poster.webp','./assets/figma/junggonara-figma-cover.png','./assets/work-junggonara.png','./assets/figma-original/junggonara-figma-hires.png'],
+ ppomppu:['./assets/submitted/ppomppu-poster.webp','./assets/figma/ppomppu-figma-cover.png','./assets/work-ppomppu.png','./assets/figma-original/ppomppu-figma.png'],
+ roundlab:['./assets/submitted/roundlab-poster.webp','./assets/figma/roundlab-figma-cover.png','./assets/work-roundlab-screen.png','./assets/figma-original/roundlab-figma-hires.png']
+};
 // Add distinct, light CSS-native orbital art; the author's real project poster remains visible and clickable.
 document.querySelectorAll('.story-project').forEach((section,index)=>{
  const art=section.querySelector('.story-picture');
@@ -62,7 +72,7 @@ document.querySelectorAll('.story-project').forEach((section,index)=>{
  const decorative=document.createElement('span');
  decorative.className='stellar-orbit-art';
  decorative.setAttribute('aria-hidden','true');
- decorative.innerHTML='<span class="stellar-moon"></span><span class="stellar-ring"></span><span class="stellar-star stellar-star-one"></span><span class="stellar-star stellar-star-two"></span>';
+ decorative.innerHTML='<span class="forest-frond forest-frond-a"></span><span class="forest-frond forest-frond-b"></span><span class="forest-frond forest-frond-c"></span>';
  art.insertBefore(decorative,art.firstChild);
  const copy=section.querySelector('.story-copy');
  if(copy){const label=document.createElement('span');label.className='stellar-work-index';label.textContent=String(index+1).padStart(2,'0')+' / 06  —  SELECTED WORKS';copy.prepend(label);}
@@ -70,12 +80,11 @@ document.querySelectorAll('.story-project').forEach((section,index)=>{
 function issueMarkup(issue,index,total,p){
  const [title,before,after,tag]=issue;
  const num=String(index+1).padStart(2,'0');
+ const shot=artwork[p.id]?.[index+1]||p.cover;
  return '<section class="case-chapter case-issue" data-case-reveal aria-labelledby="issue-'+p.id+'-'+num+'">'+
- '<div class="case-constellations" aria-hidden="true"><i></i><i></i><i></i><i></i></div>'+
  '<div class="case-chapter-inner">'+
- '<div class="case-side"><span class="case-kicker">DESIGN DIAGNOSIS / '+num+' OF '+String(total).padStart(2,'0')+'</span>'+
- '<strong class="case-num" aria-hidden="true">'+num+'</strong><div class="case-orbit" aria-hidden="true"><span></span></div>'+ '<figure class="case-evidence" aria-hidden="true"><div class="case-evidence-window"><img src="'+safe(p.cover)+'" alt="" loading="lazy"></div><span class="case-evidence-focus">FOCUS '+num+'</span><figcaption>MY DESIGN / '+safe(tag)+'</figcaption></figure>'+
- '<span class="case-side-bottom">SCROLL TO EXPLORE <b>↓</b></span></div>'+
+ '<div class="case-side"><figure class="case-evidence"><div class="case-evidence-window">'+
+ '<img src="'+safe(shot)+'" alt="'+safe(p.title)+' 실제 작업 화면 '+num+'" loading="lazy" decoding="async"></div></figure></div>'+
  '<div class="case-body"><span class="case-tag">PROBLEM '+num+' / '+safe(tag)+'</span>'+
  '<h3 id="issue-'+p.id+'-'+num+'">'+safe(title)+'</h3>'+
  '<p class="case-lead">'+safe(before)+'</p>'+
@@ -85,22 +94,20 @@ function issueMarkup(issue,index,total,p){
 }
 function caseMarkup(p){
  const d=studies[p.id];if(!d)return '';
+ const sources=artwork[p.id]||[p.cover,p.cover,p.cover,p.cover];
  return '<div class="case-story" data-project-case="'+p.id+'">'+
  '<section class="case-intro case-chapter" data-case-reveal>'+
-  '<div class="case-intro-copy"><span class="case-kicker">CASE STUDY / '+p.n+' — 06</span>'+
-  '<span class="case-dotted" aria-hidden="true">✦ ─────────── ✧</span>'+
-  '<h3>THE<br><em>THOUGHT</em><br>BEHIND.</h3>'+
-  '<p>'+safe(d.scope)+'</p>'+
-  '<span class="case-intro-cue">DESIGN PROCESS · SCROLL ↓</span></div>'+
-  '<div class="case-intro-image" aria-hidden="true"><img src="'+safe(p.cover)+'" alt="" loading="lazy"></div>'+
+  '<div class="case-intro-copy"><span class="case-kicker">PROJECT '+p.n+'</span>'+
+  '<h3>IDEA TO<br><em>EXPERIENCE.</em></h3>'+
+  '<p>'+safe(d.scope)+'</p></div>'+
+  '<div class="case-intro-image"><img src="'+safe(sources[0])+'" alt="'+safe(p.title)+' 포트폴리오 제출 대표 이미지" loading="lazy" decoding="async"></div>'+
  '</section>'+
  d.issues.map((a,i)=>issueMarkup(a,i,d.issues.length,p)).join('')+
  '<section class="case-chapter case-result" data-case-reveal>'+
-  '<div class="case-result-text"><span class="case-kicker">SOLUTION / DESIGN RESULT</span><h3>WHAT<br>CHANGED<span>.</span></h3>'+
-  '<p>'+safe(d.result)+'</p><span class="case-result-type">'+safe(d.group)+'</span></div>'+
-  '<div class="case-result-art"><img src="'+safe(p.cover)+'" alt="'+safe(p.title)+' 개선 결과 디자인" loading="lazy"></div>'+
+  '<div class="case-result-text"><span class="case-kicker">DESIGN RESULT</span><h3>THE<br>RESULT<span>.</span></h3>'+
+  '<p>'+safe(d.result)+'</p></div>'+
+  '<div class="case-result-art"><img src="'+safe(sources[3])+'" alt="'+safe(p.title)+' 실제 완성 디자인 이미지" loading="lazy" decoding="async"></div>'+
  '</section>'+
- '<div class="case-end-note"><span>THE RESULT IS IN THE DETAILS.</span><span>아래에서 실제 작업 화면과 원본 이미지를 확인할 수 있습니다 ↓</span></div>'+
  '</div>';
 }
 let caseObserver=null,videoObserver=null;
