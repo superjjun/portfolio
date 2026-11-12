@@ -14,7 +14,7 @@
 *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:linear-gradient(180deg,#d8e3d8 0%,#b6c9b0 51%,#7c9d71 100%);font-family:"DM Sans","Noto Sans KR",sans-serif;color:var(--white)}
 button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
 #scene{position:fixed;inset:0;touch-action:pan-y;cursor:grab}
-.quick-art{position:fixed;left:55%;top:50%;transform:translate(-50%,-50%);z-index:2;width:min(43vw,610px);height:min(70vh,710px);border:0;padding:0;background:transparent;display:grid;place-items:center;cursor:pointer;pointer-events:auto;perspective:1100px;opacity:1;transition:opacity .42s ease}
+.quick-art{display:none!important;position:fixed;left:55%;top:50%;transform:translate(-50%,-50%);z-index:2;width:min(43vw,610px);height:min(70vh,710px);border:0;padding:0;background:transparent;display:grid;place-items:center;cursor:pointer;pointer-events:auto;perspective:1100px;opacity:1;transition:opacity .42s ease}
 .quick-art img{display:block;width:auto;max-width:100%;height:auto;max-height:100%;object-fit:contain;box-shadow:0 24px 70px #0009;transform:rotateY(-7deg) translate3d(0,0,0);transition:opacity .15s,transform .7s cubic-bezier(.18,.7,.3,1);backface-visibility:hidden}
 .quick-art img.is-changing{opacity:.35}
 .quick-art:hover img{transform:rotateY(0deg) translateY(-8px)}
@@ -65,7 +65,7 @@ body.embedded .brand-word{color:#e7e2d9}
 <div id="scene" aria-label="실제 WebGL 3D 공간. 좌우 화살표, 마우스 드래그, 휠로 탐색하고 선택된 작품은 Enter로 열 수 있습니다." tabindex="0"></div>
 <div class="veil"></div>
 <button class="quick-art" id="quick-art" aria-label="선택한 프로젝트 상세 보기" type="button">
-<img id="quick-art-img" src="./assets/submitted/soundcloud-poster.webp" alt="SOUNDCLOUD 실제 디자인 작품 미리보기" fetchpriority="high" decoding="async">
+<img id="quick-art-img" alt="작품 전시 패널" decoding="async">
 </button>
 <header>
  <a class="brand" href="./index.html" aria-label="기존 포트폴리오로 돌아가기"><span class="brand-mark">KJ.</span><span class="brand-word">KIM JUNSEO<br>DESIGN ATELIER</span></a>
@@ -73,16 +73,16 @@ body.embedded .brand-word{color:#e7e2d9}
 </header>
 <div class="head-rule"></div>
 <div class="copy" aria-live="polite">
- <p class="section-label">SELECTED WORK / 2026</p><h1 id="work-title">SOUNDCLOUD</h1>
+ <p class="section-label">FOREST GALLERY / 2026</p><h1 id="work-title">SOUNDCLOUD</h1>
  <p class="category" id="work-category">WEB / PROMOTION</p><p class="description" id="work-description">음악 발견과 참여를 연결하는 새로운 경험.</p>
  <a class="worklink" href="#" id="inspect">EXPLORE THIS PROJECT &nbsp; ↗</a>
 </div>
 
 <div class="foot">
- <div class="instructions"><strong>DRAG</strong> TO LOOK &nbsp; / &nbsp; <strong>ARROWS</strong> TO SWITCH<br><strong>SCROLL</strong> TO CONTINUE DOWN &nbsp;·&nbsp; CLICK TO VIEW</div>
+ <div class="instructions"><strong>DRAG</strong> TO EXPLORE &nbsp; / &nbsp; <strong>ARROWS</strong> TO SWITCH<br><strong>SCROLL</strong> TO CONTINUE &nbsp;·&nbsp; <strong>CLICK</strong> TO DISCOVER</div>
  <div class="nav"><button id="prev" aria-label="이전 작품">←</button><span class="index"><b id="number">01</b> / 06</span><button id="next" aria-label="다음 작품">→</button></div>
 </div>
-<div class="loading" id="loading"><div class="spinner"></div>ENTERING FOREST</div>
+<div class="loading" id="loading"><div class="spinner"></div>PREPARING THE EXHIBITION</div>
 <aside class="detail" role="dialog" aria-modal="true" aria-label="프로젝트 상세" id="detail" inert>
  <div class="detail-head"><span>STUDIO / SELECTED WORK</span><button class="detail-close" id="close" aria-label="상세 닫기">×</button></div>
  <div class="number" id="d-number">01 / 06</div><h2 id="d-title">SOUNDCLOUD</h2><div class="subtitle" id="d-type">WEB / PROMOTION</div>
@@ -109,18 +109,10 @@ if(isEmbedded)document.body.classList.add("embedded");
 let index=0,detailOpen=false;
 const quickImg=$("quick-art-img"),quickArt=$("quick-art");
 const renderedPosters=new Set();
-function showQuickImage(){
- const p=projects[index];
- quickArt.classList.toggle("is-webgl-loaded",renderedPosters.has(p.id));
- quickImg.classList.add("is-changing");
- if(quickImg.getAttribute("src")!==p.preview)quickImg.src=p.preview;
- quickImg.alt=p.title+" 실제 디자인 미리보기";
- if(quickImg.decode)quickImg.decode().catch(()=>{}).then(()=>quickImg.classList.remove("is-changing"));
- else quickImg.classList.remove("is-changing");
-}
+function showQuickImage(){ /* 3D curated exhibition signs render synchronously; no raw posters on home. */ }
 quickArt.addEventListener("click",()=>openDetail());
 // Cache lightweight previews (~100-400 KB), not multi-megabyte original exports.
-projects.forEach(p=>{const im=new Image();im.decoding="async";im.src=p.preview;});
+// Full-resolution originals load only inside the corresponding project detail.
 const count=()=>String(index+1).padStart(2,"0");
 function sync(){
  const p=projects[index];
@@ -129,8 +121,8 @@ function sync(){
  $("d-number").textContent=count()+" / 06";$("d-title").textContent=p.title;$("d-type").textContent=p.kind;$("d-desc").textContent=p.short;
  $("d-challenge").textContent=p.challenge;$("d-solution").textContent=p.solution;$("d-link").href="./index.html#work-"+p.id;showQuickImage();
 }
-let requestHighRes=()=>{};
-function setIndex(i){index=(i+projects.length)%projects.length;sync();requestHighRes(index);requestHighRes((index+1)%projects.length);}
+
+function setIndex(i){index=(i+projects.length)%projects.length;sync();}
 function openDetail(){detailOpen=true;sync();if(!isEmbedded)$("d-img").src=projects[index].img;
  if(isEmbedded){
    // Allow the exhibition object to move closer before the original portfolio's full case study opens.
@@ -376,64 +368,182 @@ try{
    driftingLeaves.setColorAt(i,new THREE.Color(greenPalette[i%greenPalette.length]));
  }
  scene.add(driftingLeaves);
- const woodMat=new THREE.MeshStandardMaterial({color:0x302a20,roughness:.87,metalness:.02});
- const artGroups=[],hitMeshes=[],textureLoader=new THREE.TextureLoader();
- const posters=new Map(),loadingHighRes=new Set(),doneHighRes=new Set();
- const boardMat=new THREE.MeshStandardMaterial({color:0x302a20,roughness:.86,metalness:.02});
- const edgeMat=new THREE.MeshStandardMaterial({color:0x9c8d68,roughness:.74,metalness:.08});
- for(let i=0;i<projects.length;i++){
-  const p=projects[i],group=new THREE.Group();group.userData.index=i;scene.add(group);artGroups.push(group);
-  const board=new THREE.Mesh(new THREE.BoxGeometry(2.72,3.70,.17),boardMat);group.add(board);board.userData.index=i;hitMeshes.push(board);
-  const outer=new THREE.Mesh(new THREE.BoxGeometry(2.79,3.77,.055),edgeMat);outer.position.z=-.081;group.add(outer);
-  const backing=new THREE.Mesh(new THREE.PlaneGeometry(2.61,3.57),new THREE.MeshBasicMaterial({color:0x243729,side:THREE.DoubleSide}));
-  backing.position.z=.094;group.add(backing);
-  const pillar=new THREE.Mesh(new THREE.BoxGeometry(.10,.65,.10),woodMat);pillar.position.set(0,-2.19,-.15);group.add(pillar);
-  const base=new THREE.Mesh(new THREE.CylinderGeometry(.83,.83,.1,32),woodMat);base.position.set(0,-2.48,-.15);group.add(base);
-  textureLoader.load(p.preview,tex=>{
-   tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),8);
-   const ratio=tex.image.width/tex.image.height,availableW=2.52,availableH=3.48;
-   let w=availableW,h=w/ratio;if(h>availableH){h=availableH;w=h*ratio;}
-   const poster=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide,toneMapped:false}));
-   poster.position.z=.104;poster.userData.index=i;hitMeshes.push(poster);group.add(poster);posters.set(i,poster);
-   if(i===index||i===(index+1)%projects.length)requestAnimationFrame(()=>requestHighRes(i));
-   renderedPosters.add(p.id);
-   if(i===index){
-     requestAnimationFrame(()=>requestAnimationFrame(()=>{
-       if(index===i && !renderer.getContext().isContextLost())quickArt.classList.add("is-webgl-loaded");
-     }));
-   }
-  },undefined,()=>{console.warn("Could not load poster",p.preview);quickArt.classList.remove("is-webgl-loaded");});
- }
- // Small previews are immediate; show the full-resolution original for the selected and next project.
- requestHighRes=(i)=>{
-   if(doneHighRes.has(i)||loadingHighRes.has(i))return;
-   const p=projects[i],poster=posters.get(i);if(!poster)return;
-   loadingHighRes.add(i);
-   textureLoader.load(p.img,full=>{
-     try{
-       let tex=full;const image=full.image,edge=Math.max(image.width,image.height);
-       if(edge>4096){
-         const scale=4096/edge,cv=document.createElement("canvas");
-         cv.width=Math.max(1,Math.round(image.width*scale));
-         cv.height=Math.max(1,Math.round(image.height*scale));
-         cv.getContext("2d",{alpha:false}).drawImage(image,0,0,cv.width,cv.height);
-         tex=new THREE.CanvasTexture(cv);full.dispose();
-       }
-       tex.colorSpace=THREE.SRGBColorSpace;
-       tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),12);
-       tex.minFilter=THREE.LinearMipmapLinearFilter;
-       let w=2.52,h=w*image.height/image.width;if(h>3.48){h=3.48;w=h*image.width/image.height;}
-       const prior=poster.material.map;poster.geometry.dispose();
-       poster.geometry=new THREE.PlaneGeometry(w,h);
-       poster.material.map=tex;poster.material.needsUpdate=true;
-       prior?.dispose();
-       doneHighRes.add(i);
-     }catch(error){console.warn("High resolution artwork error",p.id,error);}
-     loadingHighRes.delete(i);
-   },undefined,()=>{loadingHighRes.delete(i);console.warn("High resolution unavailable",p.id);});
- };
- requestHighRes(index);requestHighRes((index+1)%projects.length);
 
+ // FOREST EDITION: six curated museum signs, rendered instantly on GPU canvases.
+ // The original full-resolution works remain in each linked project detail, not on these gallery signs.
+ const artGroups=[],hitMeshes=[];
+ const frameMat=new THREE.MeshStandardMaterial({color:0x403b2e,roughness:.62,metalness:.13});
+ const rimMat=new THREE.MeshStandardMaterial({color:0x958c6b,roughness:.48,metalness:.17});
+ const supportMat=new THREE.MeshStandardMaterial({color:0x4b4739,roughness:.83,metalness:.04});
+ const plaquePaper=new THREE.MeshBasicMaterial({color:0xeee9dc});
+ const palettes={
+   soundcloud:{accent:"#b76745",wash:"#ead8c4",ink:"#463a30",soft:"#f4e8dc",motif:"signal",label:"THE SOUND OF DISCOVERY"},
+   lostlink:{accent:"#557c93",wash:"#dbe6e3",ink:"#354b56",soft:"#e8efeb",motif:"connect",label:"RECONNECT WHAT MATTERS"},
+   voltup:{accent:"#899449",wash:"#e5e8cf",ink:"#39412d",soft:"#f1efdc",motif:"energy",label:"TURN YOUR ENERGY ON"},
+   junggonara:{accent:"#648576",wash:"#dae8d9",ink:"#36493b",soft:"#e8eee4",motif:"exchange",label:"A NEW LIFE FOR OBJECTS"},
+   ppomppu:{accent:"#8d829b",wash:"#e5e0e8",ink:"#4a4153",soft:"#f0eaf0",motif:"layers",label:"RETHINK EVERYDAY INFO"},
+   roundlab:{accent:"#739eaf",wash:"#d9e7e8",ink:"#3e5661",soft:"#e9f3ef",motif:"ripples",label:"THE FEELING OF HYDRATION"}
+ };
+ const projectCaption={
+   soundcloud:"새로운 음악을 발견하고 참여하는 경험",
+   lostlink:"잃어버린 물건을 다시 연결하는 서비스",
+   voltup:"운동 전 에너지를 깨우는 캠페인",
+   junggonara:"안전하고 직관적인 중고거래 경험",
+   ppomppu:"더 빠르고 간결한 정보 탐색 경험",
+   roundlab:"촉촉함과 산뜻함을 전하는 비주얼"
+ };
+ const roundRect=(ctx,x,y,w,h,r)=>{
+  const rr=Math.min(r,w/2,h/2);
+  ctx.beginPath();ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);
+  ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);
+  ctx.arcTo(x,y,x+w,y,rr);ctx.closePath();
+ };
+ function drawMotif(ctx,p,c,x,y,w,h){
+   ctx.save();ctx.translate(x,y);
+   // Textured archival-paper color with generous negative space.
+   ctx.fillStyle=c.soft;roundRect(ctx,0,0,w,h,12);ctx.fill();
+   ctx.save();roundRect(ctx,0,0,w,h,12);ctx.clip();
+   const grad=ctx.createLinearGradient(0,0,w,h);
+   grad.addColorStop(0,c.wash);grad.addColorStop(1,c.soft);
+   ctx.fillStyle=grad;ctx.fillRect(0,0,w,h);
+   ctx.translate(w/2,h/2);
+   ctx.strokeStyle=c.accent;ctx.fillStyle=c.accent;ctx.lineCap="round";ctx.lineJoin="round";
+   if(c.motif==="signal"){
+     for(let k=0;k<12;k++){
+       const yy=-210+k*38,phase=k*.43;
+       ctx.beginPath();ctx.lineWidth=k%3===0?10:5;ctx.globalAlpha=.21+(k%4)*.12;
+       for(let t=-300;t<=300;t+=7){
+         const v=Math.sin(t*.017+phase)*42+Math.sin(t*.037-phase)*13;
+         const xx=t,dy=yy+v;if(t===-300)ctx.moveTo(xx,dy);else ctx.lineTo(xx,dy);
+       }
+       ctx.stroke();
+     }
+     ctx.globalAlpha=1;ctx.lineWidth=4;ctx.strokeRect(-100,-100,200,200);
+     ctx.beginPath();ctx.arc(0,0,62,0,Math.PI*2);ctx.stroke();
+     ctx.fillRect(-4,-142,8,284);
+   }else if(c.motif==="connect"){
+     const nodes=[[-190,-85],[158,-160],[175,115],[-150,155],[0,-15]];
+     ctx.globalAlpha=.5;ctx.lineWidth=3;
+     for(let i=0;i<nodes.length-1;i++){
+       ctx.beginPath();ctx.moveTo(...nodes[i]);ctx.quadraticCurveTo(0,-65,...nodes[(i+1)%nodes.length]);ctx.stroke();
+     }
+     nodes.forEach(([nx,ny],i)=>{
+       ctx.globalAlpha=i===4?.95:.65;ctx.beginPath();ctx.arc(nx,ny,i===4?43:19,0,Math.PI*2);ctx.fill();
+       ctx.globalAlpha=1;ctx.beginPath();ctx.arc(nx,ny,i===4?18:8,0,Math.PI*2);
+       ctx.fillStyle=c.soft;ctx.fill();ctx.fillStyle=c.accent;
+     });
+     ctx.globalAlpha=.2;for(let k=0;k<5;k++){
+       ctx.beginPath();ctx.arc(0,-15,85+k*43,0,Math.PI*2);ctx.stroke();
+     }
+   }else if(c.motif==="energy"){
+     ctx.translate(0,-10);
+     ctx.globalAlpha=.85;ctx.beginPath();
+     ctx.moveTo(55,-220);ctx.lineTo(-116,-28);ctx.lineTo(-12,-28);
+     ctx.lineTo(-80,214);ctx.lineTo(152,-77);ctx.lineTo(32,-77);
+     ctx.closePath();ctx.fill();
+     ctx.globalAlpha=.17;ctx.lineWidth=14;
+     for(let i=-7;i<=7;i++){
+       ctx.beginPath();ctx.moveTo(i*74-70,-220);ctx.lineTo(i*74+120,240);ctx.stroke();
+     }
+   }else if(c.motif==="exchange"){
+     ctx.globalAlpha=.75;ctx.lineWidth=36;
+     ctx.beginPath();ctx.ellipse(-95,-30,126,176,-.62,0,Math.PI*2);ctx.stroke();
+     ctx.beginPath();ctx.ellipse(96,24,126,176,-.62,0,Math.PI*2);ctx.stroke();
+     ctx.globalAlpha=.4;ctx.lineWidth=3;
+     for(let i=-3;i<=3;i++){
+       ctx.beginPath();ctx.moveTo(-260,i*70);ctx.lineTo(250,i*70);ctx.stroke();
+     }
+   }else if(c.motif==="layers"){
+     ctx.globalAlpha=.8;for(let i=0;i<5;i++){
+       const xx=-210+i*40,yy=-190+i*56;
+       ctx.save();ctx.translate(xx,yy);ctx.rotate((i-2)*.075);
+       ctx.strokeStyle=c.accent;ctx.lineWidth=4;ctx.strokeRect(0,0,290,305);
+       ctx.globalAlpha=.23+i*.06;ctx.fillRect(0,0,290,305);
+       ctx.restore();
+     }
+     ctx.globalAlpha=.8;for(let r=0;r<4;r++){
+       ctx.fillStyle=c.accent;ctx.fillRect(-90,-65+r*50,130-r*17,6);
+     }
+   }else if(c.motif==="ripples"){
+     ctx.globalAlpha=.7;ctx.lineWidth=3;
+     for(let i=0;i<11;i++){
+       ctx.beginPath();ctx.ellipse(0,64,33+i*34,14+i*20,0,0,Math.PI*2);
+       ctx.stroke();
+     }
+     const glow=ctx.createRadialGradient(0,-70,8,0,-70,164);
+     glow.addColorStop(0,"#ffffffcd");glow.addColorStop(1,"#ffffff00");
+     ctx.globalAlpha=1;ctx.fillStyle=glow;ctx.beginPath();ctx.arc(0,-70,165,0,Math.PI*2);ctx.fill();
+     ctx.fillStyle=c.accent;ctx.globalAlpha=.85;
+     ctx.beginPath();ctx.moveTo(0,-210);ctx.bezierCurveTo(-85,-105,-100,-25,0,13);
+     ctx.bezierCurveTo(100,-25,85,-105,0,-210);ctx.fill();
+   }
+   ctx.restore();
+   // A restrained, small museum category in the graphic window.
+   ctx.fillStyle=c.ink;ctx.globalAlpha=.57;
+   ctx.font="600 17px 'DM Sans',Arial,sans-serif";
+   ctx.fillText("FIELD STUDY  /  "+p.kind,32,h-30);
+   ctx.restore();
+ }
+ function makeCuratedSign(p,i){
+   const W=920,H=1260,canvas=document.createElement("canvas");
+   canvas.width=W;canvas.height=H;
+   const ctx=canvas.getContext("2d",{alpha:false}),c=palettes[p.id];
+   ctx.fillStyle="#eeeadf";ctx.fillRect(0,0,W,H);
+   const wash=ctx.createLinearGradient(0,0,W,H);
+   wash.addColorStop(0,"#f5f0e6");wash.addColorStop(1,"#dfdbcc");
+   ctx.fillStyle=wash;ctx.fillRect(0,0,W,H);
+   // Fine pigment grain, with a deterministic sequence for clean repeated exports.
+   let seed=1009+i*347;
+   const rnd=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
+   for(let k=0;k<5500;k++){
+     ctx.fillStyle=rnd()>.5?"#4e4b3e":"#ffffff";
+     ctx.globalAlpha=rnd()*.043;const gx=rnd()*W,gy=rnd()*H;
+     ctx.fillRect(gx,gy,rnd()*2+.2,rnd()*2+.2);
+   }
+   ctx.globalAlpha=1;ctx.fillStyle=c.ink;
+   ctx.font="700 22px 'DM Sans',Arial,sans-serif";
+   ctx.fillText("FIELD NOTES  /  DESIGN EXHIBITION",70,85);
+   ctx.textAlign="right";ctx.font="600 20px 'DM Sans',Arial,sans-serif";
+   ctx.fillText(String(i+1).padStart(2,"0")+"  —  06",W-70,85);ctx.textAlign="left";
+   ctx.fillStyle=c.accent;ctx.fillRect(70,115,86,5);
+   ctx.strokeStyle="#7775666a";ctx.lineWidth=2;
+   ctx.beginPath();ctx.moveTo(70,150);ctx.lineTo(W-70,150);ctx.stroke();
+   drawMotif(ctx,p,c,70,194,780,655);
+   ctx.strokeStyle="#807e6a72";ctx.beginPath();ctx.moveTo(70,886);ctx.lineTo(W-70,886);ctx.stroke();
+   ctx.fillStyle=c.accent;ctx.font="700 21px 'DM Sans',Arial,sans-serif";
+   ctx.fillText(c.label,70,927);
+   ctx.fillStyle=c.ink;ctx.font="700 "+(p.title.length>12?78:95)+"px 'Space Grotesk',Arial,sans-serif";
+   ctx.fillText(p.title,67,1054,780);
+   ctx.font="500 26px 'Noto Sans KR',Arial,sans-serif";ctx.globalAlpha=.82;
+   ctx.fillText(projectCaption[p.id],70,1110,780);
+   ctx.globalAlpha=1;ctx.strokeStyle="#807e6a69";
+   ctx.beginPath();ctx.moveTo(70,1152);ctx.lineTo(W-70,1152);ctx.stroke();
+   ctx.font="600 19px 'DM Sans',Arial,sans-serif";ctx.fillStyle=c.ink;
+   ctx.fillText("KJ  /  SELECTED WORK",70,1200);
+   ctx.textAlign="right";ctx.fillStyle=c.accent;ctx.fillText("DISCOVER THE PROJECT  ↗",W-70,1200);ctx.textAlign="left";
+   const map=new THREE.CanvasTexture(canvas);
+   map.colorSpace=THREE.SRGBColorSpace;
+   map.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),8);
+   map.minFilter=THREE.LinearMipmapLinearFilter;
+   return map;
+ }
+ for(let i=0;i<projects.length;i++){
+   const p=projects[i],group=new THREE.Group();
+   group.userData.index=i;scene.add(group);artGroups.push(group);
+   // Slender walnut-toned metal frame and small gallery pedestal.
+   const outer=new THREE.Mesh(new THREE.BoxGeometry(2.81,3.78,.115),rimMat);
+   outer.position.z=-.095;group.add(outer);
+   const board=new THREE.Mesh(new THREE.BoxGeometry(2.76,3.73,.14),frameMat);
+   board.userData.index=i;group.add(board);hitMeshes.push(board);
+   const art=new THREE.Mesh(new THREE.PlaneGeometry(2.65,3.59),
+     new THREE.MeshBasicMaterial({map:makeCuratedSign(p,i),side:THREE.DoubleSide,toneMapped:false}));
+   art.position.z=.076;art.userData.index=i;group.add(art);hitMeshes.push(art);
+   const support=new THREE.Mesh(new THREE.CylinderGeometry(.048,.061,.62,16),supportMat);
+   support.position.set(0,-2.14,-.11);group.add(support);
+   const base=new THREE.Mesh(new THREE.CylinderGeometry(.54,.62,.10,32),
+     new THREE.MeshStandardMaterial({color:0x655f4b,roughness:.96,metalness:0}));
+   base.position.set(0,-2.48,-.14);group.add(base);
+ }
  const raycaster=new THREE.Raycaster(),mouse2=new THREE.Vector2();
  let pointerX=0,pointerY=0,isDragging=false,startX=0,startY=0,lastX=0,dragBias=0,hovered=-1;
  const point=(e)=>{const rect=$("scene").getBoundingClientRect();mouse2.set((e.clientX-rect.left)/rect.width*2-1,-((e.clientY-rect.top)/rect.height*2-1));};
