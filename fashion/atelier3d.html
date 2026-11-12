@@ -254,6 +254,7 @@ try{
    let w=availableW,h=w/ratio;if(h>availableH){h=availableH;w=h*ratio;}
    const poster=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide,toneMapped:false}));
    poster.position.z=.104;poster.userData.index=i;hitMeshes.push(poster);group.add(poster);posters.set(i,poster);
+   if(i===index||i===(index+1)%projects.length)requestAnimationFrame(()=>requestHighRes(i));
    renderedPosters.add(p.id);
    if(i===index){
      requestAnimationFrame(()=>requestAnimationFrame(()=>{
