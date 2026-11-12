@@ -49,6 +49,10 @@ body.no3d .fallback{display:grid}body.no3d .copy,body.no3d .right-edge{display:n
 }
 @media(max-width:480px){.brand-word{font-size:9px}.head-right{font-size:8px}.copy{bottom:124px}.copy h1{max-width:190px}.copy .description{max-width:210px}.right-edge{font-size:8px}.fallback{grid-template-columns:1fr}.fallback img{height:140px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+body.embedded header .brand{pointer-events:none}
+body.embedded .head-right a{display:none}
+body.embedded .detail{display:none!important}
+body.embedded .brand-word{color:#e7e2d9}
 </style>
 </head>
 <body>
@@ -91,6 +95,8 @@ const projects=[
  {id:"roundlab",title:"ROUND LAB",kind:"VISUAL / DETAIL PAGE",short:"촉촉함을 시각적인 경험으로 전달하다.",img:"./assets/figma-original/roundlab-figma-hires.png",color:"#b1dff1",challenge:"수분감과 산뜻함을 감각적인 이미지로 표현할 필요가 있었습니다.",solution:"블루·화이트, 물방울, 제품 컷을 결합한 스크롤형 상세페이지를 제작했습니다."}
 ];
 const $=id=>document.getElementById(id);
+const isEmbedded=new URLSearchParams(location.search).get("embed")==="1";
+if(isEmbedded)document.body.classList.add("embedded");
 let index=0,detailOpen=false;
 const count=()=>String(index+1).padStart(2,"0");
 function sync(){
@@ -101,7 +107,13 @@ function sync(){
  $("d-challenge").textContent=p.challenge;$("d-solution").textContent=p.solution;$("d-img").src=p.img;$("d-link").href="./index.html#work-"+p.id;
 }
 function setIndex(i){index=(i+projects.length)%projects.length;sync();}
-function openDetail(){detailOpen=true;sync();document.body.classList.add("detail-open");$("detail").inert=false;$("close").focus({preventScroll:true});}
+function openDetail(){detailOpen=true;sync();
+ if(isEmbedded){
+   // Allow the exhibition object to move closer before the original portfolio's full case study opens.
+   window.setTimeout(()=>window.parent.postMessage({type:"KJ_ATELIER_OPEN",project:projects[index].id},location.origin),330);
+   return;
+ }
+ document.body.classList.add("detail-open");$("detail").inert=false;$("close").focus({preventScroll:true});}
 function closeDetail(){detailOpen=false;document.body.classList.remove("detail-open");$("detail").inert=true;$("scene").focus({preventScroll:true});}
 $("prev").addEventListener("click",()=>{closeDetailIfNeeded();setIndex(index-1);});
 $("next").addEventListener("click",()=>{closeDetailIfNeeded();setIndex(index+1);});
@@ -116,6 +128,10 @@ window.addEventListener("keydown",e=>{
  if(e.key==="Enter" && (document.activeElement===$("scene"))){e.preventDefault();openDetail();}
 });
 sync();
+window.addEventListener("message",event=>{
+ if(!isEmbedded || event.origin!==location.origin || event.source!==window.parent)return;
+ if(event.data?.type==="KJ_ATELIER_CLOSE"){detailOpen=false;}
+});
 const fallback=$("fallback");
 projects.forEach((p,i)=>{
  const btn=document.createElement("button");btn.innerHTML="<img src='"+p.img+"' alt=''><b>"+p.title+"</b><small>"+p.kind+"</small>";
@@ -237,6 +253,7 @@ try{
   renderer.render(scene,camera);
  }
  tick();document.body.classList.add("ready");$("loading").removeAttribute("aria-busy");
+ if(isEmbedded)window.parent.postMessage({type:"KJ_ATELIER_READY"},location.origin);
 }catch(error){console.error("WebGL initialization failed",error);document.body.classList.add("no3d","ready");}
 }
 </script>
