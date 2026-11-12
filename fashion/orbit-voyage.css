@@ -126,3 +126,60 @@ body.voyage-active .voyage-hud{opacity:1;pointer-events:auto;transform:translate
  .voyage-warp{animation:none;display:none}
  .voyage-hud,.voyage-portal-hint{transition:none}
 }
+
+
+/* Real design evidence from each project, not an invented "before" screenshot.
+   This replaces the blank abstract-only problem visual with actual work excerpts. */
+.reading-progress{background:linear-gradient(90deg,#72a7f7,#b4e3ff)!important;box-shadow:0 0 12px #91caff56}
+.case-side .case-orbit{opacity:.26;transform:translateY(-29%) translateX(18%) scale(1.26)}
+.case-evidence{
+ position:absolute;z-index:3;left:3%;top:24%;margin:0;
+ width:min(92%,310px);height:clamp(265px,34vh,350px);
+ background:linear-gradient(140deg,#213752,#0b1c32);
+ padding:9px 9px 24px;border:1px solid #c6ddfa4a;border-radius:17px;
+ box-shadow:0 30px 84px #0009,0 0 45px #89b4f425;
+ transform:rotate(-5deg);
+ opacity:0;transition:transform 1.1s cubic-bezier(.16,1,.3,1),opacity .8s,box-shadow .5s;
+}
+.case-issue:nth-of-type(3) .case-evidence{transform:rotate(5deg) translateY(24px)}
+.case-chapter.case-in .case-evidence{transform:rotate(-4deg);opacity:1}
+.case-chapter.case-in:nth-of-type(3) .case-evidence{transform:rotate(4deg) translateY(0)}
+.case-evidence-window{width:100%;height:100%;overflow:hidden;border-radius:10px;background:#eaf1fa;position:relative}
+.case-evidence-window img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 17%;filter:saturate(.91);transform:scale(1.07)}
+.case-issue:nth-of-type(3) .case-evidence-window img{object-position:50% 70%;transform:scale(1.12)}
+.case-evidence-focus{
+ position:absolute;right:-16px;bottom:38px;border:2px solid #bde5ff;border-radius:50px;
+ font:800 10px "DM Sans",sans-serif;letter-spacing:.1em;color:#0b2343;
+ background:#d2edff;padding:11px 13px;box-shadow:0 5px 20px #081321ad;
+}
+.case-evidence figcaption{position:absolute;left:14px;bottom:7px;color:#aaceed;font:800 8px "DM Sans",sans-serif;letter-spacing:.15em;white-space:nowrap}
+.case-story[data-project-case="lostlink"] .case-evidence,
+.case-story[data-project-case="junggonara"] .case-evidence,
+.case-story[data-project-case="roundlab"] .case-evidence{
+ width:min(77%,235px);height:clamp(320px,48vh,445px);left:14%;top:12%;
+}
+.case-story[data-project-case="lostlink"] .case-evidence-window img,
+.case-story[data-project-case="junggonara"] .case-evidence-window img,
+.case-story[data-project-case="roundlab"] .case-evidence-window img{object-fit:cover;object-position:50% 0}
+.case-story[data-project-case="lostlink"] .case-issue:nth-of-type(3) .case-evidence-window img,
+.case-story[data-project-case="junggonara"] .case-issue:nth-of-type(3) .case-evidence-window img,
+.case-story[data-project-case="roundlab"] .case-issue:nth-of-type(3) .case-evidence-window img{object-position:50% 90%}
+.case-story[data-project-case="voltup"] .case-evidence-window img{object-position:50% 23%}
+.case-story[data-project-case="voltup"] .case-issue:nth-of-type(3) .case-evidence-window img{object-position:50% 93%}
+@media(max-width:700px){
+ .case-side .case-orbit{left:21%;opacity:.25}
+ .case-evidence,
+ .case-story[data-project-case="lostlink"] .case-evidence,
+ .case-story[data-project-case="junggonara"] .case-evidence,
+ .case-story[data-project-case="roundlab"] .case-evidence{
+   width:126px;height:134px;left:auto;right:9px;top:-5px;
+   padding:5px 5px 15px;border-radius:10px;transform:rotate(6deg);
+ }
+ .case-chapter.case-in .case-evidence,.case-chapter.case-in:nth-of-type(3) .case-evidence{transform:rotate(5deg)}
+ .case-evidence-window{border-radius:6px}
+ .case-evidence figcaption{font-size:5px;left:7px;bottom:4px}
+ .case-evidence-focus{font-size:7px;padding:5px 7px;right:-5px;bottom:22px;border-width:1px}
+}
+@media(prefers-reduced-motion:reduce){
+ .case-evidence{opacity:1!important;transform:none!important;transition:none!important}
+}
