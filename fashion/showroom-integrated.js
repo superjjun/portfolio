@@ -34,6 +34,33 @@
     }
   });
   new MutationObserver(notifyClosed).observe(document.body,{attributes:true,attributeFilter:['class']});
-  // If embedded WebGL cannot start, the existing complete scrolling portfolio remains visible.
+  // Crucial performance fix: NEVER initialize the second GPU context during the intro.
+  // Load it only when the viewer approaches the works section.
+  let mounted=false;
+  const vicinity=new IntersectionObserver(entries=>{
+    for(const item of entries){
+      if(item.isIntersecting && !mounted){
+        mounted=true;
+        frame.src=frame.dataset.src;
+        vicinity.disconnect();
+        break;
+      }
+    }
+  },{rootMargin:'300px 0px',threshold:0});
+  vicinity.observe(works);
+  // Freeze the embedded renderer outside the current viewport to save GPU time.
+  const visibility=new IntersectionObserver(entries=>{
+    if(!mounted)return;
+    for(const item of entries)frame.contentWindow?.postMessage({
+      type:'KJ_ATELIER_VISIBILITY',visible:item.isIntersecting
+    },location.origin);
+  },{rootMargin:'100px 0px',threshold:0});
+  visibility.observe(works);
+  frame.addEventListener('load',()=>{
+    if(!mounted)return;
+    const bounds=works.getBoundingClientRect();
+    frame.contentWindow?.postMessage({type:'KJ_ATELIER_VISIBILITY',visible:bounds.bottom>0&&bounds.top<innerHeight},location.origin);
+  });
+  // If WebGL fails, keep the original six fully functional work sections visible.
   frame.addEventListener('error',()=>works.classList.remove('showroom-ready'));
 })();
