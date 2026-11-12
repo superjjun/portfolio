@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#14251a">
+<meta name="theme-color" content="#c4d2bd">
 <title>KIM JUNSEO — 3D FOREST GALLERY</title>
 <meta name="description" content="김준서의 실제 디자인 작품을 3D 패션 전시장처럼 탐색하는 웹 포트폴리오.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark;--bg:#0b0b0d;--white:#eeeae4;--muted:#b0aaa4;--line:#77716b55;--lime:#d9f989}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:radial-gradient(ellipse at center,#55704a,#263d2d 76%);font-family:"DM Sans","Noto Sans KR",sans-serif;color:var(--white)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:linear-gradient(180deg,#d8e3d8 0%,#b6c9b0 51%,#7c9d71 100%);font-family:"DM Sans","Noto Sans KR",sans-serif;color:var(--white)}
 button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
 #scene{position:fixed;inset:0;touch-action:pan-y;cursor:grab}
 .quick-art{position:fixed;left:55%;top:50%;transform:translate(-50%,-50%);z-index:2;width:min(43vw,610px);height:min(70vh,710px);border:0;padding:0;background:transparent;display:grid;place-items:center;cursor:pointer;pointer-events:auto;perspective:1100px;opacity:1;transition:opacity .42s ease}
@@ -23,11 +23,11 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible
 .veil{display:none!important}
 header{position:fixed;left:4.1vw;right:4.1vw;top:32px;display:flex;align-items:flex-start;justify-content:space-between;z-index:3;gap:16px}
 .brand{display:flex;align-items:center;gap:15px;text-decoration:none}.brand-mark{font-size:27px;line-height:1;font-weight:700;letter-spacing:-.16em;transform:skewX(-9deg)}.brand-word{font-size:11px;line-height:1.4;letter-spacing:.1em;font-weight:700}
-.head-right{display:flex;align-items:center;gap:32px;text-align:right;font-size:10px;letter-spacing:.14em;color:#c6c0b9}.live-dot{display:inline-block;width:7px;height:7px;border-radius:100%;background:#d9f989;margin-right:8px;box-shadow:0 0 14px #d9f98988}
+.head-right{display:flex;align-items:center;gap:32px;text-align:right;font-size:10px;letter-spacing:.14em;color:#f7f8eb;text-shadow:0 2px 10px #2342316e}.live-dot{display:inline-block;width:7px;height:7px;border-radius:100%;background:#d9f989;margin-right:8px;box-shadow:0 0 14px #d9f98988}
 .head-right a{text-decoration:none;border-bottom:1px solid #ffffff55;padding-bottom:4px}
-.head-rule{position:fixed;z-index:3;top:85px;left:4.1vw;right:4.1vw;border-top:1px solid var(--line)}
+.head-rule{position:fixed;z-index:3;top:85px;left:4.1vw;right:4.1vw;border-top:1px solid #f6f9e454}
 .eyebrow{font-size:11px;letter-spacing:.21em;font-weight:700;color:#d6d0c8}
-.copy{position:fixed;z-index:3;left:4.1vw;top:27vh;pointer-events:none;width:280px;max-width:25vw}
+.copy{position:fixed;z-index:3;left:4.1vw;top:27vh;pointer-events:none;width:290px;max-width:28vw;padding:22px 18px 23px;margin-left:-18px;border-radius:12px;background:linear-gradient(90deg,rgba(15,38,28,.77),rgba(18,43,30,.43) 84%,transparent);text-shadow:0 2px 12px rgba(0,0,0,.27)}
 .copy .section-label{font-size:10px;letter-spacing:.2em;color:var(--lime);margin:0 0 19px}
 .copy h1{margin:0;font-family:"Space Grotesk",sans-serif;font-size:clamp(27px,3vw,50px);line-height:.98;letter-spacing:-.075em;overflow-wrap:anywhere;text-transform:uppercase}
 .copy .category{font-size:10px;letter-spacing:.17em;margin:20px 0;color:#c5bfb6}
@@ -35,7 +35,7 @@ header{position:fixed;left:4.1vw;right:4.1vw;top:32px;display:flex;align-items:f
 .copy .worklink{pointer-events:auto;text-decoration:none;font-size:10px;font-weight:700;letter-spacing:.13em;border-bottom:1px solid #dfd8c6;padding-bottom:7px;display:inline-block;margin-top:17px}
 .right-edge{position:fixed;right:4.1vw;top:27vh;z-index:3;writing-mode:vertical-rl;font-size:10px;letter-spacing:.2em;color:#a9a198}
 .foot{position:fixed;z-index:3;bottom:38px;left:4.1vw;right:4.1vw;display:flex;align-items:end;justify-content:space-between;gap:24px}
-.instructions{font-size:10px;line-height:1.8;letter-spacing:.09em;color:#b8b0a7}.instructions strong{color:#eeeae4;font-weight:500}
+.instructions{font-size:10px;line-height:1.8;letter-spacing:.09em;color:#fff9e9;text-shadow:0 2px 10px #1f3e2fac}.instructions strong{color:#eeeae4;font-weight:500}
 .nav{display:flex;gap:16px;align-items:center}.nav button{width:51px;height:51px;border:1px solid #9a938c77;background:#17171999;color:#f4efea;border-radius:50%;font-size:20px;transition:background .25s,transform .25s}.nav button:hover{background:#ddddcc20;transform:scale(1.07)}.nav .index{font-size:12px;letter-spacing:.12em;color:#aaa39a;min-width:66px;text-align:center}.nav .index b{font-size:22px;color:var(--white);font-weight:500}
 .detail{position:fixed;z-index:6;right:0;top:0;bottom:0;width:min(465px,100vw);background:#121214f2;border-left:1px solid #aaa49a44;backdrop-filter:blur(28px);padding:43px 44px 44px;overflow-y:auto;transform:translateX(103%);transition:transform .8s cubic-bezier(.2,.83,.2,1);box-shadow:-40px 0 80px #0003}
 body.detail-open .detail{transform:translateX(0)}.detail-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:54px}.detail-head span{font-size:10px;letter-spacing:.2em;color:var(--lime)}.detail-close{border:1px solid #9997;background:none;color:var(--white);border-radius:50%;width:39px;height:39px;font-size:22px}
@@ -171,68 +171,209 @@ try{THREE=await import("https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.m
 catch(error){console.warn("3D engine unavailable",error);document.body.classList.add("no3d","ready");}
 if(THREE){
 try{
- const scene=new THREE.Scene();scene.background=new THREE.Color(0x2a4533);scene.fog=new THREE.FogExp2(0x34583a,.023);
+ const scene=new THREE.Scene();scene.background=new THREE.Color(0xd3dccf);scene.fog=new THREE.FogExp2(0xd2dbc8,.018);
  const camera=new THREE.PerspectiveCamera(36,innerWidth/innerHeight,.1,120);camera.position.set(0,1.45,10.2);
  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:"high-performance"});
  renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.6));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;
- renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.35;
+ renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.12;
  $("scene").appendChild(renderer.domElement);
  renderer.domElement.addEventListener("webglcontextlost",event=>{
    event.preventDefault();quickArt.classList.remove("is-webgl-loaded");
  });
- scene.add(new THREE.HemisphereLight(0xfff6dd,0x3b6b3d,3.2));
- const mainLight=new THREE.DirectionalLight(0xf4e8bb,2.4);mainLight.position.set(-4,9,8);scene.add(mainLight);
- const sideLight=new THREE.PointLight(0xe4f8bf,85,24,2);sideLight.position.set(5,5,2);scene.add(sideLight);
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshLambertMaterial({color:0x456044}));
- floor.rotation.x=-Math.PI/2;floor.position.y=-1.7;scene.add(floor);
- const rear=new THREE.Mesh(new THREE.PlaneGeometry(70,24),new THREE.MeshLambertMaterial({color:0x3a583f}));
- rear.position.set(0,3,-11);scene.add(rear);
+ // Soft overcast afternoon with warm shafts of directional sunlight.
+ scene.add(new THREE.HemisphereLight(0xf8f9ef,0x78926b,2.2));
+ const mainLight=new THREE.DirectionalLight(0xfff3d6,2.0);
+ mainLight.position.set(-7,13,5);scene.add(mainLight);
+ const sideLight=new THREE.DirectionalLight(0xcce1cd,.72);
+ sideLight.position.set(7,6,-6);scene.add(sideLight);
 
- // Real 3D woodland: instanced trunks, layered foliage and a moss walking path.
- // All individual leaves are GPU instanced; avoid heavy textures and shadows.
- const path=new THREE.Mesh(new THREE.PlaneGeometry(5.6,62),new THREE.MeshLambertMaterial({color:0x596746}));
- path.rotation.x=-Math.PI/2;path.position.set(0,-1.681,-8);scene.add(path);
- const barkMat=new THREE.MeshLambertMaterial({color:0x4b3828});
- const foliageMat=new THREE.MeshLambertMaterial({color:0x477648,roughness:1});
- const treeCount=36;
- const trunks=new THREE.InstancedMesh(new THREE.CylinderGeometry(.09,.16,1,7),barkMat,treeCount);
- const crowns=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(1,1),foliageMat,treeCount*3);
- trunks.frustumCulled=false;crowns.frustumCulled=false;
- const treeDummy=new THREE.Object3D();
- const greens=[0x4b7d45,0x37683f,0x668850,0x31583a,0x789258];
- let canopyIndex=0;
+ // Natural, textured deciduous forest. Instanced foliage is real 3D geometry, not polygon balls.
+ // Small, detailed leaf cards and irregular branching keep GPU cost low.
+ const rng=(()=>{let seed=20261113;return ()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};})();
+ const rand=(a,b)=>a+(b-a)*rng();
+ const makeSurface=(kind)=>{
+   const canvas=document.createElement("canvas");canvas.width=512;canvas.height=512;
+   const ctx=canvas.getContext("2d"),sandy=kind==="path";
+   ctx.fillStyle=sandy?"#abac8a":"#7e9872";ctx.fillRect(0,0,512,512);
+   // fine-grained soil, fallen leaves, shafts of grass.
+   for(let i=0;i<19500;i++){
+     const x=rng()*512,y=rng()*512,sz=rand(.4,2.7);
+     const palette=sandy?["#b7b393","#8f9377","#d0c6a1","#868976"]:["#6b885f","#95a67c","#597c57","#a2ae83","#7b966e"];
+     ctx.globalAlpha=rand(.08,.39);ctx.fillStyle=palette[Math.floor(rng()*palette.length)];
+     ctx.fillRect(x,y,sz,rand(.6,4));
+   }
+   if(!sandy){ctx.lineWidth=.75;
+     for(let i=0;i<3700;i++){
+       const x=rng()*512,y=rng()*512;
+       ctx.strokeStyle=rng()>.58?"#c2c397":"#476b41";ctx.globalAlpha=rand(.13,.44);
+       ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+rand(-3,3),y-rand(2,9));ctx.stroke();
+     }
+   }
+   ctx.globalAlpha=1;
+   const tex=new THREE.CanvasTexture(canvas);tex.colorSpace=THREE.SRGBColorSpace;
+   tex.wrapS=tex.wrapT=THREE.RepeatWrapping;tex.repeat.set(sandy?1:8,sandy?5:8);
+   tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),8);
+   return tex;
+ };
+ const ground=new THREE.Mesh(new THREE.PlaneGeometry(170,160),new THREE.MeshLambertMaterial({map:makeSurface("grass"),color:0xc5d0b6}));
+ ground.rotation.x=-Math.PI/2;ground.position.y=-1.70;scene.add(ground);
+ // A slightly winding, matte natural-gravel footpath; no triangular flat green strip.
+ const pathHalfWidth=2.85,walkLength=45,walkSegments=48;
+ const pathVertices=[],pathUV=[],pathIndices=[];
+ for(let row=0;row<=walkSegments;row++){
+   const z=12-row*walkLength/walkSegments;
+   const centre=Math.sin(z*.19)*.14;
+   const width=pathHalfWidth+Math.sin(z*.26)*.19+Math.sin(z*.67)*.07;
+   for(const side of [-1,1]){
+     pathVertices.push(centre+width*side,-1.686,z);
+     pathUV.push((side+1)*.5,row/walkSegments);
+   }
+   if(row<walkSegments){const k=row*2;pathIndices.push(k,k+1,k+2,k+1,k+3,k+2);}
+ }
+ const pg=new THREE.BufferGeometry();
+ pg.setAttribute("position",new THREE.Float32BufferAttribute(pathVertices,3));
+ pg.setAttribute("uv",new THREE.Float32BufferAttribute(pathUV,2));
+ pg.setIndex(pathIndices);pg.computeVertexNormals();
+ const walk=new THREE.Mesh(pg,new THREE.MeshLambertMaterial({map:makeSurface("path"),color:0xe8e2c7,side:THREE.DoubleSide}));
+ scene.add(walk);
+ // Horizon artwork: a diffuse photographic-style sky wash and subtle distant tree-line.
+ const skyCanvas=document.createElement("canvas");skyCanvas.width=1024;skyCanvas.height=512;
+ const sky=skyCanvas.getContext("2d");
+ const skyGrad=sky.createLinearGradient(0,0,0,512);
+ skyGrad.addColorStop(0,"#d1dddb");skyGrad.addColorStop(.42,"#dfe3ce");
+ skyGrad.addColorStop(.73,"#c1d1b4");skyGrad.addColorStop(1,"#a5ba97");
+ sky.fillStyle=skyGrad;sky.fillRect(0,0,1024,512);
+ let haze=sky.createRadialGradient(650,130,20,650,130,440);
+ haze.addColorStop(0,"#fff6d784");haze.addColorStop(1,"#fff6d700");
+ sky.fillStyle=haze;sky.fillRect(0,0,1024,512);
+ // Distant trees are intentionally pale and atmospheric, not dark cartoon silhouettes.
+ for(let i=0;i<185;i++){
+   const x=rng()*1024,y=rand(368,438),h=rand(18,90),w=rand(5,19);
+   sky.fillStyle=["#8ca78658","#8d9f8469","#a3b19a72","#829a8170"][Math.floor(rng()*4)];
+   sky.beginPath();sky.ellipse(x,y-h*.33,w,h,0,0,Math.PI*2);sky.fill();
+ }
+ const skyTexture=new THREE.CanvasTexture(skyCanvas);skyTexture.colorSpace=THREE.SRGBColorSpace;
+ const skyWall=new THREE.Mesh(new THREE.PlaneGeometry(100,39),new THREE.MeshBasicMaterial({map:skyTexture,fog:false,depthWrite:false}));
+ skyWall.position.set(0,7,-29);scene.add(skyWall);
+ // Soft contact shadows anchor individual trunks and exhibition stands to the ground.
+ const shadowCanvas=document.createElement("canvas");shadowCanvas.width=128;shadowCanvas.height=128;
+ const sh=shadowCanvas.getContext("2d"),sg=sh.createRadialGradient(64,64,6,64,64,64);
+ sg.addColorStop(0,"rgba(22,39,23,.37)");sg.addColorStop(.48,"rgba(27,46,22,.16)");
+ sg.addColorStop(1,"rgba(27,46,22,0)");
+ sh.fillStyle=sg;sh.fillRect(0,0,128,128);
+ const shadowTex=new THREE.CanvasTexture(shadowCanvas);
+ const shadowGeo=new THREE.PlaneGeometry(1,1);
+ const shadowMat=new THREE.MeshBasicMaterial({map:shadowTex,transparent:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1});
+ const shadowMesh=new THREE.InstancedMesh(shadowGeo,shadowMat,48);
+ shadowMesh.frustumCulled=false;
+ let shadowIndex=0;
+ const treeCount=innerWidth<720?18:32;
+ const dummy=new THREE.Object3D(),treeDummy=new THREE.Object3D();
+ const trunkMaterial=new THREE.MeshStandardMaterial({color:0x776146,roughness:1,metalness:0});
+ const twigMaterial=new THREE.MeshLambertMaterial({color:0x71624c});
+ const trunkMeshes=new THREE.InstancedMesh(new THREE.CylinderGeometry(.09,.16,1,10),trunkMaterial,treeCount);
+ const branchesPerTree=7;
+ const branches=new THREE.InstancedMesh(new THREE.CylinderGeometry(.023,.067,1,7),twigMaterial,treeCount*branchesPerTree);
+ const branchAxis=new THREE.Vector3(0,1,0);
+ const greenPalette=[0x607b4e,0x78945e,0x8da578,0x6c8a52,0x9eae79,0x4c7350,0x7a945c];
+ // Leaf stamp with transparent edge and central vein, mapped on thousands of real 3D leaf quads.
+ const leafCanvas=document.createElement("canvas");leafCanvas.width=96;leafCanvas.height=128;
+ const lc=leafCanvas.getContext("2d");lc.clearRect(0,0,96,128);
+ const lg=lc.createLinearGradient(15,10,83,117);
+ lg.addColorStop(0,"#f4f6d8");lg.addColorStop(.38,"#d0dbab");lg.addColorStop(.8,"#a4b982");lg.addColorStop(1,"#6c8b54");
+ lc.beginPath();lc.moveTo(48,6);lc.bezierCurveTo(13,33,8,82,48,119);
+ lc.bezierCurveTo(90,79,80,31,48,6);lc.closePath();
+ lc.fillStyle=lg;lc.fill();lc.strokeStyle="#fff5c177";lc.lineWidth=1.3;
+ lc.beginPath();lc.moveTo(48,18);lc.quadraticCurveTo(49,70,48,115);lc.stroke();
+ for(let k=0;k<5;k++){
+   const yy=31+k*16;lc.beginPath();lc.moveTo(48,yy+8);
+   lc.lineTo(27-k*.2,yy-7);lc.moveTo(48,yy+8);lc.lineTo(68+k*.2,yy-6);lc.stroke();
+ }
+ const leafTex=new THREE.CanvasTexture(leafCanvas);leafTex.colorSpace=THREE.SRGBColorSpace;
+ leafTex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),4);
+ const leafPlane=new THREE.PlaneGeometry(.26,.38);
+ const leafMat=new THREE.MeshLambertMaterial({map:leafTex,transparent:true,alphaTest:.16,side:THREE.DoubleSide,depthWrite:true,color:0xffffff});
+ const leavesPerTree=innerWidth<720?145:245;
+ const canopy=new THREE.InstancedMesh(leafPlane,leafMat,treeCount*leavesPerTree);
+ canopy.frustumCulled=false;
+ const trunkPositions=[];
+ const leafDistribution=()=>{
+   // Layered but irregular foliage, with intentional pockets of sky between leaves.
+   const theta=rand(0,Math.PI*2),radius=Math.sqrt(rng()),lobe=Math.floor(rng()*5);
+   const offset=theta+lobe*.45;
+   return {
+     x:Math.cos(offset)*radius*rand(.9,1.85),
+     z:Math.sin(offset)*radius*rand(.7,1.65),
+     y:rand(-.94,1.65)+Math.sin(theta*3)*.22
+   };
+ };
  for(let i=0;i<treeCount;i++){
    const side=i%2?-1:1,row=Math.floor(i/2);
-   const z=7-row*2.65;
-   const x=side*(4.8+(row%4)*.63+(i%3)*.35);
-   const height=3.5+(i%5)*.48;
-   treeDummy.position.set(x,-1.69+height/2,z);
-   treeDummy.scale.set(1,height,1);treeDummy.rotation.set(0,0,0);
-   treeDummy.updateMatrix();trunks.setMatrixAt(i,treeDummy.matrix);
-   for(let layer=0;layer<3;layer++){
-     treeDummy.position.set(x+Math.sin(i*7+layer)*.22,1.35+layer*.83+(i%4)*.15,z);
-     treeDummy.scale.set(1.5-layer*.24,1.08-layer*.13,1.4-layer*.18);
-     treeDummy.rotation.y=i*.61+layer;
-     treeDummy.updateMatrix();crowns.setMatrixAt(canopyIndex,treeDummy.matrix);
-     crowns.setColorAt(canopyIndex,new THREE.Color(greens[(i+layer)%greens.length]));
-     canopyIndex++;
+   const z=6.8-row*2.70,dist=side*(6.0+(row%4)*.53+rand(-.22,.26));
+   const height=rand(4.35,6.3),x=dist;
+   trunkPositions.push({x,z});
+   dummy.rotation.set(0,0,0);dummy.position.set(x,-1.70+height/2,z);
+   dummy.scale.set(rand(.85,1.24),height,rand(.86,1.21));
+   dummy.updateMatrix();trunkMeshes.setMatrixAt(i,dummy.matrix);
+   trunkMeshes.setColorAt(i,new THREE.Color(["#756149","#6b5641","#8b7153","#846950"][i%4]));
+   // Branches taper and reach outward instead of hiding all structure behind blobs.
+   for(let b=0;b<branchesPerTree;b++){
+     const a=(b/branchesPerTree)*Math.PI*2+rand(-.45,.45);
+     const y0=height*rand(.50,.72),reach=rand(.58,1.22);
+     const from=new THREE.Vector3(x,-1.7+y0,z);
+     const to=from.clone().add(new THREE.Vector3(Math.cos(a)*reach,rand(.50,1.28),Math.sin(a)*reach));
+     const diff=to.clone().sub(from);
+     dummy.position.copy(from).addScaledVector(diff,.5);
+     dummy.quaternion.setFromUnitVectors(branchAxis,diff.clone().normalize());
+     dummy.scale.set(rand(.78,1.18),diff.length(),rand(.78,1.18));dummy.updateMatrix();
+     branches.setMatrixAt(i*branchesPerTree+b,dummy.matrix);
+   }
+   const crownBase=-1.70+height;
+   for(let n=0;n<leavesPerTree;n++){
+     const p=leafDistribution(),level=rand(-.55,1.0);
+     treeDummy.position.set(x+p.x,crownBase+p.y+level,z+p.z);
+     treeDummy.rotation.set(rand(-1.1,1.1),rand(-3.14,3.14),rand(-.95,.95));
+     const scale=rand(.58,1.72)*(1-Math.max(0,level-.3)*.08);
+     treeDummy.scale.set(scale,scale*rand(.75,1.35),scale);
+     treeDummy.updateMatrix();
+     const idx=i*leavesPerTree+n;canopy.setMatrixAt(idx,treeDummy.matrix);
+     canopy.setColorAt(idx,new THREE.Color(greenPalette[(i+n*3+Math.floor(rand(0,3)))%greenPalette.length]));
+   }
+   if(shadowIndex<48){
+     dummy.position.set(x,-1.665,z);dummy.rotation.set(-Math.PI/2,0,0);
+     dummy.scale.set(3.1,2.6,1);dummy.updateMatrix();shadowMesh.setMatrixAt(shadowIndex++,dummy.matrix);
    }
  }
- scene.add(trunks,crowns);
+ scene.add(trunkMeshes,branches,canopy);
+ shadowMesh.count=shadowIndex;scene.add(shadowMesh);
+ // A few thin grass blades and forest-floor stalks break up the perfect planar edge.
+ const grasses=innerWidth<720?120:420;
+ const grassGeo=new THREE.ConeGeometry(.026,.32,3);
+ const grassMat=new THREE.MeshLambertMaterial({color:0x819b68,side:THREE.DoubleSide});
+ const grass=new THREE.InstancedMesh(grassGeo,grassMat,grasses);
+ for(let i=0;i<grasses;i++){
+   const zz=rand(-20,9),xx=(rng()>.5?1:-1)*rand(3.1,13);
+   dummy.position.set(xx,-1.54,zz);dummy.rotation.set(rand(-.20,.20),rand(-3.14,3.14),rand(-.2,.2));
+   dummy.scale.set(rand(.7,1.5),rand(.7,2.2),rand(.7,1.6));dummy.updateMatrix();
+   grass.setMatrixAt(i,dummy.matrix);
+   grass.setColorAt(i,new THREE.Color([0x819e69,0x64835a,0x91a879,0x728f5e][i%4]));
+ }
+ grass.frustumCulled=false;scene.add(grass);
+ // Only a handful of naturally small drifting leaves, not giant polygons.
  const leafShape=new THREE.Shape();
- leafShape.moveTo(0,-.22);leafShape.quadraticCurveTo(-.16,-.07,-.10,.07);
- leafShape.quadraticCurveTo(0,.22,.02,.22);
- leafShape.quadraticCurveTo(.21,.06,.12,-.08);leafShape.quadraticCurveTo(.06,-.18,0,-.22);
+ leafShape.moveTo(0,-.11);leafShape.quadraticCurveTo(-.08,-.035,-.05,.05);
+ leafShape.quadraticCurveTo(0,.11,.02,.11);
+ leafShape.quadraticCurveTo(.11,.03,.06,-.04);leafShape.quadraticCurveTo(.025,-.09,0,-.11);
  const leafGeometry=new THREE.ShapeGeometry(leafShape);
- const leafMaterial=new THREE.MeshBasicMaterial({color:0xb6d287,side:THREE.DoubleSide,transparent:true,opacity:.65,depthWrite:false});
- const leafCount=innerWidth<700?16:34;
+ const leafMaterial=new THREE.MeshLambertMaterial({color:0xb0a87b,side:THREE.DoubleSide,transparent:true,opacity:.54,depthWrite:false});
+ const leafCount=innerWidth<720?7:15;
  const driftingLeaves=new THREE.InstancedMesh(leafGeometry,leafMaterial,leafCount);
  driftingLeaves.frustumCulled=false;driftingLeaves.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
  const leafItems=[];
  for(let i=0;i<leafCount;i++){
-  leafItems.push({x:(Math.random()-.5)*13,y:Math.random()*8-1.2,z:(Math.random()-.5)*13,
-   speed:.22+Math.random()*.42,spin:Math.random()*6.28,sway:Math.random()*6.28,size:.45+Math.random()*.6});
-  driftingLeaves.setColorAt(i,new THREE.Color(greens[i%greens.length]));
+   leafItems.push({x:rand(-8,8),y:rand(-.7,5.5),z:rand(-9,6),
+    speed:rand(.18,.38),spin:rand(0,Math.PI*2),sway:rand(0,Math.PI*2),size:rand(.4,.95)});
+   driftingLeaves.setColorAt(i,new THREE.Color(greenPalette[i%greenPalette.length]));
  }
  scene.add(driftingLeaves);
  const woodMat=new THREE.MeshStandardMaterial({color:0x302a20,roughness:.87,metalness:.02});
