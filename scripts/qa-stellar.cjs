@@ -21,6 +21,14 @@ const { chromium } = require('playwright');
    const hud=document.querySelector('.voyage-hud');
    return {hasOrbit:!!sec.querySelector('.stellar-orbit-art'),hasIndex:!!sec.querySelector('.stellar-work-index'),background:css.backgroundImage,color:css.color,stellarCssRules:[...document.styleSheets].filter(s=>s.href&&s.href.includes('stellar-case')).map(s=>s.href),voyageHud:!!hud,orbitProgressCount:hud?.querySelectorAll('[data-voyage-go]').length,activeVoyage:document.body.classList.contains('voyage-active'),planetDepth:sec.style.getPropertyValue('--voyage-img-scale'),titlesOverflow:title.scrollWidth>title.clientWidth+3,screenOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth};
   });
+  await page.waitForTimeout(220);
+  if(!mobile){
+    const workShot=(await page.screenshot({type:'jpeg',quality:49})).toString('base64');
+    console.log('VOYAGE_WORK_DESKTOP_BEGIN'+workShot+'VOYAGE_WORK_DESKTOP_END');
+  }else{
+    const workShot=(await page.screenshot({type:'jpeg',quality:55})).toString('base64');
+    console.log('VOYAGE_WORK_MOBILE_BEGIN'+workShot+'VOYAGE_WORK_MOBILE_END');
+  }
   await page.locator('#work-ppomppu .story-action').click();
   await page.waitForFunction(()=>!document.querySelector('#detail').hidden,null,{timeout:10000});
   const detail=await page.evaluate(()=>{
@@ -35,6 +43,10 @@ const { chromium } = require('playwright');
    await page.locator('#detail .case-issue').nth(1).scrollIntoViewIfNeeded();
    await page.waitForTimeout(280);
    detail.issue2Shown=await page.locator('#detail .case-issue').nth(1).evaluate(e=>e.classList.contains('case-in'));
+  }
+  if(!mobile){
+    const caseShot=(await page.screenshot({type:'jpeg',quality:48})).toString('base64');
+    console.log('VOYAGE_CASE_DESKTOP_BEGIN'+caseShot+'VOYAGE_CASE_DESKTOP_END');
   }
   await page.locator('#detail .detail-close').click();
   await page.waitForFunction(()=>document.querySelector('#detail').hidden,null,{timeout:8000});
