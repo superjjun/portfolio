@@ -165,3 +165,10 @@ body.entering #liquid-canvas{opacity:0}
  .story-project .story-picture img{max-height:50svh!important}
 }
 @media(prefers-reduced-motion:reduce){.forest-frond{animation:none!important}}
+
+/* Hide obsolete orbital navigation when the real forest showroom is active. */
+body:has(#works.showroom-ready) .voyage-hud,
+body:has(#works.showroom-ready) .voyage-waypoint-preview,
+body:has(#works.showroom-ready) .scene-progress{display:none!important}
+#liquid-canvas{display:none!important}
+#detail .detail-poster img,#detail .detail-original img{clip-path:none!important;transform:none!important;object-fit:contain!important}
