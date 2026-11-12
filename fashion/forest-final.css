@@ -204,3 +204,93 @@ body:has(#works.showroom-ready) .scene-progress{display:none!important}
  #detail .ll-final-card p{font-size:14px}
  #detail .ll-final{padding:clamp(20px,5vw,35px)!important}
 }
+
+
+/* PROJECT COLORWAYS 20261112: case study palettes follow actual project branding instead of a forest-green overlay. */
+#detail .detail-main[data-project-detail]{
+ --case-bg:#13251b;--case-panel:#284733;--case-panel2:#1b3325;--case-accent:#c5e0a7;
+ --case-copy:#d5e3d4;--case-ink:#f4f8ef;
+ background:var(--case-bg)!important;color:var(--case-ink)!important;
+}
+#detail .detail-main[data-project-detail="soundcloud"]{
+ --case-bg:#2e1810;--case-panel:#673322;--case-panel2:#442319;
+ --case-accent:#ff9b56;--case-copy:#f2d1bd;--case-ink:#fff5ed;
+}
+#detail .detail-main[data-project-detail="lostlink"]{
+ --case-bg:#101d36;--case-panel:#254677;--case-panel2:#1a3156;
+ --case-accent:#8eaeff;--case-copy:#cbdafa;--case-ink:#f3f7ff;
+}
+#detail .detail-main[data-project-detail="voltup"]{
+ --case-bg:#1b2110;--case-panel:#3a471b;--case-panel2:#293517;
+ --case-accent:#ddf473;--case-copy:#d9e5bd;--case-ink:#f7fbed;
+}
+#detail .detail-main[data-project-detail="junggonara"]{
+ --case-bg:#122820;--case-panel:#305c44;--case-panel2:#214332;
+ --case-accent:#9ce4b1;--case-copy:#c5e2cd;--case-ink:#f0fbf3;
+}
+#detail .detail-main[data-project-detail="ppomppu"]{
+ --case-bg:#251c32;--case-panel:#4b3766;--case-panel2:#342746;
+ --case-accent:#dcbff7;--case-copy:#e2d3f0;--case-ink:#faf3ff;
+}
+#detail .detail-main[data-project-detail="roundlab"]{
+ --case-bg:#112837;--case-panel:#2a586d;--case-panel2:#1d4053;
+ --case-accent:#a8e7fa;--case-copy:#c5e6ed;--case-ink:#f4fbfe;
+}
+#detail .detail-main[data-project-detail] .detail-top{
+ background:var(--case-panel2)!important;color:var(--case-ink)!important;
+ border-color:color-mix(in srgb,var(--case-accent) 35%,transparent)!important;
+ backdrop-filter:none!important;
+}
+#detail .detail-main[data-project-detail] .detail-close{background:var(--case-accent)!important;color:var(--case-bg)!important}
+#detail .detail-main[data-project-detail] .detail-content h2,
+#detail .detail-main[data-project-detail] .case-chapter h3,
+#detail .detail-main[data-project-detail] .detail-columns h3,
+#detail .detail-main[data-project-detail] .ll-final-card h4{color:var(--case-ink)!important}
+#detail .detail-main[data-project-detail] .detail-headerline,
+#detail .detail-main[data-project-detail] .case-kicker,
+#detail .detail-main[data-project-detail] .case-tag,
+#detail .detail-main[data-project-detail] .detail-columns span,
+#detail .detail-main[data-project-detail] .ll-final-label>*{color:var(--case-accent)!important}
+#detail .detail-main[data-project-detail] .case-intro-copy h3 em,
+#detail .detail-main[data-project-detail] .case-result-text h3 span,
+#detail .detail-main[data-project-detail] .ll-final-head h3 em{color:var(--case-accent)!important}
+#detail .detail-main[data-project-detail] .detail-sub,
+#detail .detail-main[data-project-detail] .case-lead,
+#detail .detail-main[data-project-detail] .case-intro-copy p,
+#detail .detail-main[data-project-detail] .case-result-text p,
+#detail .detail-main[data-project-detail] .detail-columns p,
+#detail .detail-main[data-project-detail] .ll-final-head>p,
+#detail .detail-main[data-project-detail] .ll-final-card p{color:var(--case-copy)!important}
+#detail .detail-main[data-project-detail] .case-chapter,
+#detail .detail-main[data-project-detail] .case-chapter.case-result,
+#detail .detail-main[data-project-detail] .case-chapter.ll-final{
+ background:linear-gradient(127deg,var(--case-panel),var(--case-panel2) 70%,var(--case-bg))!important;
+ border-color:color-mix(in srgb,var(--case-accent) 30%,transparent)!important;
+}
+#detail .detail-main[data-project-detail] .detail-screen,
+#detail .detail-main[data-project-detail] .detail-poster,
+#detail .detail-main[data-project-detail] .detail-original,
+#detail .detail-main[data-project-detail] .detail-columns,
+#detail .detail-main[data-project-detail] .detail-no-video,
+#detail .detail-main[data-project-detail] .ll-final-card{
+ background:var(--case-panel2)!important;
+ border-color:color-mix(in srgb,var(--case-accent) 30%,transparent)!important;
+ color:var(--case-ink)!important;
+}
+#detail .detail-main[data-project-detail] .detail-screen-top,
+#detail .detail-main[data-project-detail] .voyage-case-steps{
+ background:var(--case-panel)!important;color:var(--case-ink)!important
+}
+#detail .detail-main[data-project-detail] .case-beforeafter strong,
+#detail .detail-main[data-project-detail] .detail-poster>summary{color:var(--case-ink)!important}
+#detail .detail-main[data-project-detail] .case-beforeafter small,
+#detail .detail-main[data-project-detail] .case-beforeafter>div:nth-child(2) small{color:var(--case-accent)!important}
+#detail .detail-main[data-project-detail] .detail-back{
+ color:var(--case-accent)!important;border-color:var(--case-accent)!important;
+}
+#detail .detail-main[data-project-detail] .ll-final-note{color:var(--case-copy)!important}
+#detail .detail-main[data-project-detail] .ll-final-note strong{color:var(--case-accent)!important}
+
+/* Softer, brighter forest scene without artificial dark vignette. */
+#works.showroom-ready{background:#304a33!important}
+#works.showroom-ready .showroom-frame{filter:none!important}
