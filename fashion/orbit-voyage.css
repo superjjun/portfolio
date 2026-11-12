@@ -1,0 +1,128 @@
+/* ORBIT VOYAGE 2026. Only progressive effects — no expensive live 3D dependency. */
+.voyage-hud{
+ position:fixed;right:clamp(12px,2.3vw,44px);top:50%;transform:translate3d(15px,-50%,0);
+ z-index:50;width:132px;padding:19px 14px 19px 20px;
+ border:1px solid #a7bce13b;border-radius:16px;
+ background:linear-gradient(145deg,#0a1426d9,#0f1e32c6);
+ backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+ color:#cfe1ff;opacity:0;pointer-events:none;
+ transition:opacity .4s ease,transform .4s cubic-bezier(.16,1,.3,1);
+ box-shadow:0 13px 65px #0004;
+}
+body.voyage-active .voyage-hud{opacity:1;pointer-events:auto;transform:translate3d(0,-50%,0)}
+.voyage-hud-header{display:flex;flex-direction:column;gap:6px;padding-bottom:19px;border-bottom:1px solid #b7d1f529}
+.voyage-hud-header span{font:800 9px/1.4 "DM Sans",sans-serif;letter-spacing:.13em;opacity:.64}
+.voyage-hud-header strong{font:700 19px/1.2 "Space Grotesk",sans-serif;letter-spacing:.08em;color:#f0f7ff}
+.voyage-hud-rail{position:relative;padding:14px 0;display:flex;flex-direction:column;gap:3px}
+.voyage-hud-rail:before{content:"";position:absolute;left:8px;top:23px;bottom:23px;width:1px;background:#b4d1f02c}
+.voyage-hud-line{position:absolute;left:7px;top:23px;width:2px;height:0;background:linear-gradient(#bfe1ff,#91c1ff);border-radius:3px;max-height:calc(100% - 44px);pointer-events:none;transition:height .12s linear}
+.voyage-stop{border:0;color:#9eb2d2;background:none;padding:7px 0;width:100%;display:flex;align-items:center;gap:12px;text-align:left;cursor:pointer;position:relative;border-radius:0}
+.voyage-stop-node{width:17px;height:17px;flex:none;border:1px solid #8eafda77;border-radius:50%;background:#1a2b41;position:relative;transition:background .2s,transform .3s,box-shadow .3s}
+.voyage-stop-node:after{content:"";position:absolute;inset:5px;background:#aac9ef;border-radius:50%;opacity:.3}
+.voyage-stop:hover .voyage-stop-node,.voyage-stop.is-active .voyage-stop-node{background:#cce6ff;box-shadow:0 0 0 4px #9bc2ec17,0 0 20px #a3d2fe69;transform:scale(1.2)}
+.voyage-stop.is-active .voyage-stop-node:after{background:#15335a;opacity:1}
+.voyage-stop-label{font:700 9px "DM Sans",sans-serif;letter-spacing:-.01em;opacity:.58;max-width:73px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:opacity .25s,color .25s}
+.voyage-stop:hover .voyage-stop-label,.voyage-stop.is-active .voyage-stop-label{opacity:1;color:#eef7ff}
+.voyage-hud-footer{font:700 8px "DM Sans",sans-serif;letter-spacing:.13em;opacity:.65;border-top:1px solid #b7d1f529;padding-top:15px;white-space:nowrap}
+.voyage-hud-footer span{margin-left:5px}
+.story-project{--voyage-img-y:0px;--voyage-img-rot:-4deg;--voyage-img-scale:1;--voyage-orb-y:0px;--voyage-orb-rot:0deg;--voyage-orb-scale:1;--voyage-light-opacity:1}
+.story-project .stellar-orbit-art{
+ transform:translate3d(0,var(--voyage-orb-y),0) rotate(var(--voyage-orb-rot)) scale(var(--voyage-orb-scale));
+ will-change:transform;transition:transform .09s linear;
+}
+.story-project .stellar-moon{animation:none;box-shadow:inset -36px -25px 50px #12213fcc,inset 14px 15px 33px #e8f4ff72,0 0 0 38px #709bcc0c,0 0 96px var(--voyage-planet-color,#83a7f37c)}
+.story-project[data-project="soundcloud"] .stellar-moon{filter:sepia(.6) hue-rotate(-19deg) saturate(1.2)}
+.story-project[data-project="lostlink"] .stellar-moon{filter:hue-rotate(0deg) saturate(1.12)}
+.story-project[data-project="voltup"] .stellar-moon{filter:sepia(.6) hue-rotate(33deg) saturate(1.8)}
+.story-project[data-project="junggonara"] .stellar-moon{filter:sepia(.44) hue-rotate(90deg) saturate(1.1)}
+.story-project[data-project="ppomppu"] .stellar-moon{filter:brightness(1.22) saturate(.75)}
+.story-project[data-project="roundlab"] .stellar-moon{filter:hue-rotate(11deg) saturate(1.38)}
+.story-project.is-visible .story-picture img{
+ transform:translate3d(0,var(--voyage-img-y),0) rotate(var(--voyage-img-rot)) scale(var(--voyage-img-scale))!important;
+ transition:clip-path 1.18s cubic-bezier(.17,.89,.23,1),transform .12s ease-out,box-shadow .6s;
+}
+.story-project.is-visible .story-picture:hover img,.story-project.voyage-hovered .story-picture img{
+ transform:translate3d(0,calc(var(--voyage-img-y) - 15px),0) rotate(-1deg) scale(1.03)!important;
+ box-shadow:0 48px 140px #000b,0 0 90px 10px #80acdf2b;
+}
+.story-project .stellar-ring{border-color:#cfe9ff72;box-shadow:0 0 40px #9cbfe319}
+.story-project.voyage-hovered .stellar-ring{border-color:#f1fbffc1;box-shadow:0 0 55px #93d1fc57}
+.voyage-planet-number{
+ position:absolute;top:15%;left:4%;
+ color:#f2f8ff;font:700 clamp(55px,7.1vw,117px)/1 "Space Grotesk",sans-serif;
+ letter-spacing:-.1em;opacity:.13;transform:rotate(-12deg);text-shadow:0 0 50px #96beff37;
+}
+.voyage-portal-hint{
+ position:absolute;z-index:5;left:50%;bottom:-20px;transform:translate3d(-50%,12px,0);
+ display:flex;flex-direction:column;align-items:center;gap:3px;
+ color:#e8f5ff;padding:12px 22px;background:#0b1d34e8;
+ border:1px solid #a2c5ed66;border-radius:12px;
+ white-space:nowrap;opacity:0;pointer-events:none;
+ box-shadow:0 10px 50px #000a;transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .35s;
+}
+.voyage-portal-hint .voyage-portal-glyph{font-size:24px;color:#a7d1ff}
+.voyage-portal-hint strong{font:800 11px "DM Sans",sans-serif;letter-spacing:.08em}
+.voyage-portal-hint small{font:600 9px "DM Sans",sans-serif;letter-spacing:.19em;color:#99bce5}
+.story-project.voyage-hovered .voyage-portal-hint,.story-project .story-picture:focus-visible .voyage-portal-hint{opacity:1;transform:translate3d(-50%,0,0)}
+.voyage-warp{
+ position:fixed;inset:0;z-index:902;pointer-events:none;
+ background:radial-gradient(circle at var(--warp-x,50%) var(--warp-y,50%),#bdd9ffde 0%,#5073ad88 11%,#0b17369c 34%,#03091600 67%);
+ animation:voyage-crossfade .95s ease-out both;
+}
+@keyframes voyage-crossfade{0%{opacity:0;transform:scale(.7)}39%{opacity:.9;transform:scale(1.05)}100%{opacity:0;transform:scale(1.3)}}
+.voyage-case-steps{
+ position:fixed;z-index:11;right:clamp(12px,1.8vw,30px);top:50%;
+ transform:translateY(-50%);width:120px;
+ display:flex;flex-direction:column;gap:3px;
+ padding:19px 15px;background:#101f36c9;border:1px solid #96b9e63f;
+ border-radius:15px;backdrop-filter:blur(18px);box-shadow:0 15px 60px #0005;
+}
+.voyage-case-heading{font:800 9px "DM Sans",sans-serif;letter-spacing:.17em;color:#89aed9;margin-bottom:12px;white-space:nowrap}
+.voyage-case-steps button{display:flex;align-items:center;gap:9px;text-align:left;width:100%;border:0;background:none;color:#aabfdf;opacity:.62;padding:9px 0;cursor:pointer;transition:color .2s,opacity .2s}
+.voyage-case-steps button span{font:700 10px "DM Sans",sans-serif;color:#88b7e9}
+.voyage-case-steps button b{font:700 9px "DM Sans",sans-serif;letter-spacing:.04em;white-space:nowrap}
+.voyage-case-steps button.is-active,.voyage-case-steps button:hover{opacity:1;color:#f3fbff}
+.voyage-case-steps button.is-active span{color:#d7eaff}
+.voyage-case-progress{height:2px;width:100%;background:#7295c34b;margin-top:12px;border-radius:2px;overflow:hidden}
+.voyage-case-progress i{display:block;background:#a6d5ff;width:100%;height:100%;transform-origin:left center}
+/* Case study detail: responsive internal navigation without covering the art. */
+@media(min-width:1280px){
+ #detail .detail-content{max-width:1160px;padding-right:clamp(70px,7vw,125px)}
+}
+@media(max-width:1100px){
+ .voyage-hud{right:10px;width:56px;padding:14px 9px}
+ .voyage-hud-header span,.voyage-hud-footer,.voyage-stop-label{display:none}
+ .voyage-hud-header{border:0;padding:0 0 10px;align-items:center}
+ .voyage-hud-header strong{font-size:10px;letter-spacing:-.04em}
+ .voyage-stop{justify-content:center;padding:7px 0}
+ .voyage-hud-rail:before,.voyage-hud-line{left:50%;transform:translateX(-50%)}
+ .voyage-case-steps{width:49px;padding:11px 9px}
+ .voyage-case-steps button{justify-content:center}
+ .voyage-case-steps button b,.voyage-case-heading{display:none}
+}
+@media(max-width:700px){
+ .voyage-hud{top:auto;right:50%;bottom:11px;transform:translate3d(50%,18px,0);width:min(330px,86vw);padding:8px 13px;border-radius:100px}
+ body.voyage-active .voyage-hud{transform:translate3d(50%,0,0)}
+ .voyage-hud-header{display:none}
+ .voyage-hud-rail{display:flex;flex-direction:row;justify-content:space-between;padding:0;gap:0}
+ .voyage-hud-rail:before{left:10px;right:10px;top:50%;bottom:auto;width:auto;height:1px;transform:translateY(-50%)}
+ .voyage-hud-line{left:10px;top:50%;height:2px!important;width:calc(var(--voyage-mobile-progress,0)*1%)!important;max-width:calc(100% - 20px);transform:translateY(-50%)}
+ .voyage-stop{width:38px;height:36px;justify-content:center;padding:0;flex:none}
+ .voyage-stop-node{width:14px;height:14px;border-color:#bdcfe8}
+ .voyage-portal-hint{bottom:2px;min-width:150px;padding:8px 12px}
+ .voyage-portal-hint .voyage-portal-glyph{font-size:15px}
+ .voyage-portal-hint strong{font-size:9px}
+ .voyage-portal-hint small{font-size:8px}
+ .voyage-case-steps{left:50%;right:auto;top:auto;bottom:7px;transform:translateX(-50%);width:min(305px,84vw);flex-direction:row;justify-content:space-between;gap:2px;border-radius:100px;padding:6px 13px}
+ .voyage-case-steps button{width:44px;padding:9px 0}
+ .voyage-case-steps button span{font-size:11px}
+ .voyage-case-progress{display:none}
+ #detail .detail-main{padding-bottom:70px}
+ .voyage-planet-number{font-size:60px;top:12%;left:7%}
+ .story-project .stellar-orbit-art{will-change:auto}
+}
+@media(prefers-reduced-motion:reduce){
+ .story-project .stellar-orbit-art,.story-project.is-visible .story-picture img{transform:none!important;transition:none!important;will-change:auto}
+ .voyage-warp{animation:none;display:none}
+ .voyage-hud,.voyage-portal-hint{transition:none}
+}
