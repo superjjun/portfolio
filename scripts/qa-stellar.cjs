@@ -24,7 +24,10 @@ const { chromium } = require('playwright');
   await page.waitForTimeout(220);
   if(!mobile){
     await page.locator('.voyage-stop[data-voyage-go="2"]').hover();
-    await page.waitForFunction(()=>{const p=document.querySelector('.voyage-waypoint-preview');return p?.classList.contains('is-visible')&&p.querySelector('img')?.naturalWidth>0;},null,{timeout:7000});
+    await page.waitForTimeout(240);
+    const waypointState=await page.evaluate(()=>{const p=document.querySelector('.voyage-waypoint-preview');return {found:!!p,visible:p?.classList.contains('is-visible'),src:p?.querySelector('img')?.src,complete:p?.querySelector('img')?.complete,width:p?.querySelector('img')?.naturalWidth,bodyActive:document.body.classList.contains('voyage-active'),pointer:matchMedia('(pointer:coarse)').matches};});
+    console.log('VOYAGE_HOVER_DIAGNOSTIC '+JSON.stringify(waypointState));
+    await page.waitForFunction(()=>{const p=document.querySelector('.voyage-waypoint-preview');return p?.classList.contains('is-visible')&&p.querySelector('img')?.naturalWidth>0;},null,{timeout:14000});
     const preview=await page.evaluate(()=>({title:document.querySelector('.voyage-waypoint-preview strong').textContent,imageWidth:document.querySelector('.voyage-waypoint-preview img').naturalWidth}));
     if(preview.title!=='VOLT-UP'||preview.imageWidth<100)throw Error('Artwork hover preview failed '+JSON.stringify(preview));
     await page.mouse.move(755,700);
