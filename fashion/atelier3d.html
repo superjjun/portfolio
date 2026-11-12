@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{color-scheme:dark;--bg:#0b0b0d;--white:#eeeae4;--muted:#b0aaa4;--line:#77716b55;--lime:#d9f989}
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:radial-gradient(ellipse at center,#304c32,#0f2017 75%);font-family:"DM Sans","Noto Sans KR",sans-serif;color:var(--white)}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:radial-gradient(ellipse at center,#55704a,#263d2d 76%);font-family:"DM Sans","Noto Sans KR",sans-serif;color:var(--white)}
 button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible,a:focus-visible{outline:2px solid var(--lime);outline-offset:5px}
 #scene{position:fixed;inset:0;touch-action:pan-y;cursor:grab}
 .quick-art{position:fixed;left:55%;top:50%;transform:translate(-50%,-50%);z-index:2;width:min(43vw,610px);height:min(70vh,710px);border:0;padding:0;background:transparent;display:grid;place-items:center;cursor:pointer;pointer-events:auto;perspective:1100px;opacity:1;transition:opacity .42s ease}
@@ -20,7 +20,7 @@ button,a{font:inherit}button{cursor:pointer}a{color:inherit}button:focus-visible
 .quick-art:hover img{transform:rotateY(0deg) translateY(-8px)}
 .quick-art.is-webgl-loaded{opacity:0;pointer-events:none}
 @media(max-width:850px){.quick-art{left:50%;top:42%;width:78vw;height:45vh}.quick-art img{max-height:100%}}#scene.grabbing{cursor:grabbing}#scene canvas{display:block;width:100%;height:100%}
-.veil{position:fixed;inset:0;pointer-events:none;background:linear-gradient(90deg,#0d2411b3 0%,transparent 31%,transparent 76%,#0e24116e 100%),linear-gradient(0deg,#0d2015d9 0%,transparent 30%,transparent 78%,#0c2615b8 100%);z-index:1}
+.veil{display:none!important}
 header{position:fixed;left:4.1vw;right:4.1vw;top:32px;display:flex;align-items:flex-start;justify-content:space-between;z-index:3;gap:16px}
 .brand{display:flex;align-items:center;gap:15px;text-decoration:none}.brand-mark{font-size:27px;line-height:1;font-weight:700;letter-spacing:-.16em;transform:skewX(-9deg)}.brand-word{font-size:11px;line-height:1.4;letter-spacing:.1em;font-weight:700}
 .head-right{display:flex;align-items:center;gap:32px;text-align:right;font-size:10px;letter-spacing:.14em;color:#c6c0b9}.live-dot{display:inline-block;width:7px;height:7px;border-radius:100%;background:#d9f989;margin-right:8px;box-shadow:0 0 14px #d9f98988}
@@ -77,9 +77,9 @@ body.embedded .brand-word{color:#e7e2d9}
  <p class="category" id="work-category">WEB / PROMOTION</p><p class="description" id="work-description">음악 발견과 참여를 연결하는 새로운 경험.</p>
  <a class="worklink" href="#" id="inspect">EXPLORE THIS PROJECT &nbsp; ↗</a>
 </div>
-<div class="right-edge">NATURE, MOTION AND ORIGINAL DESIGN</div>
+
 <div class="foot">
- <div class="instructions"><strong>DRAG</strong> TO LOOK &nbsp; / &nbsp; <strong>SCROLL</strong> TO MOVE<br>CLICK ARTWORK TO INSPECT &nbsp;·&nbsp; ESC TO CLOSE</div>
+ <div class="instructions"><strong>DRAG</strong> TO LOOK &nbsp; / &nbsp; <strong>ARROWS</strong> TO SWITCH<br><strong>SCROLL</strong> TO CONTINUE DOWN &nbsp;·&nbsp; CLICK TO VIEW</div>
  <div class="nav"><button id="prev" aria-label="이전 작품">←</button><span class="index"><b id="number">01</b> / 06</span><button id="next" aria-label="다음 작품">→</button></div>
 </div>
 <div class="loading" id="loading"><div class="spinner"></div>ENTERING FOREST</div>
@@ -129,7 +129,8 @@ function sync(){
  $("d-number").textContent=count()+" / 06";$("d-title").textContent=p.title;$("d-type").textContent=p.kind;$("d-desc").textContent=p.short;
  $("d-challenge").textContent=p.challenge;$("d-solution").textContent=p.solution;$("d-link").href="./index.html#work-"+p.id;showQuickImage();
 }
-function setIndex(i){index=(i+projects.length)%projects.length;sync();}
+let requestHighRes=()=>{};
+function setIndex(i){index=(i+projects.length)%projects.length;sync();requestHighRes(index);requestHighRes((index+1)%projects.length);}
 function openDetail(){detailOpen=true;sync();if(!isEmbedded)$("d-img").src=projects[index].img;
  if(isEmbedded){
    // Allow the exhibition object to move closer before the original portfolio's full case study opens.
@@ -148,6 +149,11 @@ window.addEventListener("keydown",e=>{
  if(detailOpen)return;
  if(e.key==="ArrowLeft"){e.preventDefault();setIndex(index-1);}
  if(e.key==="ArrowRight"){e.preventDefault();setIndex(index+1);}
+  if(isEmbedded&&["PageDown","PageUp","ArrowDown","ArrowUp"," "].includes(e.key)){
+    e.preventDefault();
+    const sign=e.key==="PageUp"||e.key==="ArrowUp"?-1:1;
+    window.parent.postMessage({type:"KJ_ATELIER_SCROLL",deltaY:sign*Math.min(innerHeight*.75,600)},location.origin);
+  }
  if(e.key==="Enter" && (document.activeElement===$("scene"))){e.preventDefault();openDetail();}
 });
 sync();
@@ -165,21 +171,21 @@ try{THREE=await import("https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.m
 catch(error){console.warn("3D engine unavailable",error);document.body.classList.add("no3d","ready");}
 if(THREE){
 try{
- const scene=new THREE.Scene();scene.background=new THREE.Color(0x13241a);scene.fog=new THREE.FogExp2(0x1a3020,.050);
+ const scene=new THREE.Scene();scene.background=new THREE.Color(0x2a4533);scene.fog=new THREE.FogExp2(0x34583a,.023);
  const camera=new THREE.PerspectiveCamera(36,innerWidth/innerHeight,.1,120);camera.position.set(0,1.45,10.2);
  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false,powerPreference:"high-performance"});
- renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.17));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;
- renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+ renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.6));renderer.setSize(innerWidth,innerHeight);renderer.outputColorSpace=THREE.SRGBColorSpace;
+ renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.35;
  $("scene").appendChild(renderer.domElement);
  renderer.domElement.addEventListener("webglcontextlost",event=>{
    event.preventDefault();quickArt.classList.remove("is-webgl-loaded");
  });
- scene.add(new THREE.HemisphereLight(0xf4ebcc,0x1c3623,2.6));
+ scene.add(new THREE.HemisphereLight(0xfff6dd,0x3b6b3d,3.2));
  const mainLight=new THREE.DirectionalLight(0xf4e8bb,2.4);mainLight.position.set(-4,9,8);scene.add(mainLight);
- const sideLight=new THREE.PointLight(0xb5de91,55,22,2);sideLight.position.set(5,5,2);scene.add(sideLight);
- const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshLambertMaterial({color:0x203b25}));
+ const sideLight=new THREE.PointLight(0xe4f8bf,85,24,2);sideLight.position.set(5,5,2);scene.add(sideLight);
+ const floor=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshLambertMaterial({color:0x456044}));
  floor.rotation.x=-Math.PI/2;floor.position.y=-1.7;scene.add(floor);
- const rear=new THREE.Mesh(new THREE.PlaneGeometry(70,24),new THREE.MeshLambertMaterial({color:0x1a3020}));
+ const rear=new THREE.Mesh(new THREE.PlaneGeometry(70,24),new THREE.MeshLambertMaterial({color:0x3a583f}));
  rear.position.set(0,3,-11);scene.add(rear);
 
  // Real 3D woodland: instanced trunks, layered foliage and a moss walking path.
@@ -231,6 +237,7 @@ try{
  scene.add(driftingLeaves);
  const woodMat=new THREE.MeshStandardMaterial({color:0x302a20,roughness:.87,metalness:.02});
  const artGroups=[],hitMeshes=[],textureLoader=new THREE.TextureLoader();
+ const posters=new Map(),loadingHighRes=new Set(),doneHighRes=new Set();
  const boardMat=new THREE.MeshStandardMaterial({color:0x302a20,roughness:.86,metalness:.02});
  const edgeMat=new THREE.MeshStandardMaterial({color:0x9c8d68,roughness:.74,metalness:.08});
  for(let i=0;i<projects.length;i++){
@@ -239,11 +246,6 @@ try{
   const outer=new THREE.Mesh(new THREE.BoxGeometry(2.79,3.77,.055),edgeMat);outer.position.z=-.081;group.add(outer);
   const backing=new THREE.Mesh(new THREE.PlaneGeometry(2.61,3.57),new THREE.MeshBasicMaterial({color:0x243729,side:THREE.DoubleSide}));
   backing.position.z=.094;group.add(backing);
-  const labelMat=new THREE.MeshBasicMaterial({color:0xf0efe8});
-  const numCanvas=document.createElement("canvas");numCanvas.width=512;numCanvas.height=96;const ctx=numCanvas.getContext("2d");
-  ctx.clearRect(0,0,512,96);ctx.fillStyle="#ede8e0";ctx.font="700 36px Arial";ctx.fillText(countFor(i)+" / KIM JUNSEO",18,52);
-  const label=new THREE.Mesh(new THREE.PlaneGeometry(2.67,.31),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(numCanvas),transparent:true,depthWrite:false}));
-  label.position.set(0,-2.11,.08);group.add(label);
   const pillar=new THREE.Mesh(new THREE.BoxGeometry(.10,.65,.10),woodMat);pillar.position.set(0,-2.19,-.15);group.add(pillar);
   const base=new THREE.Mesh(new THREE.CylinderGeometry(.83,.83,.1,32),woodMat);base.position.set(0,-2.48,-.15);group.add(base);
   textureLoader.load(p.preview,tex=>{
@@ -251,7 +253,7 @@ try{
    const ratio=tex.image.width/tex.image.height,availableW=2.52,availableH=3.48;
    let w=availableW,h=w/ratio;if(h>availableH){h=availableH;w=h*ratio;}
    const poster=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({map:tex,side:THREE.DoubleSide,toneMapped:false}));
-   poster.position.z=.104;poster.userData.index=i;hitMeshes.push(poster);group.add(poster);
+   poster.position.z=.104;poster.userData.index=i;hitMeshes.push(poster);group.add(poster);posters.set(i,poster);
    renderedPosters.add(p.id);
    if(i===index){
      requestAnimationFrame(()=>requestAnimationFrame(()=>{
@@ -260,7 +262,36 @@ try{
    }
   },undefined,()=>{console.warn("Could not load poster",p.preview);quickArt.classList.remove("is-webgl-loaded");});
  }
- function countFor(i){return String(i+1).padStart(2,"0");}
+ // Small previews are immediate; show the full-resolution original for the selected and next project.
+ requestHighRes=(i)=>{
+   if(doneHighRes.has(i)||loadingHighRes.has(i))return;
+   const p=projects[i],poster=posters.get(i);if(!poster)return;
+   loadingHighRes.add(i);
+   textureLoader.load(p.img,full=>{
+     try{
+       let tex=full;const image=full.image,edge=Math.max(image.width,image.height);
+       if(edge>4096){
+         const scale=4096/edge,cv=document.createElement("canvas");
+         cv.width=Math.max(1,Math.round(image.width*scale));
+         cv.height=Math.max(1,Math.round(image.height*scale));
+         cv.getContext("2d",{alpha:false}).drawImage(image,0,0,cv.width,cv.height);
+         tex=new THREE.CanvasTexture(cv);full.dispose();
+       }
+       tex.colorSpace=THREE.SRGBColorSpace;
+       tex.anisotropy=Math.min(renderer.capabilities.getMaxAnisotropy(),12);
+       tex.minFilter=THREE.LinearMipmapLinearFilter;
+       let w=2.52,h=w*image.height/image.width;if(h>3.48){h=3.48;w=h*image.width/image.height;}
+       const prior=poster.material.map;poster.geometry.dispose();
+       poster.geometry=new THREE.PlaneGeometry(w,h);
+       poster.material.map=tex;poster.material.needsUpdate=true;
+       prior?.dispose();
+       doneHighRes.add(i);
+     }catch(error){console.warn("High resolution artwork error",p.id,error);}
+     loadingHighRes.delete(i);
+   },undefined,()=>{loadingHighRes.delete(i);console.warn("High resolution unavailable",p.id);});
+ };
+ requestHighRes(index);requestHighRes((index+1)%projects.length);
+
  const raycaster=new THREE.Raycaster(),mouse2=new THREE.Vector2();
  let pointerX=0,pointerY=0,isDragging=false,startX=0,startY=0,lastX=0,dragBias=0,hovered=-1;
  const point=(e)=>{const rect=$("scene").getBoundingClientRect();mouse2.set((e.clientX-rect.left)/rect.width*2-1,-((e.clientY-rect.top)/rect.height*2-1));};
@@ -285,13 +316,25 @@ try{
   dragBias=0;
  });
  $("scene").addEventListener("pointercancel",()=>{isDragging=false;dragBias=0;$("scene").classList.remove("grabbing");});
- let wheelTime=0;
- $("scene").addEventListener("wheel",e=>{
-  if(detailOpen)return;
-  e.preventDefault();const now=performance.now();
-  if(Math.abs(e.deltaY)>7&&now-wheelTime>520){wheelTime=now;setIndex(index+(e.deltaY>0?1:-1));}
+
+ // The wheel scrolls the OUTER portfolio, never cycles the artwork.
+ window.addEventListener("wheel",e=>{
+   if(detailOpen)return;
+   e.preventDefault();
+   const factor=e.deltaMode===1?18:e.deltaMode===2?innerHeight:1;
+   if(isEmbedded)window.parent.postMessage({type:"KJ_ATELIER_SCROLL",deltaY:e.deltaY*factor},location.origin);
  },{passive:false});
- function resize(){const w=innerWidth,h=innerHeight;camera.aspect=w/h;camera.fov=w<650?49:36;camera.updateProjectionMatrix();renderer.setSize(w,h);renderer.setPixelRatio(Math.min(devicePixelRatio||1,w<650?1:1.17));}
+ let lastTouchX=0,lastTouchY=0;
+ window.addEventListener("touchstart",e=>{
+   if(e.touches.length===1){lastTouchX=e.touches[0].clientX;lastTouchY=e.touches[0].clientY;}
+ },{passive:true});
+ window.addEventListener("touchmove",e=>{
+   if(!isEmbedded||detailOpen||e.touches.length!==1)return;
+   const x=e.touches[0].clientX,y=e.touches[0].clientY,dy=lastTouchY-y,dx=lastTouchX-x;
+   if(Math.abs(dy)>Math.abs(dx)*1.1){e.preventDefault();window.parent.postMessage({type:"KJ_ATELIER_SCROLL",deltaY:dy},location.origin);}
+   lastTouchY=y;lastTouchX=x;
+ },{passive:false});
+ function resize(){const w=innerWidth,h=innerHeight;camera.aspect=w/h;camera.fov=w<650?49:36;camera.updateProjectionMatrix();renderer.setSize(w,h);renderer.setPixelRatio(Math.min(devicePixelRatio||1,w<650?1.35:1.6));}
  window.addEventListener("resize",resize,{passive:true});resize();
  const clock=new THREE.Clock(),lowMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
  let renderVisible=true,lastRender=0;
