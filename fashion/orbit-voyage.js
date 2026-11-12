@@ -24,6 +24,26 @@ document.body.appendChild(hud);
 const count=hud.querySelector('[data-voyage-count]');
 const stops=[...hud.querySelectorAll('.voyage-stop')];
 const line=hud.querySelector('.voyage-hud-line');
+const waypointPreview=document.createElement('div');
+waypointPreview.className='voyage-waypoint-preview';
+waypointPreview.setAttribute('aria-hidden','true');
+waypointPreview.innerHTML='<img alt="" loading="lazy" decoding="async"><div><span>PROJECT PREVIEW</span><strong></strong><small>CLICK TO EXPLORE ↗</small></div>';
+hud.appendChild(waypointPreview);
+const waypointImage=waypointPreview.querySelector('img'),waypointTitle=waypointPreview.querySelector('strong');
+const showWaypoint=i=>{
+  const img=sections[i]?.querySelector('.story-picture img');if(!img)return;
+  waypointImage.src=img.currentSrc||img.src;
+  waypointTitle.textContent=labels[i];
+  waypointPreview.classList.add('is-visible');
+};
+const hideWaypoint=()=>waypointPreview.classList.remove('is-visible');
+stops.forEach((button,i)=>{
+ button.addEventListener('pointerenter',()=>{if(!coarse)showWaypoint(i);});
+ button.addEventListener('pointerleave',hideWaypoint);
+ button.addEventListener('focus',()=>showWaypoint(i));
+ button.addEventListener('blur',hideWaypoint);
+});
+
 hud.addEventListener('click',e=>{
  const b=e.target.closest('[data-voyage-go]');
  if(!b)return;
