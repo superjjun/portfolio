@@ -1,0 +1,21 @@
+name: Inspect reference orbit interactions
+on:
+  push:
+    paths: [scripts/probe-reference-portfolio.cjs, .github/workflows/probe-reference-portfolio.yml]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Execute intro to 3D navigation to project detail
+        run: node scripts/probe-reference-portfolio.cjs
