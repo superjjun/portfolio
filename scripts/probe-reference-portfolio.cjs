@@ -1,54 +1,62 @@
 const {chromium}=require('playwright');
 (async()=>{
  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage','--enable-webgl','--use-gl=angle','--enable-unsafe-swiftshader','--autoplay-policy=no-user-gesture-required']});
- const page=await browser.newPage({viewport:{width:1440,height:1024},deviceScaleFactor:1, reducedMotion:'reduce'});
- const errs=[];page.on('pageerror',e=>errs.push(e.message.slice(0,140)));
- await page.goto('https://suhan998.github.io/Web-Portfolio/',{waitUntil:'domcontentloaded',timeout:70000});
- const snap=async label=>{
-  const x=await page.evaluate(()=>{
-   const names=['profile','explore','orbit-project-detail','orbit-detail-scroll'];
-   const visible=id=>{const e=document.getElementById(id);return e?{hidden:e.hidden,cls:e.className,scrollTop:e.scrollTop,scrollHeight:e.scrollHeight,rect:e.getBoundingClientRect().toJSON().width}:null};
-   return {state:window.__CLEAR_ORBIT_STATE,profile:visible('profile'),explore:visible('explore'),detail:visible('orbit-project-detail'),stage:document.querySelector('#stage')?.className,planetCount:document.querySelectorAll('.orbit-planet').length,activePlanets:[...document.querySelectorAll('.orbit-planet')].filter(e=>{const r=e.getBoundingClientRect();return r.width>5&&r.left>=0&&r.left<innerWidth&&r.top>=0&&r.top<innerHeight}).slice(0,10).map(e=>({text:e.innerText.slice(0,65),rect:e.getBoundingClientRect().toJSON(),pointer:getComputedStyle(e).pointerEvents})),detailSections:[...document.querySelectorAll('#orbit-detail-scroll [data-section]')].slice(0,12).map(e=>({text:e.getAttribute('data-section'),cls:e.className})),route:location.href};
-  });console.log('REFERENCE_STAGE '+JSON.stringify({label,...x}));return x;
- };
- await snap('intro');
- await page.locator('#star-hit').click({timeout:12000});
+ const page=await browser.newPage({viewport:{width:1440,height:1024},deviceScaleFactor:1,reducedMotion:'reduce'});
+ const errors=[];page.on('pageerror',e=>errors.push(e.message.slice(0,200)));
+ await page.goto('https://suhan998.github.io/Web-Portfolio/',{waitUntil:'domcontentloaded',timeout:65000});
+ console.log('REFERENCE_INTRO '+JSON.stringify(await page.evaluate(()=>({title:document.title,button:!!document.querySelector('#star-hit'),state:window.__CLEAR_ORBIT_STATE}))));
+ await page.locator('#star-hit').click({timeout:15000});
  await page.waitForTimeout(5500);
- await snap('after_enter');
- // Profile requires one wheel turn to enter 3D explore, not ArrowDown/End.
- await page.mouse.move(700,540);
- for(let i=0;i<10;i++){await page.mouse.wheel(0,600);await page.waitForTimeout(640);const state=await page.evaluate(()=>window.__CLEAR_ORBIT_STATE);if(state==='EXPLORE'||state==='PROJECT_APPROACH')break;}
- await page.waitForTimeout(1800);let state=await snap('after_wheel_enter_explore');
- if(state.state!=='EXPLORE'){console.log('WARNING EXPLORE NOT ENTERED');}
- for(let i=0;i<6;i++){
-  await page.mouse.wheel(0,370);await page.waitForTimeout(350);
-  if(i===2||i===5)await snap('travel_'+i);
+ const profile=await page.evaluate(()=>({visible:!document.querySelector('#profile')?.hidden,details:document.querySelector('#profile-more')?.getAttribute('class'),state:window.__CLEAR_ORBIT_STATE}));
+ console.log('REFERENCE_PROFILE '+JSON.stringify(profile));
+ await page.mouse.move(680,490);
+ for(let i=0;i<8;i++){await page.mouse.wheel(0,680);await page.waitForTimeout(460);if(await page.evaluate(()=>window.__CLEAR_ORBIT_STATE)==='EXPLORE')break;}
+ await page.waitForTimeout(1000);
+ console.log('REFERENCE_EXPLORE '+JSON.stringify(await page.evaluate(()=>({state:window.__CLEAR_ORBIT_STATE,visible:!document.querySelector('#explore').hidden,projectNames:[...document.querySelectorAll('.orbit-planet')].map(x=>x.textContent.trim().replace(/\s+/g,' ').slice(0,58)),hud:document.querySelector('#orbit-hud-name')?.textContent}))));
+ for(let i=0;i<9;i++){await page.mouse.wheel(0,420);await page.waitForTimeout(300);}
+ await page.waitForTimeout(800);
+ const available=await page.evaluate(()=>[...document.querySelectorAll('.orbit-planet')].map((e,i)=>({i,txt:e.textContent.trim().replace(/\s+/g,' ').slice(0,36),front:e.classList.contains('is-frontmost'),pointer:getComputedStyle(e).pointerEvents,width:e.getBoundingClientRect().width})));
+ console.log('REFERENCE_PLANETS '+JSON.stringify(available));
+ const index=available.find(x=>x.front&&x.pointer==='auto'&&x.width>25)?.i??available.find(x=>x.pointer==='auto')?.i??0;
+ const target=page.locator('.orbit-planet').nth(index);
+ await target.hover({force:true,timeout:5000}).catch(()=>{});
+ const preview=await page.evaluate(()=>({visible:!!document.querySelector('.orbit-planet-preview.is-visible'),url:document.querySelector('.orbit-planet-preview img')?.currentSrc}));
+ console.log('REFERENCE_HOVER '+JSON.stringify(preview));
+ // Native click event via the real DOM element (not navigation to an invented page).
+ await target.evaluate(x=>x.click());
+ await page.waitForTimeout(900);
+ const chosen=await page.evaluate(()=>({state:window.__CLEAR_ORBIT_STATE,visible:!document.querySelector('#orbit-project-detail').hidden}));
+ console.log('REFERENCE_CHOSEN '+JSON.stringify(chosen));
+ let authenticDetail=false;
+ try{await page.waitForFunction(()=>!document.querySelector('#orbit-project-detail').hidden,null,{timeout:25000});authenticDetail=true;}catch(e){}
+ // GPU software renderer may not complete camera easing in headless CI:
+ // fallback invokes the SAME internal focus-complete notification after a genuine pick,
+ // only for examining the rendered chapters. It does not claim a completed camera animation.
+ if(!authenticDetail && chosen.state==='PROJECT_APPROACH'){
+  const key=await page.evaluate(i=>['bugs','naver','aladin','seven','hwalok','gta'][i],index);
+  await page.evaluate(key=>window.dispatchEvent(new CustomEvent('orbit:project-focus-complete',{detail:{project:key}})),key);
+  await page.waitForTimeout(1100);
  }
- let buttons=page.locator('.orbit-planet');
- const cnt=await buttons.count();console.log('REF_PLANET_BUTTONS '+cnt);
- if(cnt){let clicked=false;
-  for(let i=0;i<cnt;i++){
-   const b=buttons.nth(i);const box=await b.boundingBox();
-   if(box&&box.width>20&&box.height>20&&box.x>0&&box.x+box.width<1440&&box.y>30&&box.y+box.height<1024){
-    await b.hover({timeout:4000}).catch(()=>{});await snap('hover_planet_'+i);
-    await b.click({timeout:7000,force:true}).catch(e=>console.log('CLICK_REF_ERROR '+e.message.slice(0,120)));
-    clicked=true;break;
-   }
+ const detail=await page.evaluate(()=>({visible:!document.querySelector('#orbit-project-detail').hidden,project:document.querySelector('#orbit-project-detail').dataset.project,navLabels:[...document.querySelectorAll('#orbit-detail-nav button')].map(x=>x.innerText.trim()),chapters:[...document.querySelectorAll('#orbit-detail-scroll .orbit-detail-section')].map(x=>({key:x.dataset.section,height:x.getBoundingClientRect().height}))}));
+ console.log('REFERENCE_DETAIL '+JSON.stringify({authenticDetail,...detail}));
+ const observations=[];
+ if(detail.visible){
+  const scroll=page.locator('#orbit-detail-scroll');
+  for(let i=0;i<6;i++){
+   await page.mouse.move(800,560);await page.mouse.wheel(0,760);await page.waitForTimeout(360);
+   observations.push(await page.evaluate(()=>({state:window.__CLEAR_ORBIT_STATE,scroll:document.querySelector('#orbit-detail-scroll').scrollTop,active:[...document.querySelectorAll('#orbit-detail-nav button')].findIndex(x=>x.classList.contains('is-active')),text:document.querySelector('#orbit-detail-nav [aria-current]')?.textContent?.trim()})));
   }
-  if(!clicked){await buttons.first().evaluate(b=>b.click());console.log('FALLBACK_PROGRAMMATIC_PLANET_CLICK');}
- }
- await page.waitForTimeout(2600);state=await snap('after_project_click');
- if(state.detail?.hidden){await page.waitForTimeout(4000);state=await snap('after_detail_animation');}
- let stages=[];
- if(!state.detail?.hidden){
-  for(let i=0;i<7;i++){
-   await page.locator('#orbit-detail-scroll').hover({force:true,timeout:3000}).catch(()=>{});
-   await page.mouse.wheel(0,760);await page.waitForTimeout(400);
-   stages.push(await snap('detail_scroll_'+i));
+  for(let i=0;i<5;i++){
+   try{await page.locator('#orbit-detail-nav button').nth(i).click({force:true,timeout:3000});await page.waitForTimeout(450);}catch(e){}
+   const x=await page.evaluate(()=>({selected:[...document.querySelectorAll('#orbit-detail-nav button')].findIndex(x=>x.classList.contains('is-active')),scroll:document.querySelector('#orbit-detail-scroll').scrollTop}));
+   observations.push({click:i,...x});
   }
-  const back=page.locator('#orbit-detail-close');
-  if(await back.count()){await back.click({force:true});await page.waitForTimeout(1700);await snap('returned_to_explore');}
+  await page.locator('#orbit-detail-close').click({force:true,timeout:5000});
+  await page.waitForTimeout(800);
  }
- console.log('REFERENCE_SUMMARY '+JSON.stringify({errors:errs,sectionsObserved:stages.map(s=>s.detailSections.filter(x=>x.cls.includes('current')).map(x=>x.text)),buttons:cnt}));
+ console.log('REFERENCE_CHAPTERS '+JSON.stringify(observations));
+ console.log('REFERENCE_RETURN '+JSON.stringify(await page.evaluate(()=>({detailHidden:document.querySelector('#orbit-project-detail').hidden,exploreVisible:!document.querySelector('#explore').hidden,state:window.__CLEAR_ORBIT_STATE}))));
+ console.log('REFERENCE_END '+JSON.stringify({errors,authenticDetail,chapterCount:detail.chapters?.length||0,visited:observations.length}));
  await browser.close();
-})().catch(e=>{console.error('REFERENCE_QA_FAILED '+(e.stack||e));process.exit(1)});
+ if(!detail.visible||detail.chapters.length!==5||observations.length<6)throw Error('Could not fully inspect reference case navigation');
+})().catch(e=>{console.error('REFERENCE_PROBE_FAILED '+(e.stack||e));process.exit(1)});
