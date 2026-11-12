@@ -29,7 +29,7 @@ function loadDB(){try{const x=JSON.parse(localStorage.getItem(STORAGE)||'{}');re
 const db=loadDB(),imgs={};
 const st={page:'home',id:'airpods',slide:0,zoom:false,inspect:true,filter:'전체',sort:'new',radar:'all',query:'',rating:5,tags:['설명과 같아요','친절해요'],order:null,chatId:'airpods',upload:[]};
 const stack=[],app=document.getElementById('app');
-const catalog=()=>[...db.sales,...data],item=(id=st.id)=>catalog().find(x=>x.id===id)||data[0],pic=d=>(d.photos?.[0]||d.image||imgs[d.id]||'');
+const catalog=()=>[...db.sales,...data],item=(id=st.id)=>catalog().find(x=>x.id===id)||data[0],pic=d=>(d.photos?.[0]||d.image||imgs[d.id]||d.gallery?.[0]||'');
 function shots(d){return [{url:pic(d),caption:'대표 사진'},...(d.photos?.slice(1).map((url,i)=>({url,caption:'추가 사진 '+(i+2)}))||d.gallery.map((url,i)=>({url,caption:'제품 유형 참고 이미지 '+(i+1),sample:true})))];}
 function save(){try{localStorage.setItem(STORAGE,JSON.stringify(db));return true;}catch{alert('브라우저 저장 용량을 초과했어요.');return false;}}
 function toast(msg){app.querySelector('.toast')?.remove();const t=document.createElement('div');t.className='toast';t.textContent=msg;app.appendChild(t);setTimeout(()=>t.remove(),2700);}
@@ -125,5 +125,5 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(st.zoom){st.zoom
 document.addEventListener('error',e=>{if(e.target.tagName==='IMG'&&e.target.dataset.fallback&&!e.target.dataset.fell){e.target.dataset.fell='1';e.target.src=e.target.dataset.fallback;}},true);
 let touchX=0;document.addEventListener('touchstart',e=>{if(e.target.closest('#swipe-gallery,.modal-layer'))touchX=e.touches[0].clientX;},{passive:true});document.addEventListener('touchend',e=>{if(e.target.closest('#swipe-gallery,.modal-layer')){const v=e.changedTouches[0].clientX-touchX;if(Math.abs(v)>35)slide(v<0?1:-1);}},{passive:true});
 window.addEventListener('popstate',()=>{const [page,id]=decodeURIComponent(location.hash.slice(1)).split('/');if(page){st.page=page;if(id)st.id=id;}else st.page='home';st.zoom=false;render();});
-async function init(){await Promise.all(data.map(async d=>{try{const res=await fetch(PATH+d.id+'.b64');if(!res.ok)throw Error('image');imgs[d.id]='data:image/jpeg;base64,'+(await res.text()).trim();}catch(e){imgs[d.id]=d.gallery[0];}}));const [page,id]=decodeURIComponent(location.hash.slice(1)).split('/');if(['home','category','radar','search','favorites','profile','detail','inspection','checkout','orders','tracking','inspectionReport'].includes(page)){st.page=page;if(id)st.id=id;}render();}
+async function init(){const [page,id]=decodeURIComponent(location.hash.slice(1)).split('/');if(['home','category','radar','search','favorites','profile','detail','inspection','checkout','orders','tracking','inspectionReport'].includes(page)){st.page=page;if(id)st.id=id;}render();await Promise.allSettled(data.filter(d=>!d.image).map(async d=>{try{const res=await fetch(PATH+d.id+'.b64',{cache:'force-cache'});if(!res.ok)throw Error('image');imgs[d.id]='data:image/jpeg;base64,'+(await res.text()).trim();}catch(e){imgs[d.id]=d.gallery?.[0]||'';}}));render(true);}
 init();
