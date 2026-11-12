@@ -185,7 +185,7 @@ function detailHTML(p){
  : '<div class="detail-no-video"><strong>VISUAL DESIGN</strong><p>정적 디자인 작품입니다. 조작형 프로토타입 영상은 없습니다.</p></div>';
  const source='<details class="detail-poster"><summary><span>원본 작품 이미지 전체 펼쳐보기</span><b aria-hidden="true">＋</b></summary>'+
  '<div class="detail-original"><img src="'+p.img+'" data-fallback="'+p.fallback+'" loading="lazy" alt="'+p.title+' 실제 Figma 디자인 전체"><span>ORIGINAL DESIGN / '+p.n+' OF 06</span></div></details>';
- return '<div class="detail-main" role="dialog" aria-modal="true" aria-label="'+safe(p.title)+' 프로젝트 상세" tabindex="-1">'+
+ return '<div class="detail-main" data-project-detail="'+safe(p.id)+'" role="dialog" aria-modal="true" aria-label="'+safe(p.title)+' 프로젝트 상세" tabindex="-1">'+
  '<div class="detail-top"><span>KIM JUNSEO / '+p.n+' / 06</span><button class="detail-close" data-close type="button">CLOSE <b>×</b></button></div>'+
  '<div class="detail-content"><div class="detail-headerline">'+p.kind+' / 2026</div><h2>'+p.title+'</h2><p class="detail-sub">'+safe(p.short)+'</p>'+
  clip+voltupGallery+source+
