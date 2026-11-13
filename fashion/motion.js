@@ -185,12 +185,13 @@ function detailHTML(p){
    '<div class="detail-video '+(p.mode==='mobile'?'phone':'')+'">'+
    '<div class="detail-video-fallback"><img src="./assets/demos/'+p.movie+'.gif" alt="'+p.title+' 영상 미리보기"></div>'+
    '<video muted autoplay loop playsinline controls preload="metadata" aria-label="'+p.title+' 시연 영상">'+
-   (['soundcloud','lostlink','junggonara','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.webm?v=20261111-webm-live4" type="video/webm">':'')+
-   (['soundcloud','lostlink','junggonara','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.mp4?v=20261111-cropped2" type="video/mp4">':'')+
+   (p.id==='soundcloud'?'<source src="./assets/demos/soundcloud-user-recording.mp4?v=20261113-user-recording16" type="video/mp4">':'')+
+   (['lostlink','junggonara','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.webm?v=20261111-webm-live4" type="video/webm">':'')+
+   (['lostlink','junggonara','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.mp4?v=20261111-cropped2" type="video/mp4">':'')+
    (['lostlink','junggonara','ppomppu'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-real.mp4?v=20261111-real1" type="video/mp4">':'')+
    '</video></div></div>'+
    '<p class="detail-tip" data-demo-status>화면녹화 영상을 불러오는 중입니다.</p>'
- : '<div class="detail-no-video"><strong>VISUAL DESIGN</strong><p>정적 디자인 작품입니다. 조작형 프로토타입 영상은 없습니다.</p></div>';
+ : '';
 
  // Only link to actual GitHub-hosted functional demos. Non-app visual projects use an interactive design viewer.
  const experiences={
@@ -227,11 +228,13 @@ function open(id,button){
   const label=()=>{
    if(video.readyState>=2){
     video.style.opacity='1';
+    const fromUserRecording=video.currentSrc.includes('soundcloud-user-recording.mp4');
     const fromFigma=video.currentSrc.includes('-figma.');
     const fromWebsite=video.currentSrc.includes('-real.mp4');
-    note.textContent=fromFigma?'실제 Figma 프로토타입에서 버튼을 클릭하거나 화면을 스크롤하며 녹화한 영상입니다.':
+    note.textContent=fromUserRecording?'직접 제공한 SoundCloud 화면 녹화 영상입니다.':
+      (fromFigma?'실제 Figma 프로토타입에서 버튼을 클릭하거나 화면을 스크롤하며 녹화한 영상입니다.':
       (fromWebsite?'실제 웹 프로토타입에서 버튼을 조작하며 녹화한 영상입니다.':
-      (p.isDemo?'기존 인터랙션 시연 미리보기입니다.':'이 영상은 디자인 이미지의 모션 프리뷰로, 실제 버튼 조작 영상이 아닙니다.'));
+      (p.isDemo?'기존 인터랙션 시연 미리보기입니다.':'이 영상은 디자인 이미지의 모션 프리뷰로, 실제 버튼 조작 영상이 아닙니다.')));
    }
   };
   video.addEventListener('loadeddata',label);
