@@ -75,6 +75,7 @@ let current=0,startX=null;
 function show(n){
  current=(n+d.pictures.length)%d.pictures.length;
  const [src,label]=d.pictures[current];$("art").src=src;$("art").alt=d.title+": "+label;
+ $("art").classList.toggle("roundlab-sheet",id==="roundlab"&&current===0);
  $("counter").textContent=String(current+1).padStart(2,"0")+" / "+String(d.pictures.length).padStart(2,"0");
  $("caption").textContent=label;
  $("viewport").classList.remove("zoomed");$("zoom").textContent="이미지 확대";
