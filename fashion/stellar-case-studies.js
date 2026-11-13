@@ -22,12 +22,10 @@ const studies={
   result:'분실자와 습득자가 입력한 물건의 색상·형태·스티커·흠집 등 특징을 AI로 비교합니다. 분실 시간과 장소를 함께 고려해 유사도가 높은 후보를 추천하고, 습득자와의 1:1 채팅으로 물건이 맞는지 확인하도록 설계했습니다.'
  },
  voltup:{
-  group:'ORIGINAL BRAND · CAMPAIGN',scope:'에너지 부스터 제품의 패키지와 캠페인 비주얼 디자인',
-  issues:[
-   ['제품의 첫인상이 약하면 기억되지 않는다','에너지 제품 특유의 강렬함과 차별점을 한 장의 이미지에 담는 것이 핵심 디자인 과제였습니다.','블랙과 형광 라임을 결합해 제품·패키지의 주목도를 높이는 방향으로 시각화했습니다.','VISUAL IMPACT'],
-   ['메시지가 복잡하면 전달력이 떨어진다','짧은 SNS 콘텐츠에서는 제품 설명보다 먼저 핵심 문구가 이해되어야 합니다.','「운동 전 10초」라는 짧은 메시지를 중심으로 카드뉴스의 정보 우선순위를 정리했습니다.','MESSAGE']
-  ],
-  result:'패키지, 제품 연출, SNS 카드뉴스까지 하나의 시각 언어로 연결했습니다.'
+  group:'ORIGINAL BRAND · CAMPAIGN',
+  scope:'운동 전 10초, 텐션을 깨우는 에너지 부스터 브랜드 VOLT-UP을 직접 기획하고 제품 패키지·비주얼·카드뉴스까지 디자인했습니다.',
+  issues:[],
+  result:'블랙과 형광 라임의 강한 대비, 스틱형 패키지의 휴대성, 운동 전 10초라는 메시지를 제품 연출부터 SNS 캠페인까지 일관되게 표현했습니다.'
  },
  junggonara:{
   group:'EXISTING SERVICE · UI/UX REDESIGN',scope:'오래된 홈 디자인을 개선하고 후기·검수·안전결제 기능을 도입한 중고거래 UI/UX 리디자인',
@@ -95,6 +93,38 @@ function issueMarkup(issue,index,total,p){
 function caseMarkup(p){
  const d=studies[p.id];if(!d)return '';
  const sources=artwork[p.id]||[p.cover,p.cover,p.cover,p.cover];
+ if(p.id==='voltup'){
+ const visuals=[
+  ['01','브랜드의 첫인상','강렬한 블랙과 형광 라임, 굵은 로고로 에너지 부스터의 정체성을 보여줍니다.'],
+  ['02','입체적인 패키지 디자인','패키지와 스틱 제품을 함께 연출해 제품의 존재감을 강조했습니다.'],
+  ['03','운동 전 10초 루틴','제품을 마시는 간단한 순간을 한 장의 키 비주얼로 표현했습니다.'],
+  ['04','가볍게 가지고 다니는 에너지','스틱형 포장의 휴대성과 간편한 사용 장면을 시각화했습니다.'],
+  ['05','청량한 레몬라임 콘셉트','밝고 깨끗한 제품 화보로 상쾌한 브랜드 이미지를 완성했습니다.']
+ ];
+ const fallbacks=['./assets/submitted/voltup-poster.webp','./assets/figma-original/voltup-figma.png','./assets/submitted/voltup-poster.webp','./assets/figma-original/voltup-figma.png','./assets/submitted/voltup-poster.webp'];
+ const visualImage=i=>'<img src="./assets/voltup/brand/'+visuals[i][0]+'.webp" data-fallback="'+fallbacks[i]+'" alt="VOLT-UP '+safe(visuals[i][1])+' 제품 비주얼" loading="lazy" decoding="async" onerror="if(!this.dataset.failed){this.dataset.failed=1;this.src=this.dataset.fallback;}">';
+ return '<div class="case-story vu-brand-story" data-project-case="voltup">'+
+  '<section class="vu-brand-hero case-chapter case-in"><div class="vu-brand-copy"><span class="case-kicker">ORIGINAL BRAND / 2026</span>'+
+  '<h3>ENERGY.<br><em>IN MOTION.</em></h3><p>'+safe(d.scope)+'</p>'+
+  '<span class="vu-brand-note">BLACK × NEON LIME / PACKAGING / CAMPAIGN</span></div>'+
+  '<figure class="vu-brand-main">'+visualImage(0)+'</figure></section>'+
+  '<section class="vu-brand-strategy case-chapter case-in"><span class="case-kicker">BRAND STRATEGY / CREATIVE DIRECTION</span>'+
+  '<h3>운동 전 10초,<br><em>텐션을 깨우다.</em></h3>'+
+  '<p>기존 브랜드의 문제를 해결하는 리디자인이 아닌, 직접 만든 브랜드의 메시지를 어떻게 보여줄지 고민했습니다. 에너지의 속도감을 강한 컬러 대비와 굵은 타이포그래피로 표현하고, 실용적인 스틱형 패키지부터 제품 화보까지 일관되게 설계했습니다.</p>'+
+  '<div class="vu-strategy-points"><article><b>01 / BRAND IDENTITY</b><strong>블랙 × 형광 라임</strong><span>강렬하고 기억에 남는 브랜드 인상</span></article>'+
+  '<article><b>02 / PRODUCT DESIGN</b><strong>스틱형 패키지</strong><span>간편한 휴대와 빠른 섭취 경험을 시각화</span></article>'+
+  '<article><b>03 / CAMPAIGN</b><strong>운동 전 10초</strong><span>짧고 직관적인 핵심 메시지</span></article></div></section>'+
+  '<section class="vu-product-wrap case-chapter case-in"><span class="case-kicker">PRODUCT VISUALS / 05 SCENES</span>'+
+  '<h3>보여주고 싶은<br><em>VOLT-UP의 이미지.</em></h3>'+
+  '<p>하나의 제품을 다양한 상황으로 연출해 강렬함, 휴대성, 청량감을 강조했습니다.</p>'+
+  '<div class="vu-product-grid">'+visuals.map((v,i)=>'<figure class="vu-product-item '+(i===0?'featured':'')+'">'+visualImage(i)+
+  '<figcaption><small>'+v[0]+' / 05</small><strong>'+v[1]+'</strong><span>'+v[2]+'</span></figcaption></figure>').join('')+'</div></section>'+
+  '<section class="vu-campaign-idea case-chapter case-in"><span class="case-kicker">CARD NEWS / SERIES 01</span>'+
+  '<h3>공감에서 시작하는<br><em>브랜드 스토리.</em></h3>'+
+  '<p>피곤함과 집중력 저하 같은 일상의 순간을 먼저 보여주고, 운동 전 에너지가 필요한 상황에 VOLT-UP을 자연스럽게 연결했습니다.</p>'+
+  '<div class="vu-campaign-flow"><span>일상 속 피로</span><span>→</span><span>공감</span><span>→</span><span>제품 소개</span><span>→</span><span>브랜드 경험</span></div></section>'+
+  '</div>';
+ }
  if(p.id==='lostlink'){
  const screens=[
   {number:'01',eng:'REGISTER',heading:'분실 정보 등록',description:'분실자는 색상·형태·스티커·흠집 같은 물건의 특징과 분실 장소 및 시간을 입력합니다.',src:'./assets/figma-lostlink/lostlink-location-clean.png',alt:'실제 LOST LINK 앱 분실 장소와 시간 등록 화면'},
