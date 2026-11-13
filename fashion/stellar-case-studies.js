@@ -105,22 +105,22 @@ function caseMarkup(p){
  const fallbacks=['./assets/submitted/voltup-poster.webp','./assets/figma-original/voltup-figma.png','./assets/submitted/voltup-poster.webp','./assets/figma-original/voltup-figma.png','./assets/submitted/voltup-poster.webp'];
  const visualImage=i=>'<img src="./assets/voltup/brand/'+visuals[i][0]+'.webp" data-fallback="'+fallbacks[i]+'" alt="VOLT-UP '+safe(visuals[i][1])+' 제품 비주얼" loading="lazy" decoding="async" onerror="if(!this.dataset.failed){this.dataset.failed=1;this.src=this.dataset.fallback;}">';
  return '<div class="case-story vu-brand-story" data-project-case="voltup">'+
-  '<section class="vu-brand-hero case-chapter case-in"><div class="vu-brand-copy"><span class="case-kicker">ORIGINAL BRAND / 2026</span>'+
+  '<section class="vu-brand-hero case-chapter case-in"><div class="vu-brand-copy">'+
   '<h3>ENERGY.<br><em>IN MOTION.</em></h3><p>'+safe(d.scope)+'</p>'+
-  '<span class="vu-brand-note">BLACK × NEON LIME / PACKAGING / CAMPAIGN</span></div>'+
+  '</div>'+
   '<figure class="vu-brand-main">'+visualImage(0)+'</figure></section>'+
-  '<section class="vu-brand-strategy case-chapter case-in"><span class="case-kicker">BRAND STRATEGY / CREATIVE DIRECTION</span>'+
+  '<section class="vu-brand-strategy case-chapter case-in">'+
   '<h3>운동 전 10초,<br><em>텐션을 깨우다.</em></h3>'+
   '<p>기존 브랜드의 문제를 해결하는 리디자인이 아닌, 직접 만든 브랜드의 메시지를 어떻게 보여줄지 고민했습니다. 에너지의 속도감을 강한 컬러 대비와 굵은 타이포그래피로 표현하고, 실용적인 스틱형 패키지부터 제품 화보까지 일관되게 설계했습니다.</p>'+
-  '<div class="vu-strategy-points"><article><b>01 / BRAND IDENTITY</b><strong>블랙 × 형광 라임</strong><span>강렬하고 기억에 남는 브랜드 인상</span></article>'+
-  '<article><b>02 / PRODUCT DESIGN</b><strong>스틱형 패키지</strong><span>간편한 휴대와 빠른 섭취 경험을 시각화</span></article>'+
-  '<article><b>03 / CAMPAIGN</b><strong>운동 전 10초</strong><span>짧고 직관적인 핵심 메시지</span></article></div></section>'+
-  '<section class="vu-product-wrap case-chapter case-in"><span class="case-kicker">PRODUCT VISUALS / 05 SCENES</span>'+
-  '<h3>보여주고 싶은<br><em>VOLT-UP의 이미지.</em></h3>'+
-  '<p>하나의 제품을 다양한 상황으로 연출해 강렬함, 휴대성, 청량감을 강조했습니다.</p>'+
+  '<div class="vu-strategy-points"><article><b>01</b><strong>블랙 × 형광 라임</strong><span>강렬하고 기억에 남는 브랜드 인상</span></article>'+
+  '<article><b>02</b><strong>스틱형 패키지</strong><span>간편한 휴대와 빠른 섭취 경험을 시각화</span></article>'+
+  '<article><b>03</b><strong>운동 전 10초</strong><span>짧고 직관적인 핵심 메시지</span></article></div></section>'+
+  '<section class="vu-product-wrap case-chapter case-in">'+
+  '<h3>제품에 담아낸<br><em>VOLT-UP의 에너지.</em></h3>'+
+  '<p>패키지의 강렬한 인상부터 간편한 휴대, 청량한 사용 장면까지 제품의 특징을 다양한 연출로 전달했습니다.</p>'+
   '<div class="vu-product-grid">'+visuals.slice(1).map((v,i)=>'<figure class="vu-product-item">'+visualImage(i+1)+
   '<figcaption><small>'+v[0]+' / 05</small><strong>'+v[1]+'</strong><span>'+v[2]+'</span></figcaption></figure>').join('')+'</div></section>'+
-  '<section class="vu-campaign-idea case-chapter case-in"><span class="case-kicker">CARD NEWS / SERIES 01</span>'+
+  '<section class="vu-campaign-idea case-chapter case-in">'+
   '<h3>공감에서 시작하는<br><em>브랜드 스토리.</em></h3>'+
   '<p>피곤함과 집중력 저하 같은 일상의 순간을 먼저 보여주고, 운동 전 에너지가 필요한 상황에 VOLT-UP을 자연스럽게 연결했습니다.</p>'+
   '<div class="vu-campaign-flow"><span>일상 속 피로</span><span>→</span><span>공감</span><span>→</span><span>제품 소개</span><span>→</span><span>브랜드 경험</span></div></section>'+

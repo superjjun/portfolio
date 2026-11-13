@@ -152,7 +152,7 @@ const vuSlides=[{"src":"./assets/voltup/cardnews-01/01.webp","fallback":"./asset
 function detailHTML(p){
  const voltupGallery=p.id==='voltup' ?
  '<section class="voltup-gallery" data-voltup-gallery data-index="0" aria-label="VOLT-UP 첫 번째 카드뉴스 10장">'+
- '<div class="voltup-gallery-header"><div><small>CARD NEWS / SERIES 01</small><strong>VOLT-UP / 첫 번째 카드뉴스</strong></div><span>10 SCREENS · SWIPE TO EXPLORE</span></div>'+
+ '<div class="voltup-gallery-header"><strong>첫 번째 카드뉴스</strong></div>'+
  '<p class="vu-gallery-description">일상의 피로에 대한 공감부터 브랜드 소개까지 이어지는 10장의 카드뉴스입니다.</p>'+
  '<div class="voltup-gallery-stage"><button class="voltup-gallery-arrow" type="button" data-vu-step="-1" aria-label="이전 카드뉴스">‹</button>'+
  '<div class="voltup-gallery-artwork"><img data-vu-image src="./assets/voltup/cardnews-01/01.webp" data-fallback="./assets/instagram/voltup-captured-1.jpg" alt="VOLT-UP 첫 번째 카드뉴스 1 / 10" loading="lazy" decoding="async"></div>'+
