@@ -1,0 +1,13 @@
+{
+  "name": "Hidden Stage — SoundCloud Reimagined",
+  "short_name": "Hidden Stage",
+  "description": "새로운 음악을 발견하고 숨겨진 아티스트의 첫 번째 팬이 되는 리디자인 웹앱",
+  "start_url": "./#/discover",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0b0d",
+  "theme_color": "#ff501e",
+  "icons": [
+    {"src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}
