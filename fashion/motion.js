@@ -8,7 +8,7 @@ const mobile=matchMedia('(pointer:coarse)');
 const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const projects=[
  {id:'soundcloud',cover:'./assets/figma-original/soundcloud-figma.png?v=source20261110',posterAspect:'portrait',n:'01',title:'SOUNDCLOUD',kind:'WEB / PROMOTION',short:'새로운 음악을 발견하고 직접 참여하는 프로모션 경험.',color:'#f9a875',shade:'#f2c6ae',back:'#f7e9de',img:'./assets/figma-original/soundcloud-figma.png?v=source20261110',fallback:'./assets/work-soundcloud.png',mode:'desktop',movie:'soundcloud',isDemo:false,sub:'SoundCloud Promotion',challenge:'새로운 아티스트를 발견하기 어렵고, 관련 프로모션의 참여 방법도 한눈에 파악하기 어려웠습니다.',solution:'DISCOVER DROP으로 음악 탐색을 돕고, Hidden Stage와 FIRST LISTENER 배지로 프로모션 참여 정보를 명확하게 전달했습니다.'},
- {id:'lostlink',cover:'./assets/figma-original/lostlink-figma.png?v=source20261110',posterAspect:'portrait',n:'02',title:'LOST LINK',kind:'UI/UX / MOBILE APP',short:'잃어버린 물건을 다시 연결하는 디자인.',color:'#b4c6f8',shade:'#b5caff',back:'#e5eafa',img:'./assets/figma-original/lostlink-figma.png?v=source20261110',fallback:'./assets/work-lostlink.png',mode:'mobile',movie:'lostlink',isDemo:true,sub:'Lost & Found Matching App',challenge:'수많은 게시글 속에서 물건을 직접 찾아야 하는 불편함을 줄이고자 했습니다.',solution:'물건의 특징, 장소, 시간을 연결하여 등록부터 매칭 결과 확인까지 단계별로 설계했습니다.'},
+ {id:'lostlink',cover:'./assets/figma-original/lostlink-figma.png?v=source20261110',posterAspect:'portrait',n:'02',title:'LOST LINK',kind:'UI/UX / MOBILE APP',short:'잃어버린 물건을 다시 연결하는 디자인.',color:'#b4c6f8',shade:'#b5caff',back:'#e5eafa',img:'./assets/figma-original/lostlink-figma.png?v=source20261110',fallback:'./assets/work-lostlink.png',mode:'mobile',movie:null,isDemo:true,sub:'Lost & Found Matching App',challenge:'수많은 게시글 속에서 물건을 직접 찾아야 하는 불편함을 줄이고자 했습니다.',solution:'물건의 특징, 장소, 시간을 연결하여 등록부터 매칭 결과 확인까지 단계별로 설계했습니다.'},
  {id:'voltup',cover:'./assets/figma-original/voltup-figma.png?v=source20261110',posterAspect:'portrait',n:'03',title:'VOLT-UP',kind:'VISUAL / CAMPAIGN',short:'운동 전 10초, 텐션을 깨우는 나만의 에너지 브랜드.',color:'#d2ef61',shade:'#d2ee84',back:'#e9f2ce',img:'./assets/figma-original/voltup-figma.png?v=source20261110',fallback:'../assets/hd/volt-up.jpg',mode:'desktop',movie:null,isDemo:false,sub:'Original Energy Booster Brand',challenge:'브랜드의 에너지와 스틱형 패키지의 편리함을 표현하는 것이 목표였습니다.',solution:'블랙·형광 라임, 제품 화보, 운동 전 10초 카피로 브랜드 정체성을 구축했습니다.'},
  {id:'junggonara',cover:'./assets/figma-original/junggonara-figma-hires.png?v=20261111-real-hires1',posterAspect:'portrait',n:'04',title:'JUNGGO NARA',kind:'UI/UX / REDESIGN',short:'새로운 홈 디자인과 후기·검수·안전결제로 신뢰를 더하다.',color:'#b2e6bb',shade:'#a9d6b4',back:'#e6f1e4',img:'./assets/submitted/junggonara-poster.webp?hq=20261110b',fallback:'./assets/work-junggonara.png',mode:'mobile',movie:'junggonara',isDemo:true,sub:'Secondhand Commerce Redesign',challenge:'기존 홈 디자인이 오래된 느낌이고 후기·상품 검수·안전결제 기능이 부족해 거래를 신뢰하기 어려웠습니다.',solution:'홈 화면을 현대적으로 리디자인하고 판매자 후기, 상품 검수, 안전결제, 거래 진행현황 확인 기능을 새롭게 도입했습니다.'},
  {id:'ppomppu',cover:'./assets/figma-original/ppomppu-figma.png?v=source20261110',posterAspect:'landscape',n:'05',title:'PPOMPPU',kind:'RESPONSIVE / WEB',short:'복잡한 커뮤니티를 쉽고 빠르게.',color:'#dfc7ff',shade:'#d2c4ee',back:'#f0e9f6',img:'./assets/figma-original/ppomppu-figma.png?v=source20261110',fallback:'./assets/work-ppomppu.png',mode:'desktop',movie:'ppomppu',isDemo:true,sub:'Community Website Redesign',challenge:'커뮤니티 정보와 게시판 구조의 우선순위가 명확하지 않았습니다.',solution:'카테고리, 검색, 인기 정보의 위계를 재설계하여 정보 탐색을 간편하게 만들었습니다.'},
@@ -186,9 +186,10 @@ function detailHTML(p){
    '<div class="detail-video-fallback"><img src="./assets/demos/'+p.movie+'.gif" alt="'+p.title+' 영상 미리보기"></div>'+
    '<video muted autoplay loop playsinline controls preload="metadata" aria-label="'+p.title+' 시연 영상">'+
    (p.id==='soundcloud'?'<source src="./assets/demos/soundcloud-user-recording.mp4?v=20261113-user-recording16" type="video/mp4">':'')+
-   (['lostlink','junggonara','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.webm?v=20261111-webm-live4" type="video/webm">':'')+
-   (['lostlink','junggonara','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.mp4?v=20261111-cropped2" type="video/mp4">':'')+
-   (['lostlink','junggonara','ppomppu'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-real.mp4?v=20261111-real1" type="video/mp4">':'')+
+   (p.id==='junggonara'?'<source src="./assets/demos/junggonara-user-recording.mp4?v=20261113-user-recording17" type="video/mp4">':'')+
+   (['lostlink','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.webm?v=20261111-webm-live4" type="video/webm">':'')+
+   (['lostlink','ppomppu','roundlab'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-figma.mp4?v=20261111-cropped2" type="video/mp4">':'')+
+   (['lostlink','ppomppu'].includes(p.movie)?'<source src="./assets/demos/'+p.movie+'-real.mp4?v=20261111-real1" type="video/mp4">':'')+
    '</video></div></div>'+
    '<p class="detail-tip" data-demo-status>화면녹화 영상을 불러오는 중입니다.</p>'
  : '';
@@ -229,12 +230,14 @@ function open(id,button){
    if(video.readyState>=2){
     video.style.opacity='1';
     const fromUserRecording=video.currentSrc.includes('soundcloud-user-recording.mp4');
+    const junggoUserRecording=video.currentSrc.includes('junggonara-user-recording.mp4');
     const fromFigma=video.currentSrc.includes('-figma.');
     const fromWebsite=video.currentSrc.includes('-real.mp4');
-    note.textContent=fromUserRecording?'직접 제공한 SoundCloud 화면 녹화 영상입니다.':
+    note.textContent=junggoUserRecording?'직접 제공한 중고나라 앱 실행 영상입니다.':
+      (fromUserRecording?'직접 제공한 SoundCloud 화면 녹화 영상입니다.':
       (fromFigma?'실제 Figma 프로토타입에서 버튼을 클릭하거나 화면을 스크롤하며 녹화한 영상입니다.':
       (fromWebsite?'실제 웹 프로토타입에서 버튼을 조작하며 녹화한 영상입니다.':
-      (p.isDemo?'기존 인터랙션 시연 미리보기입니다.':'이 영상은 디자인 이미지의 모션 프리뷰로, 실제 버튼 조작 영상이 아닙니다.')));
+      (p.isDemo?'기존 인터랙션 시연 미리보기입니다.':'이 영상은 디자인 이미지의 모션 프리뷰로, 실제 버튼 조작 영상이 아닙니다.'))));
    }
   };
   video.addEventListener('loadeddata',label);
