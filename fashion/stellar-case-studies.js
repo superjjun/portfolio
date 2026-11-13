@@ -78,11 +78,12 @@ document.querySelectorAll('.story-project').forEach((section,index)=>{
 function issueMarkup(issue,index,total,p){
  const [title,before,after,tag]=issue;
  const num=String(index+1).padStart(2,'0');
- const shot=artwork[p.id]?.[index+1]||p.cover;
+ const isJunggoSafety=p.id==='junggonara'&&index===1;
+ const shot=isJunggoSafety?'./assets/figma-junggonara/secure-payment-progress.png':(artwork[p.id]?.[index+1]||p.cover);
  return '<section class="case-chapter case-issue" data-case-reveal aria-labelledby="issue-'+p.id+'-'+num+'">'+
  '<div class="case-chapter-inner">'+
  '<div class="case-side"><figure class="case-evidence"><div class="case-evidence-window">'+
- '<img src="'+safe(shot)+'" alt="'+safe(p.title)+' 실제 작업 화면 '+num+'" loading="lazy" decoding="async"></div></figure></div>'+
+ '<img src="'+safe(shot)+'" alt="'+(isJunggoSafety?'중고나라 리디자인 안전결제 완료 및 거래 진행 현황 화면':safe(p.title)+' 실제 작업 화면 '+num)+'" loading="lazy" decoding="async"></div></figure></div>'+
  '<div class="case-body"><span class="case-tag">PROBLEM '+num+' / '+safe(tag)+'</span>'+
  '<h3 id="issue-'+p.id+'-'+num+'">'+safe(title)+'</h3>'+
  '<p class="case-lead">'+safe(before)+'</p>'+

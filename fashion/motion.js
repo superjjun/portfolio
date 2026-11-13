@@ -179,7 +179,7 @@ function detailHTML(p){
 
  // Only link to actual GitHub-hosted functional demos. Non-app visual projects use an interactive design viewer.
  const experiences={
-  soundcloud:{href:'https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk?page-id=0%3A1&amp;node-id=6-2&amp;starting-point-node-id=6%3A2&amp;scaling=scale-down&amp;content-scaling=fixed',label:'피그마 프로토타입 실행하기',copy:'기존에 제작한 SoundCloud 피그마 화면을 그대로 실행해 보세요.',type:'ORIGINAL FIGMA PROTOTYPE'},
+  soundcloud:{href:'https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk?page-id=0%3A1&amp;node-id=6-2&amp;starting-point-node-id=6%3A2&amp;scaling=scale-down&amp;content-scaling=fixed',label:'리뉴얼된 SoundCloud 체험하기',copy:'새로운 음악 탐색과 프로모션 참여 화면을 직접 경험해 보세요.',type:'SOUNDCLOUD REDESIGN'},
   lostlink:{href:'https://superjjun.github.io/portfolio/lostlink/',label:'어플 체험해보기',copy:'분실물 등록, AI 매칭, 습득자 채팅을 직접 체험해 보세요.',type:'INTERACTIVE APP'},
   voltup:{href:'./visual-preview.html?project=voltup',label:'카드뉴스 체험하기',copy:'VOLT-UP 캠페인의 실제 카드뉴스를 넘겨보세요.',type:'CAMPAIGN VIEWER'},
   junggonara:{href:'https://superjjun.github.io/portfolio/junggonara/',label:'어플 체험해보기',copy:'상품 탐색부터 검수, 안전결제, 배송까지 직접 체험해 보세요.',type:'INTERACTIVE APP'},
