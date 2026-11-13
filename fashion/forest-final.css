@@ -597,3 +597,30 @@ body:has(#works.showroom-ready) .scene-progress{display:none!important}
  #detail .voltup-gallery-stage{min-height:250px!important}
  #detail .voltup-gallery-photos{gap:5px!important}
 }
+
+
+/* Second, distinct VOLT-UP card news series - authentic user-provided images */
+#detail .detail-main[data-project-detail="voltup"] .voltup-gallery[data-series="2"]{
+ --vu-accent:#ff5963!important;
+ background:#100f12!important;
+ border:1px solid #b92e3a5e!important;
+ margin-top:clamp(22px,3vw,42px)!important;
+}
+#detail .detail-main[data-project-detail="voltup"] .voltup-gallery[data-series="2"] .voltup-gallery-header strong{
+ color:#f9f8f3!important;
+}
+#detail .detail-main[data-project-detail="voltup"] .voltup-gallery[data-series="2"] .voltup-gallery-arrow{
+ background:#281719!important;border-color:#b64c58!important;color:#ff727a!important;
+}
+#detail .detail-main[data-project-detail="voltup"] .voltup-gallery[data-series="2"] .voltup-gallery-arrow:hover{
+ background:#462129!important;
+}
+#detail .detail-main[data-project-detail="voltup"] .voltup-gallery[data-series="2"] .voltup-gallery-page,
+#detail .detail-main[data-project-detail="voltup"] .voltup-gallery[data-series="2"] .voltup-gallery-header strong{
+ color:#ff777f!important;
+}
+#detail .detail-main[data-project-detail="voltup"] .voltup-gallery[data-series="2"] .voltup-gallery-dot[aria-current="true"],
+#detail .detail-main[data-project-detail="voltup"] .voltup-gallery[data-series="2"] .voltup-gallery-thumb[aria-current="true"]{
+ border-color:#ff5963!important;background-color:#ff5963!important;
+}
+#detail .detail-main[data-project-detail="voltup"] .voltup-gallery[data-series="2"] .voltup-gallery-thumb[aria-current="true"]{background:transparent!important}

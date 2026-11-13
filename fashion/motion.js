@@ -149,10 +149,11 @@ onScroll();
 // Project detail is a sheet that physically expands from the clicked project artwork.
 const detail=q('#detail');let active=null,origin=null,cover=null;
 const vuSlides=[{"src":"./assets/voltup/cardnews-01/01.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"매일 피곤한 현대인 특징"},{"src":"./assets/voltup/cardnews-01/02.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"자도 자도 피곤함"},{"src":"./assets/voltup/cardnews-01/03.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"아침에 일어나기가 너무 힘듦"},{"src":"./assets/voltup/cardnews-01/04.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"커피 없이는 하루 시작이 안 됨"},{"src":"./assets/voltup/cardnews-01/05.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"퇴근하고 아무것도 하기 싫음"},{"src":"./assets/voltup/cardnews-01/06.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"에너지가 부족한 일상"},{"src":"./assets/voltup/cardnews-01/07.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"근데 다 해결해주는 게 있다던데?"},{"src":"./assets/voltup/cardnews-01/08.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"VOLT-UP — 운동 전 10초"},{"src":"./assets/voltup/cardnews-01/09.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"VOLT-UP 에너지 부스터"},{"src":"./assets/voltup/cardnews-01/10.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"VOLT-UP 특별 혜택"}];
+const vuSlides2=[{"src":"./assets/voltup/cardnews-02/01.webp","fallback":"./assets/voltup/cardnews-02/01.webp","caption":"요즘 현대인들의 공감 이야기"},{"src":"./assets/voltup/cardnews-02/02.webp","fallback":"./assets/voltup/cardnews-02/02.webp","caption":"게으름에 지배된 현대인"},{"src":"./assets/voltup/cardnews-02/03.webp","fallback":"./assets/voltup/cardnews-02/03.webp","caption":"운동을 미루는 사람들의 모습"},{"src":"./assets/voltup/cardnews-02/04.webp","fallback":"./assets/voltup/cardnews-02/04.webp","caption":"운동을 시작하기 어려운 이유"},{"src":"./assets/voltup/cardnews-02/05.webp","fallback":"./assets/voltup/cardnews-02/05.webp","caption":"의지보다 먼저 필요한 시작"},{"src":"./assets/voltup/cardnews-02/06.webp","fallback":"./assets/voltup/cardnews-02/06.webp","caption":"운동 전 준비 루틴"},{"src":"./assets/voltup/cardnews-02/07.webp","fallback":"./assets/voltup/cardnews-02/07.webp","caption":"VOLT-UP으로 시작하는 변화"},{"src":"./assets/voltup/cardnews-02/08.webp","fallback":"./assets/voltup/cardnews-02/08.webp","caption":"가볍게 챙기는 운동 전 루틴"},{"src":"./assets/voltup/cardnews-02/09.webp","fallback":"./assets/voltup/cardnews-02/09.webp","caption":"운동 전 10초, VOLT-UP"}];
 function detailHTML(p){
  const voltupGallery=p.id==='voltup' ?
  '<section class="voltup-gallery" data-voltup-gallery data-index="0" aria-label="VOLT-UP 첫 번째 카드뉴스 10장">'+
- '<div class="voltup-gallery-header"><strong>첫 번째 카드뉴스</strong></div>'+
+ '<div class="voltup-gallery-header"><strong>카드뉴스 1</strong></div>'+
  '<p class="vu-gallery-description">일상의 피로에 대한 공감부터 브랜드 소개까지 이어지는 10장의 카드뉴스입니다.</p>'+
  '<div class="voltup-gallery-stage"><button class="voltup-gallery-arrow" type="button" data-vu-step="-1" aria-label="이전 카드뉴스">‹</button>'+
  '<div class="voltup-gallery-artwork"><img data-vu-image src="./assets/voltup/cardnews-01/01.webp" data-fallback="./assets/instagram/voltup-captured-1.jpg" alt="VOLT-UP 첫 번째 카드뉴스 1 / 10" loading="lazy" decoding="async"></div>'+
@@ -163,6 +164,20 @@ function detailHTML(p){
  '<p class="voltup-gallery-caption" data-vu-caption>'+vuSlides[0].caption+'</p>'+
  '<div class="voltup-gallery-photos">'+
  vuSlides.map((item,i)=>'<button class="voltup-gallery-thumb" data-vu-go="'+i+'" type="button" aria-current="'+(i===0?'true':'false')+'" aria-label="'+(i+1)+'번째 카드뉴스 보기"><img src="'+item.src+'" data-fallback="'+item.fallback+'" loading="lazy" alt="" onerror="if(!this.dataset.failed){this.dataset.failed=1;this.src=this.dataset.fallback;}"></button>').join('')+'</div>'+
+ '</section>' : '';
+ const voltupGallery2=p.id==='voltup' ?
+ '<section class="voltup-gallery voltup-gallery-2" data-voltup-gallery data-series="2" data-index="0" aria-label="VOLT-UP 카드뉴스 2, 9장">'+
+ '<div class="voltup-gallery-header"><strong>카드뉴스 2</strong></div>'+
+ '<p class="vu-gallery-description">운동을 미루는 일상에 대한 공감부터 VOLT-UP과 함께하는 운동 전 루틴까지, 9장의 카드뉴스로 구성했습니다.</p>'+
+ '<div class="voltup-gallery-stage"><button class="voltup-gallery-arrow" type="button" data-vu-step="-1" aria-label="이전 카드뉴스">‹</button>'+
+ '<div class="voltup-gallery-artwork"><img data-vu-image src="./assets/voltup/cardnews-02/01.webp" alt="VOLT-UP 카드뉴스 2 · 1 / 9" loading="lazy" decoding="async"></div>'+
+ '<button class="voltup-gallery-arrow" type="button" data-vu-step="1" aria-label="다음 카드뉴스">›</button></div>'+
+ '<div class="voltup-gallery-footer"><span class="voltup-gallery-page" data-vu-counter aria-live="polite">01 / 09</span>'+
+ '<div class="voltup-gallery-dots" aria-label="카드뉴스 2 선택">'+
+ vuSlides2.map((item,i)=>'<button class="voltup-gallery-dot" data-vu-go="'+i+'" type="button" aria-current="'+(i===0?'true':'false')+'" aria-label="카드뉴스 2 - '+(i+1)+'번째"></button>').join('')+'</div></div>'+
+ '<p class="voltup-gallery-caption" data-vu-caption>'+vuSlides2[0].caption+'</p>'+
+ '<div class="voltup-gallery-photos">'+
+ vuSlides2.map((item,i)=>'<button class="voltup-gallery-thumb" data-vu-go="'+i+'" type="button" aria-current="'+(i===0?'true':'false')+'" aria-label="카드뉴스 2 - '+(i+1)+'번째 보기"><img src="'+item.src+'" loading="lazy" alt="" decoding="async"></button>').join('')+'</div>'+
  '</section>' : '';
  const hasVideo=!!p.movie;
  const clip=hasVideo
@@ -198,7 +213,7 @@ function detailHTML(p){
  return '<div class="detail-main" data-project-detail="'+safe(p.id)+'" role="dialog" aria-modal="true" aria-label="'+safe(p.title)+' 프로젝트 상세" tabindex="-1">'+
  '<div class="detail-top"><span>KIM JUNSEO / '+p.n+' / 06</span><button class="detail-close" data-close type="button">CLOSE <b>×</b></button></div>'+
  '<div class="detail-content"><div class="detail-headerline">'+p.kind+' / 2026</div><h2>'+p.title+'</h2><p class="detail-sub">'+safe(p.short)+'</p>'+
- clip+voltupGallery+source+experienceLink+
+ clip+voltupGallery+voltupGallery2+source+experienceLink+
  '<button class="detail-back" type="button" data-close>← BACK TO WORKS</button></div></div>';
 }
 function removeCover(){if(cover){cover.remove();cover=null;}}
@@ -243,48 +258,50 @@ function close(){
  if(reduce.matches){detail.hidden=true;detail.innerHTML='';old?.focus?.({preventScroll:true});return;}
  setTimeout(()=>{if(active)return;detail.hidden=true;detail.innerHTML='';old?.focus?.({preventScroll:true});},630);
 }
-// VOLT-UP first cardnews: original ten-image sequence, arrows, thumbnails and touch.
-function switchVoltup(index){
- const gallery=q('[data-voltup-gallery]',detail);
+// Both VOLT-UP card-news series use independent navigation and image indexes.
+function switchVoltup(index,gallery){
  if(!gallery)return;
- const i=(index+vuSlides.length)%vuSlides.length;
- const current=vuSlides[i];
+ const slides=gallery.dataset.series==='2'?vuSlides2:vuSlides;
+ const i=((index%slides.length)+slides.length)%slides.length;
+ const current=slides[i];
  gallery.dataset.index=String(i);
  const picture=q('[data-vu-image]',gallery);
+ if(!picture)return;
  picture.classList.add('is-changing');
- picture.dataset.failed='';picture.dataset.fallback=current.fallback;
- picture.src=current.src;
- picture.alt='VOLT-UP 카드뉴스 '+String(i+1)+' / '+vuSlides.length+' · '+current.caption;
- q('[data-vu-counter]',gallery).textContent=String(i+1).padStart(2,'0')+' / '+String(vuSlides.length).padStart(2,'0');
- q('[data-vu-caption]',gallery).textContent=current.caption;
+ picture.dataset.failed='';picture.dataset.fallback=current.fallback||current.src;
+ if(picture.getAttribute('src')!==current.src)picture.src=current.src;
+ picture.alt='VOLT-UP 카드뉴스 '+(gallery.dataset.series==='2'?'2':'1')+' '+String(i+1)+' / '+slides.length+' · '+current.caption;
+ const counter=q('[data-vu-counter]',gallery);
+ if(counter)counter.textContent=String(i+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+ const caption=q('[data-vu-caption]',gallery);if(caption)caption.textContent=current.caption;
  qa('[data-vu-go]',gallery).forEach(btn=>btn.setAttribute('aria-current',String(Number(btn.dataset.vuGo)===i)));
  if(reduce.matches)picture.classList.remove('is-changing');
  else setTimeout(()=>picture.classList.remove('is-changing'),150);
 }
+let recentVoltupGallery=null,voltupTouchX=null;
 document.addEventListener('click',e=>{
  const go=e.target.closest('[data-vu-go]');
- if(go){switchVoltup(Number(go.dataset.vuGo));return;}
+ if(go){const gallery=go.closest('[data-voltup-gallery]');recentVoltupGallery=gallery;switchVoltup(Number(go.dataset.vuGo),gallery);return;}
  const move=e.target.closest('[data-vu-step]');
- if(move){const gallery=q('[data-voltup-gallery]',detail);if(gallery)switchVoltup(Number(gallery.dataset.index)+Number(move.dataset.vuStep));}
+ if(move){const gallery=move.closest('[data-voltup-gallery]');recentVoltupGallery=gallery;switchVoltup(Number(gallery.dataset.index)+Number(move.dataset.vuStep),gallery);}
 });
-let voltupTouchX=null;
 document.addEventListener('touchstart',e=>{
- if(e.target.closest('[data-voltup-gallery]'))voltupTouchX=e.touches[0].clientX;
+ const gallery=e.target.closest('[data-voltup-gallery]');
+ if(gallery){recentVoltupGallery=gallery;voltupTouchX=e.touches[0]?.clientX??null;}
 },{passive:true});
 document.addEventListener('touchend',e=>{
  if(voltupTouchX===null)return;
  const gallery=e.target.closest('[data-voltup-gallery]');
- if(gallery){const dx=e.changedTouches[0].clientX-voltupTouchX;
-  if(Math.abs(dx)>45)switchVoltup(Number(gallery.dataset.index)+(dx<0?1:-1));}
+ if(gallery){recentVoltupGallery=gallery;const dx=e.changedTouches[0].clientX-voltupTouchX;
+  if(Math.abs(dx)>45)switchVoltup(Number(gallery.dataset.index)+(dx<0?1:-1),gallery);}
  voltupTouchX=null;
 },{passive:true});
 document.addEventListener('keydown',e=>{
- if(!active||active.id!=='voltup')return;
- if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;
- const gallery=q('[data-voltup-gallery]',detail);
+ if(!active||active.id!=='voltup'||(e.key!=='ArrowLeft'&&e.key!=='ArrowRight'))return;
+ if(['INPUT','TEXTAREA'].includes(document.activeElement?.tagName))return;
+ const gallery=(recentVoltupGallery&&detail.contains(recentVoltupGallery))?recentVoltupGallery:q('[data-voltup-gallery]',detail);
  if(!gallery)return;
- e.preventDefault();
- switchVoltup(Number(gallery.dataset.index)+(e.key==='ArrowRight'?1:-1));
+ e.preventDefault();switchVoltup(Number(gallery.dataset.index)+(e.key==='ArrowRight'?1:-1),gallery);
 });
 document.addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b){open(b.dataset.open,b);return;}if(e.target.closest('[data-close]'))close();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active)close();});
