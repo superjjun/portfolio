@@ -180,6 +180,39 @@ body{background:radial-gradient(ellipse 55% 75% at 54% 47%,#152440 0%,#0a101b 55
 .zoom-hit{overflow:hidden!important;background:#070b13!important;border-radius:16px;}
 .zoom-hit .hero-photo{display:block;width:100%;height:100%;border:0!important;}
 .gallery img{object-fit:contain!important;max-width:92%;max-height:75%;border-radius:12px;}
+
+/* LOST LINK / blended photo backgrounds · 2026-11-13 */
+/* The original Figma JPEGs contain black studio backgrounds, which do not
+   match the navy card fill. Screen-blending removes that visible rectangle
+   while preserving the product's original color, image and positioning. */
+.item,.match-card,.zoom-hit{isolation:isolate}
+.item img.photo,
+.match-card img.photo,
+.zoom-hit img.hero-photo {
+  mix-blend-mode:screen!important;
+  background:transparent!important;
+  background-color:transparent!important;
+  border-color:transparent!important;
+  filter:none!important;
+}
+/* The original wallet JPEG also has two white horizontal export bars.
+   Fade only its empty outer margins, avoiding the wallet itself. */
+.item img.photo[data-shape="wallet"],
+.match-card img.photo[data-shape="wallet"],
+.zoom-hit img.hero-photo[data-shape="wallet"]{
+  -webkit-mask-image:linear-gradient(to bottom,
+    transparent 0%,transparent 12%,#000 18%,#000 78%,
+    transparent 84%,transparent 100%);
+  mask-image:linear-gradient(to bottom,
+    transparent 0%,transparent 12%,#000 18%,#000 78%,
+    transparent 84%,transparent 100%);
+}
+.zoom-hit{background:#141e31!important}
+.gallery img.gallery-image{mix-blend-mode:screen!important;background:transparent!important}
+.gallery img.gallery-image[src*="wallet.jpg"]{
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,transparent 12%,#000 18%,#000 78%,transparent 84%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0%,transparent 12%,#000 18%,#000 78%,transparent 84%,transparent 100%);
+}
 </style>
 </head>
 <body>
