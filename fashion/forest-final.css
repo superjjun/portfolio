@@ -361,3 +361,111 @@ body:has(#works.showroom-ready) .scene-progress{display:none!important}
   #detail .lostlink-tryout-arrow{width:45px;height:45px;font-size:25px}
 }
 @media(prefers-reduced-motion:reduce){#detail .lostlink-tryout{transition:none}}
+
+
+/* 2026-11-13: Unclutter every project detail and give artwork and functional demo actions strong visual hierarchy. */
+#detail .detail-main[data-project-detail] .detail-columns{display:none!important}
+#detail .detail-main[data-project-detail] .detail-poster{
+ margin:clamp(22px,3vw,40px) 0 12px!important;
+ padding:0!important;border:1px solid color-mix(in srgb,var(--case-accent) 55%,transparent)!important;
+ background:linear-gradient(135deg,var(--case-panel),var(--case-panel2))!important;
+ border-radius:18px!important;overflow:hidden!important;
+ box-shadow:0 12px 36px #00000020!important;
+}
+#detail .detail-main[data-project-detail] .detail-poster>summary{
+ list-style:none!important;display:flex!important;align-items:center!important;
+ justify-content:space-between!important;gap:24px!important;
+ min-height:156px!important;padding:clamp(20px,3vw,34px)!important;
+ background:transparent!important;color:var(--case-ink)!important;
+ transition:background .25s ease!important;cursor:pointer!important;
+}
+#detail .detail-main[data-project-detail] .detail-poster>summary::marker{content:""}
+#detail .detail-main[data-project-detail] .detail-poster>summary::-webkit-details-marker{display:none}
+#detail .detail-main[data-project-detail] .detail-poster>summary:hover{
+ background:color-mix(in srgb,var(--case-accent) 9%,transparent)!important;
+}
+#detail .detail-main[data-project-detail] .detail-poster-copy,
+#detail .detail-experience-copy{display:flex;flex-direction:column;gap:11px;min-width:0}
+#detail .detail-main[data-project-detail] .detail-poster-copy small,
+#detail .detail-experience-copy small{
+ font:700 10px/1.4 "DM Sans","Noto Sans KR",sans-serif!important;
+ letter-spacing:.16em!important;color:var(--case-accent)!important;
+}
+#detail .detail-main[data-project-detail] .detail-poster-copy strong{
+ font-size:clamp(23px,2.5vw,35px)!important;line-height:1.18!important;
+ letter-spacing:-.06em!important;color:var(--case-ink)!important;font-weight:800!important;
+ word-break:keep-all;
+}
+#detail .detail-main[data-project-detail] .detail-poster-copy em{
+ font-size:clamp(12px,1vw,15px)!important;color:var(--case-copy)!important;
+ font-weight:500!important;font-style:normal!important;letter-spacing:0!important;line-height:1.6!important;
+}
+#detail .detail-main[data-project-detail] .detail-poster>summary .detail-poster-toggle{
+ flex:none!important;width:60px!important;height:60px!important;min-width:60px!important;
+ display:grid!important;place-items:center!important;border-radius:50%!important;
+ background:var(--case-accent)!important;color:var(--case-bg)!important;
+ font:700 33px/1 "DM Sans",sans-serif!important;transform:none!important;
+ transition:transform .3s ease!important;box-shadow:0 8px 22px #0002!important;
+}
+#detail .detail-main[data-project-detail] .detail-poster[open]>summary .detail-poster-toggle{
+ transform:rotate(180deg)!important;
+}
+#detail .detail-main[data-project-detail] .detail-original{
+ margin:0!important;border-radius:0!important;
+ background:var(--case-panel2)!important;
+ border-top:1px solid color-mix(in srgb,var(--case-accent) 25%,transparent)!important;
+}
+#detail .detail-main[data-project-detail] .detail-original>span{color:var(--case-copy)!important}
+#detail .detail-main[data-project-detail] .detail-experience{
+ text-decoration:none!important;display:flex!important;align-items:center!important;
+ justify-content:space-between!important;gap:18px!important;
+ padding:clamp(22px,3vw,32px)!important;
+ margin:13px 0 clamp(23px,4vw,45px)!important;
+ border-radius:18px!important;
+ background:var(--case-accent)!important;color:var(--case-bg)!important;
+ border:1px solid color-mix(in srgb,var(--case-accent) 65%,white)!important;
+ box-shadow:0 16px 36px #00000022!important;
+ transition:transform .23s ease,filter .23s ease!important;
+}
+#detail .detail-main[data-project-detail] .detail-experience:hover{
+ transform:translateY(-3px)!important;filter:brightness(1.085)!important;
+}
+#detail .detail-main[data-project-detail] .detail-experience:focus-visible,
+#detail .detail-main[data-project-detail] .detail-poster>summary:focus-visible{
+ outline:3px solid var(--case-ink)!important;outline-offset:4px!important;
+}
+#detail .detail-main[data-project-detail] .detail-experience-copy small{
+ color:color-mix(in srgb,var(--case-bg) 85%,transparent)!important;
+}
+#detail .detail-main[data-project-detail] .detail-experience-copy strong{
+ font-size:clamp(22px,2.4vw,33px)!important;line-height:1.2!important;
+ font-weight:800!important;letter-spacing:-.06em!important;
+ color:var(--case-bg)!important;word-break:keep-all;
+}
+#detail .detail-main[data-project-detail] .detail-experience-copy em{
+ font-size:clamp(12px,1.05vw,15px)!important;line-height:1.6!important;
+ color:color-mix(in srgb,var(--case-bg) 88%,transparent)!important;
+ font-style:normal!important;font-weight:600!important;word-break:keep-all;
+}
+#detail .detail-main[data-project-detail] .detail-experience-arrow{
+ flex:none;display:grid;place-items:center;width:60px;height:60px;border-radius:50%;
+ background:var(--case-bg);color:var(--case-accent);font-size:29px;font-weight:500;
+ border:1px solid color-mix(in srgb,var(--case-bg) 18%,transparent);
+}
+#detail .detail-main[data-project-detail] .detail-back{margin-top:30px!important}
+@media(max-width:700px){
+ #detail .detail-main[data-project-detail] .detail-poster>summary{min-height:120px!important;padding:20px!important}
+ #detail .detail-main[data-project-detail] .detail-poster>summary .detail-poster-toggle,
+ #detail .detail-main[data-project-detail] .detail-experience-arrow{
+   width:44px!important;height:44px!important;min-width:44px!important;font-size:24px!important;
+ }
+ #detail .detail-main[data-project-detail] .detail-poster-copy,
+ #detail .detail-experience-copy{gap:7px!important}
+ #detail .detail-main[data-project-detail] .detail-poster-copy strong{font-size:clamp(21px,5.7vw,28px)!important}
+ #detail .detail-main[data-project-detail] .detail-experience{padding:21px 19px!important}
+ #detail .detail-main[data-project-detail] .detail-experience-copy strong{font-size:clamp(21px,5.5vw,28px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #detail .detail-main[data-project-detail] .detail-poster>summary,
+ #detail .detail-main[data-project-detail] .detail-experience{transition:none!important}
+}

@@ -183,17 +183,29 @@ function detailHTML(p){
    '</video></div></div>'+
    '<p class="detail-tip" data-demo-status>화면녹화 영상을 불러오는 중입니다.</p>'
  : '<div class="detail-no-video"><strong>VISUAL DESIGN</strong><p>정적 디자인 작품입니다. 조작형 프로토타입 영상은 없습니다.</p></div>';
- const lostlinkTry=p.id==='lostlink'
-  ? '<a class="lostlink-tryout" href="https://superjjun.github.io/portfolio/lostlink/" target="_blank" rel="noopener noreferrer" aria-label="LOST LINK 앱 프로토타입 새 탭에서 체험하기">'+
-    '<span class="lostlink-tryout-copy"><small>INTERACTIVE PROTOTYPE / LOST LINK</small><strong>어플 체험하기 <span aria-hidden="true">↗</span></strong><em>분실물 등록부터 AI 매칭, 습득자 채팅까지 직접 살펴보세요.</em></span>'+
-    '<span class="lostlink-tryout-arrow" aria-hidden="true">↗</span></a>' : '';
- const source='<details class="detail-poster"><summary><span>원본 작품 이미지 전체 펼쳐보기</span><b aria-hidden="true">＋</b></summary>'+
- '<div class="detail-original"><img src="'+p.img+'" data-fallback="'+p.fallback+'" loading="lazy" alt="'+p.title+' 실제 Figma 디자인 전체"><span>ORIGINAL DESIGN / '+p.n+' OF 06</span></div></details>';
+
+ // Only link to actual GitHub-hosted functional demos. Non-app visual projects use an interactive design viewer.
+ const experiences={
+  soundcloud:{href:'https://superjjun.github.io/portfolio/soundcloud/',label:'웹 프로토타입 체험하기',copy:'음악 발견·Hidden Stage·참여 기능을 직접 살펴보세요.',type:'LIVE WEB PROTOTYPE'},
+  lostlink:{href:'https://superjjun.github.io/portfolio/lostlink/',label:'어플 체험하기',copy:'분실물 등록, AI 매칭, 습득자 채팅을 직접 체험해 보세요.',type:'INTERACTIVE APP'},
+  voltup:{href:'./visual-preview.html?project=voltup',label:'카드뉴스 체험하기',copy:'VOLT-UP 캠페인의 실제 카드뉴스를 넘겨보세요.',type:'CAMPAIGN VIEWER'},
+  junggonara:{href:'https://superjjun.github.io/portfolio/junggonara/',label:'어플 체험하기',copy:'상품 탐색부터 검수, 안전결제, 배송까지 직접 체험해 보세요.',type:'INTERACTIVE APP'},
+  ppomppu:{href:'https://superjjun.github.io/portfolio/ppomppu/',label:'웹사이트 체험하기',copy:'카테고리, 검색, 커뮤니티 탐색 기능을 직접 이용해 보세요.',type:'LIVE WEB PROTOTYPE'},
+  roundlab:{href:'./visual-preview.html?project=roundlab',label:'상세페이지 체험하기',copy:'실제 상세페이지 디자인을 스크롤하며 살펴보세요.',type:'PRODUCT DETAIL VIEWER'}
+ };
+ const e=experiences[p.id];
+ const source='<details class="detail-poster" aria-label="'+safe(p.title)+' 디자인 전체 보기">'+
+ '<summary><span class="detail-poster-copy"><small>COMPLETE ARTWORK / '+p.n+' — 06</small>'+
+ '<strong>'+safe(p.title)+' 작품 전체 보기</strong><em>전체 디자인을 원본 비율로 펼쳐서 확인할 수 있습니다.</em></span>'+
+ '<span class="detail-poster-toggle" aria-hidden="true">↓</span></summary>'+
+ '<div class="detail-original"><img src="'+p.img+'" data-fallback="'+p.fallback+'" loading="lazy" alt="'+safe(p.title)+' 전체 디자인 화면"><span>COMPLETE DESIGN / '+p.n+' — 06</span></div></details>';
+ const experienceLink='<a class="detail-experience" href="'+e.href+'" target="_blank" rel="noopener noreferrer" aria-label="'+safe(p.title)+' '+e.label+' 새 창에서 열기">'+
+ '<span class="detail-experience-copy"><small>'+e.type+' / '+safe(p.title)+'</small><strong>'+e.label+'</strong><em>'+e.copy+'</em></span>'+
+ '<span class="detail-experience-arrow" aria-hidden="true">↗</span></a>';
  return '<div class="detail-main" data-project-detail="'+safe(p.id)+'" role="dialog" aria-modal="true" aria-label="'+safe(p.title)+' 프로젝트 상세" tabindex="-1">'+
  '<div class="detail-top"><span>KIM JUNSEO / '+p.n+' / 06</span><button class="detail-close" data-close type="button">CLOSE <b>×</b></button></div>'+
  '<div class="detail-content"><div class="detail-headerline">'+p.kind+' / 2026</div><h2>'+p.title+'</h2><p class="detail-sub">'+safe(p.short)+'</p>'+
- clip+voltupGallery+source+lostlinkTry+
- '<div class="detail-columns"><section><span>01 / THE CHALLENGE</span><h3>문제와 목표</h3><p>'+safe(p.challenge)+'</p></section><section><span>02 / MY APPROACH</span><h3>디자인 접근</h3><p>'+safe(p.solution)+'</p></section></div>'+
+ clip+voltupGallery+source+experienceLink+
  '<button class="detail-back" type="button" data-close>← BACK TO WORKS</button></div></div>';
 }
 function removeCover(){if(cover){cover.remove();cover=null;}}
