@@ -9,7 +9,7 @@ const safe=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;
 const projects=[
  {id:'soundcloud',cover:'./assets/figma-original/soundcloud-figma.png?v=source20261110',posterAspect:'portrait',n:'01',title:'SOUNDCLOUD',kind:'WEB / PROMOTION',short:'새로운 음악을 발견하고 직접 참여하는 프로모션 경험.',color:'#f9a875',shade:'#f2c6ae',back:'#f7e9de',img:'./assets/figma-original/soundcloud-figma.png?v=source20261110',fallback:'./assets/work-soundcloud.png',mode:'desktop',movie:'soundcloud',isDemo:false,sub:'SoundCloud Promotion',challenge:'새로운 아티스트를 발견하기 어렵고, 관련 프로모션의 참여 방법도 한눈에 파악하기 어려웠습니다.',solution:'DISCOVER DROP으로 음악 탐색을 돕고, Hidden Stage와 FIRST LISTENER 배지로 프로모션 참여 정보를 명확하게 전달했습니다.'},
  {id:'lostlink',cover:'./assets/figma-original/lostlink-figma.png?v=source20261110',posterAspect:'portrait',n:'02',title:'LOST LINK',kind:'UI/UX / MOBILE APP',short:'잃어버린 물건을 다시 연결하는 디자인.',color:'#b4c6f8',shade:'#b5caff',back:'#e5eafa',img:'./assets/figma-original/lostlink-figma.png?v=source20261110',fallback:'./assets/work-lostlink.png',mode:'mobile',movie:'lostlink',isDemo:true,sub:'Lost & Found Matching App',challenge:'수많은 게시글 속에서 물건을 직접 찾아야 하는 불편함을 줄이고자 했습니다.',solution:'물건의 특징, 장소, 시간을 연결하여 등록부터 매칭 결과 확인까지 단계별로 설계했습니다.'},
- {id:'voltup',cover:'./assets/figma-original/voltup-figma.png?v=source20261110',posterAspect:'portrait',n:'03',title:'VOLT-UP',kind:'VISUAL / CAMPAIGN',short:'운동 전 10초, 오늘의 텐션을 켜다.',color:'#d2ef61',shade:'#d2ee84',back:'#e9f2ce',img:'./assets/figma-original/voltup-figma.png?v=source20261110',fallback:'../assets/hd/volt-up.jpg',mode:'desktop',movie:null,isDemo:false,sub:'Energy Supplement Campaign',challenge:'에너지 부스터의 특징을 짧고 강렬한 시각 경험으로 전달하는 것이 목표였습니다.',solution:'블랙·라임 컬러와 역동적인 제품 연출로 패키지와 카드뉴스 캠페인을 제작했습니다.'},
+ {id:'voltup',cover:'./assets/figma-original/voltup-figma.png?v=source20261110',posterAspect:'portrait',n:'03',title:'VOLT-UP',kind:'VISUAL / CAMPAIGN',short:'운동 전 10초, 텐션을 깨우는 나만의 에너지 브랜드.',color:'#d2ef61',shade:'#d2ee84',back:'#e9f2ce',img:'./assets/figma-original/voltup-figma.png?v=source20261110',fallback:'../assets/hd/volt-up.jpg',mode:'desktop',movie:null,isDemo:false,sub:'Original Energy Booster Brand',challenge:'브랜드의 에너지와 스틱형 패키지의 편리함을 표현하는 것이 목표였습니다.',solution:'블랙·형광 라임, 제품 화보, 운동 전 10초 카피로 브랜드 정체성을 구축했습니다.'},
  {id:'junggonara',cover:'./assets/figma-original/junggonara-figma-hires.png?v=20261111-real-hires1',posterAspect:'portrait',n:'04',title:'JUNGGO NARA',kind:'UI/UX / REDESIGN',short:'새로운 홈 디자인과 후기·검수·안전결제로 신뢰를 더하다.',color:'#b2e6bb',shade:'#a9d6b4',back:'#e6f1e4',img:'./assets/submitted/junggonara-poster.webp?hq=20261110b',fallback:'./assets/work-junggonara.png',mode:'mobile',movie:'junggonara',isDemo:true,sub:'Secondhand Commerce Redesign',challenge:'기존 홈 디자인이 오래된 느낌이고 후기·상품 검수·안전결제 기능이 부족해 거래를 신뢰하기 어려웠습니다.',solution:'홈 화면을 현대적으로 리디자인하고 판매자 후기, 상품 검수, 안전결제, 거래 진행현황 확인 기능을 새롭게 도입했습니다.'},
  {id:'ppomppu',cover:'./assets/figma-original/ppomppu-figma.png?v=source20261110',posterAspect:'landscape',n:'05',title:'PPOMPPU',kind:'RESPONSIVE / WEB',short:'복잡한 커뮤니티를 쉽고 빠르게.',color:'#dfc7ff',shade:'#d2c4ee',back:'#f0e9f6',img:'./assets/figma-original/ppomppu-figma.png?v=source20261110',fallback:'./assets/work-ppomppu.png',mode:'desktop',movie:'ppomppu',isDemo:true,sub:'Community Website Redesign',challenge:'커뮤니티 정보와 게시판 구조의 우선순위가 명확하지 않았습니다.',solution:'카테고리, 검색, 인기 정보의 위계를 재설계하여 정보 탐색을 간편하게 만들었습니다.'},
  {id:'roundlab',cover:'./assets/figma-original/roundlab-figma-hires.png?v=20261111-real-hires1',posterAspect:'portrait',n:'06',title:'ROUND LAB',kind:'VISUAL / DETAIL PAGE',short:'촉촉함을 시각적인 경험으로 전달하다.',color:'#b1dff1',shade:'#b8e5e9',back:'#e3f2f4',img:'./assets/submitted/roundlab-poster.webp?hq=20261110b',fallback:'./assets/work-roundlab-screen.png',mode:'mobile',movie:'roundlab',isDemo:false,sub:'Birch Juice Sunscreen',challenge:'수분감과 산뜻함을 설명보다 감각적인 이미지로 전달하고자 했습니다.',solution:'블루·화이트, 물방울, 제품 컷을 결합한 스크롤형 상세페이지를 제작했습니다.'}
@@ -149,28 +149,21 @@ onScroll();
 // Project detail is a sheet that physically expands from the clicked project artwork.
 const detail=q('#detail');let active=null,origin=null,cover=null;
 function detailHTML(p){
- const voltupGallery=p.id==='voltup' ? `
- <section class="voltup-gallery" data-voltup-gallery data-index="0" aria-label="VOLT-UP 인스타그램 캠페인 게시물 슬라이드">
-  <div class="voltup-gallery-header"><strong>VOLT-UP / SNS CAMPAIGN</strong><span>CAPTURED POSTS · 02</span></div>
-  <div class="voltup-gallery-stage">
-   <button class="voltup-gallery-arrow" type="button" data-vu-step="-1" aria-label="이전 VOLT-UP 게시물">‹</button>
-   <div class="voltup-gallery-artwork"><img data-vu-image src="./assets/instagram/voltup-captured-1.jpg?v=20261111a" alt="VOLT-UP 첫 번째 SNS 캠페인 게시물, 운동을 완성하는 루틴"></div>
-   <button class="voltup-gallery-arrow" type="button" data-vu-step="1" aria-label="다음 VOLT-UP 게시물">›</button>
-  </div>
-  <div class="voltup-gallery-footer">
-   <span class="voltup-gallery-page" data-vu-counter aria-live="polite">01 / 02</span>
-   <div class="voltup-gallery-dots" aria-label="게시물 선택">
-    <button type="button" class="voltup-gallery-dot" data-vu-go="0" aria-current="true" aria-label="첫 번째 게시물"></button>
-    <button type="button" class="voltup-gallery-dot" data-vu-go="1" aria-current="false" aria-label="두 번째 게시물"></button>
-   </div>
-  </div>
-  <p class="voltup-gallery-caption" data-vu-caption>운동을 완성하는 루틴</p>
-  <div class="voltup-gallery-photos">
-   <button class="voltup-gallery-thumb" data-vu-go="0" aria-current="true" type="button" aria-label="첫 번째 게시물 미리보기"><img src="./assets/instagram/voltup-captured-1.jpg?v=20261111a" alt=""></button>
-   <button class="voltup-gallery-thumb" data-vu-go="1" aria-current="false" type="button" aria-label="두 번째 게시물 미리보기"><img src="./assets/instagram/voltup-captured-2.jpg?v=20261111a" alt=""></button>
-  </div>
-  <p class="voltup-gallery-origin">인스타그램 계정 스크린샷에서 VOLT-UP 게시물 영역을 추출한 이미지입니다.</p>
- </section>` : '';
+ const vuSlides=[{"src":"./assets/voltup/cardnews-01/01.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"공감에서 시작하는 첫 장"},{"src":"./assets/voltup/cardnews-01/02.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"자도 자도 피곤한 하루"},{"src":"./assets/voltup/cardnews-01/03.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"아침부터 밀려오는 피로"},{"src":"./assets/voltup/cardnews-01/04.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"커피만으로 해결되지 않는 피로"},{"src":"./assets/voltup/cardnews-01/05.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"퇴근 후에도 지친 일상"},{"src":"./assets/voltup/cardnews-01/06.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"운동·공부를 미루게 되는 순간"},{"src":"./assets/voltup/cardnews-01/07.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"운동 전 에너지 부족"},{"src":"./assets/voltup/cardnews-01/08.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"VOLT-UP 브랜드 소개"},{"src":"./assets/voltup/cardnews-01/09.webp","fallback":"./assets/instagram/voltup-captured-1.jpg","caption":"패키지와 스틱형 제품"},{"src":"./assets/voltup/cardnews-01/10.webp","fallback":"./assets/instagram/voltup-captured-2.jpg","caption":"운동 전 10초 캠페인"}];
+ const voltupGallery=p.id==='voltup' ?
+ '<section class="voltup-gallery" data-voltup-gallery data-index="0" aria-label="VOLT-UP 첫 번째 카드뉴스 10장">'+
+ '<div class="voltup-gallery-header"><div><small>CARD NEWS / SERIES 01</small><strong>VOLT-UP / 첫 번째 카드뉴스</strong></div><span>10 SCREENS · SWIPE TO EXPLORE</span></div>'+
+ '<p class="vu-gallery-description">일상의 피로에 대한 공감부터 브랜드 소개까지 이어지는 10장의 카드뉴스입니다.</p>'+
+ '<div class="voltup-gallery-stage"><button class="voltup-gallery-arrow" type="button" data-vu-step="-1" aria-label="이전 카드뉴스">‹</button>'+
+ '<div class="voltup-gallery-artwork"><img data-vu-image src="./assets/voltup/cardnews-01/01.webp" data-fallback="./assets/instagram/voltup-captured-1.jpg" alt="VOLT-UP 첫 번째 카드뉴스 1 / 10" loading="lazy" decoding="async"></div>'+
+ '<button class="voltup-gallery-arrow" type="button" data-vu-step="1" aria-label="다음 카드뉴스">›</button></div>'+
+ '<div class="voltup-gallery-footer"><span class="voltup-gallery-page" data-vu-counter aria-live="polite">01 / 10</span>'+
+ '<div class="voltup-gallery-dots" aria-label="카드뉴스 선택">'+
+ vuSlides.map((item,i)=>'<button class="voltup-gallery-dot" data-vu-go="'+i+'" type="button" aria-current="'+(i===0?'true':'false')+'" aria-label="'+(i+1)+'번째 카드뉴스"></button>').join('')+'</div></div>'+
+ '<p class="voltup-gallery-caption" data-vu-caption>'+vuSlides[0].caption+'</p>'+
+ '<div class="voltup-gallery-photos">'+
+ vuSlides.map((item,i)=>'<button class="voltup-gallery-thumb" data-vu-go="'+i+'" type="button" aria-current="'+(i===0?'true':'false')+'" aria-label="'+(i+1)+'번째 카드뉴스 보기"><img src="'+item.src+'" data-fallback="'+item.fallback+'" loading="lazy" alt="" onerror="if(!this.dataset.failed){this.dataset.failed=1;this.src=this.dataset.fallback;}"></button>').join('')+'</div>'+
+ '</section>' : '';
  const hasVideo=!!p.movie;
  const clip=hasVideo
  ? '<div class="detail-screen"><div class="detail-screen-top"><span>PROTOTYPE / MOTION</span><span>'+(p.mode==='mobile'?'MOBILE':'DESKTOP')+'</span></div>'+
@@ -250,21 +243,23 @@ function close(){
  if(reduce.matches){detail.hidden=true;detail.innerHTML='';old?.focus?.({preventScroll:true});return;}
  setTimeout(()=>{if(active)return;detail.hidden=true;detail.innerHTML='';old?.focus?.({preventScroll:true});},630);
 }
-// VOLT-UP: show the actual two Instagram post crops, not invented slides.
+// VOLT-UP first cardnews: original ten-image sequence, arrows, thumbnails and touch.
 function switchVoltup(index){
  const gallery=q('[data-voltup-gallery]',detail);
  if(!gallery)return;
- const i=(index+2)%2;
+ const i=(index+vuSlides.length)%vuSlides.length;
+ const current=vuSlides[i];
  gallery.dataset.index=String(i);
  const picture=q('[data-vu-image]',gallery);
  picture.classList.add('is-changing');
- picture.src='./assets/instagram/voltup-captured-'+(i+1)+'.jpg?v=20261111a';
- picture.alt=i===0?'VOLT-UP 첫 번째 SNS 게시물, 운동을 완성하는 루틴':'VOLT-UP 두 번째 SNS 게시물, 운동 전 10초';
- q('[data-vu-counter]',gallery).textContent=String(i+1).padStart(2,'0')+' / 02';
- q('[data-vu-caption]',gallery).textContent=i===0?'운동을 완성하는 루틴':'운동 전 10초, 텐션을 깨우다';
- qa('[data-vu-go]',gallery).forEach(button=>button.setAttribute('aria-current',String(Number(button.dataset.vuGo)===i)));
- if(reduce.matches){picture.classList.remove('is-changing');}
- else setTimeout(()=>picture.classList.remove('is-changing'),120);
+ picture.dataset.failed='';picture.dataset.fallback=current.fallback;
+ picture.src=current.src;
+ picture.alt='VOLT-UP 카드뉴스 '+String(i+1)+' / '+vuSlides.length+' · '+current.caption;
+ q('[data-vu-counter]',gallery).textContent=String(i+1).padStart(2,'0')+' / '+String(vuSlides.length).padStart(2,'0');
+ q('[data-vu-caption]',gallery).textContent=current.caption;
+ qa('[data-vu-go]',gallery).forEach(btn=>btn.setAttribute('aria-current',String(Number(btn.dataset.vuGo)===i)));
+ if(reduce.matches)picture.classList.remove('is-changing');
+ else setTimeout(()=>picture.classList.remove('is-changing'),150);
 }
 document.addEventListener('click',e=>{
  const go=e.target.closest('[data-vu-go]');
