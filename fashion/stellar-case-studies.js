@@ -117,7 +117,7 @@ function caseMarkup(p){
   '<section class="vu-product-wrap case-chapter case-in"><span class="case-kicker">PRODUCT VISUALS / 05 SCENES</span>'+
   '<h3>보여주고 싶은<br><em>VOLT-UP의 이미지.</em></h3>'+
   '<p>하나의 제품을 다양한 상황으로 연출해 강렬함, 휴대성, 청량감을 강조했습니다.</p>'+
-  '<div class="vu-product-grid">'+visuals.map((v,i)=>'<figure class="vu-product-item '+(i===0?'featured':'')+'">'+visualImage(i)+
+  '<div class="vu-product-grid">'+visuals.slice(1).map((v,i)=>'<figure class="vu-product-item">'+visualImage(i+1)+
   '<figcaption><small>'+v[0]+' / 05</small><strong>'+v[1]+'</strong><span>'+v[2]+'</span></figcaption></figure>').join('')+'</div></section>'+
   '<section class="vu-campaign-idea case-chapter case-in"><span class="case-kicker">CARD NEWS / SERIES 01</span>'+
   '<h3>공감에서 시작하는<br><em>브랜드 스토리.</em></h3>'+
