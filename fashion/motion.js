@@ -186,11 +186,11 @@ function detailHTML(p){
 
  // Only link to actual GitHub-hosted functional demos. Non-app visual projects use an interactive design viewer.
  const experiences={
-  soundcloud:{href:'https://superjjun.github.io/portfolio/soundcloud/',label:'웹 프로토타입 체험하기',copy:'음악 발견·Hidden Stage·참여 기능을 직접 살펴보세요.',type:'LIVE WEB PROTOTYPE'},
-  lostlink:{href:'https://superjjun.github.io/portfolio/lostlink/',label:'어플 체험하기',copy:'분실물 등록, AI 매칭, 습득자 채팅을 직접 체험해 보세요.',type:'INTERACTIVE APP'},
+  soundcloud:{href:'https://superjjun.github.io/portfolio/soundcloud/',label:'웹 프로토타입 체험해보기',copy:'음악 발견·Hidden Stage·참여 기능을 직접 살펴보세요.',type:'LIVE WEB PROTOTYPE'},
+  lostlink:{href:'https://superjjun.github.io/portfolio/lostlink/',label:'어플 체험해보기',copy:'분실물 등록, AI 매칭, 습득자 채팅을 직접 체험해 보세요.',type:'INTERACTIVE APP'},
   voltup:{href:'./visual-preview.html?project=voltup',label:'카드뉴스 체험하기',copy:'VOLT-UP 캠페인의 실제 카드뉴스를 넘겨보세요.',type:'CAMPAIGN VIEWER'},
-  junggonara:{href:'https://superjjun.github.io/portfolio/junggonara/',label:'어플 체험하기',copy:'상품 탐색부터 검수, 안전결제, 배송까지 직접 체험해 보세요.',type:'INTERACTIVE APP'},
-  ppomppu:{href:'https://superjjun.github.io/portfolio/ppomppu/',label:'웹사이트 체험하기',copy:'카테고리, 검색, 커뮤니티 탐색 기능을 직접 이용해 보세요.',type:'LIVE WEB PROTOTYPE'},
+  junggonara:{href:'https://superjjun.github.io/portfolio/junggonara/',label:'어플 체험해보기',copy:'상품 탐색부터 검수, 안전결제, 배송까지 직접 체험해 보세요.',type:'INTERACTIVE APP'},
+  ppomppu:{href:'https://superjjun.github.io/portfolio/ppomppu/',label:'웹사이트 체험해보기',copy:'카테고리, 검색, 커뮤니티 탐색 기능을 직접 이용해 보세요.',type:'LIVE WEB PROTOTYPE'},
   roundlab:{href:'./visual-preview.html?project=roundlab',label:'상세페이지 체험하기',copy:'실제 상세페이지 디자인을 스크롤하며 살펴보세요.',type:'PRODUCT DETAIL VIEWER'}
  };
  const e=experiences[p.id];
