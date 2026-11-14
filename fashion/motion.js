@@ -152,11 +152,11 @@ const vuSlides=[{"src":"./assets/voltup/cardnews-01/01.webp","fallback":"./asset
 const vuSlides2=[{"src":"./assets/voltup/cardnews-02/01.webp","fallback":"./assets/voltup/cardnews-02/01.webp","caption":"요즘 현대인들의 공감 이야기"},{"src":"./assets/voltup/cardnews-02/02.webp","fallback":"./assets/voltup/cardnews-02/02.webp","caption":"게으름에 지배된 현대인"},{"src":"./assets/voltup/cardnews-02/03.webp","fallback":"./assets/voltup/cardnews-02/03.webp","caption":"운동을 미루는 사람들의 모습"},{"src":"./assets/voltup/cardnews-02/04.webp","fallback":"./assets/voltup/cardnews-02/04.webp","caption":"운동을 시작하기 어려운 이유"},{"src":"./assets/voltup/cardnews-02/05.webp","fallback":"./assets/voltup/cardnews-02/05.webp","caption":"의지보다 먼저 필요한 시작"},{"src":"./assets/voltup/cardnews-02/06.webp","fallback":"./assets/voltup/cardnews-02/06.webp","caption":"운동 전 준비 루틴"},{"src":"./assets/voltup/cardnews-02/07.webp","fallback":"./assets/voltup/cardnews-02/07.webp","caption":"VOLT-UP으로 시작하는 변화"},{"src":"./assets/voltup/cardnews-02/08.webp","fallback":"./assets/voltup/cardnews-02/08.webp","caption":"가볍게 챙기는 운동 전 루틴"},{"src":"./assets/voltup/cardnews-02/09.webp","fallback":"./assets/voltup/cardnews-02/09.webp","caption":"운동 전 10초, VOLT-UP"}];
 function detailHTML(p){
  const voltupGallery=p.id==='voltup' ?
- '<section class="voltup-gallery" data-voltup-gallery data-index="0" aria-label="VOLT-UP 첫 번째 카드뉴스 10장">'+
- '<div class="voltup-gallery-header"><strong>카드뉴스 1</strong></div>'+
+ '<section class="voltup-gallery" data-voltup-gallery data-index="0" aria-label="VOLT-UP 카드뉴스 10장">'+
+ '<div class="voltup-gallery-header"><strong>카드뉴스</strong></div>'+
  '<p class="vu-gallery-description">일상의 피로에 대한 공감부터 브랜드 소개까지 이어지는 10장의 카드뉴스입니다.</p>'+
  '<div class="voltup-gallery-stage"><button class="voltup-gallery-arrow" type="button" data-vu-step="-1" aria-label="이전 카드뉴스">‹</button>'+
- '<div class="voltup-gallery-artwork"><img data-vu-image src="./assets/voltup/cardnews-01/01.webp" data-fallback="./assets/instagram/voltup-captured-1.jpg" alt="VOLT-UP 첫 번째 카드뉴스 1 / 10" loading="lazy" decoding="async"></div>'+
+ '<div class="voltup-gallery-artwork"><img data-vu-image src="./assets/voltup/cardnews-01/01.webp" data-fallback="./assets/instagram/voltup-captured-1.jpg" alt="VOLT-UP 카드뉴스 1 / 10" loading="lazy" decoding="async"></div>'+
  '<button class="voltup-gallery-arrow" type="button" data-vu-step="1" aria-label="다음 카드뉴스">›</button></div>'+
  '<div class="voltup-gallery-footer"><span class="voltup-gallery-page" data-vu-counter aria-live="polite">01 / 10</span>'+
  '<div class="voltup-gallery-dots" aria-label="카드뉴스 선택">'+
