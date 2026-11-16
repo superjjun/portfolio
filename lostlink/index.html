@@ -207,6 +207,41 @@ body{background:radial-gradient(ellipse 55% 75% at 54% 47%,#152440 0%,#0a101b 55
 .rank-result img.rank-photo{mix-blend-mode:screen;background:transparent}
 @media(prefers-reduced-motion:reduce){.scan-ring,.scan-track span{animation:none}.scan-track span{width:100%}}
 
+
+/* Auto-match radar — original Figma APP / 07 reference */
+.scan-page{background:#090f20;min-height:100%;padding:0 20px 24px;display:flex;flex-direction:column}
+.scan-page .scan-page-head{height:76px;display:flex;align-items:center;flex:0 0 auto}
+.scan-page .scan-page-head .back{font-size:15px;font-weight:700}
+.scan-page .scan-content{flex:1;min-height:0;display:flex;flex-direction:column;text-align:center}
+.scan-page .scan-heading{margin:30px -5px 0;font-size:22px;font-weight:800;line-height:1.43;letter-spacing:-.048em}
+.scan-page .scan-description{font-size:12px;color:#95a4c2;margin:18px 0 0;line-height:1.75}
+.scan-page .radar-graphic{width:min(234px,67vw);aspect-ratio:1;margin:48px auto 0;flex:0 0 auto;position:relative;display:grid;place-items:center;border-radius:50%;border:1px solid #2d4369;background:transparent;isolation:isolate}
+.scan-page .radar-graphic:before,.scan-page .radar-graphic:after{content:"";position:absolute;inset:13%;border-radius:50%;border:1px solid #283e63}
+.scan-page .radar-graphic:after{inset:25.5%;border-color:#2b4168}
+.scan-page .radar-axis{position:absolute;background:#344b72;opacity:.86}
+.scan-page .radar-axis.h{height:1.5px;width:91%;top:50%;left:4.5%}
+.scan-page .radar-axis.v{height:91%;width:1.5px;left:50%;top:4.5%}
+.scan-page .radar-pulse{position:absolute;width:84%;height:84%;border-radius:50%;background:conic-gradient(from 10deg,transparent 0deg,rgba(78,124,248,.09) 48deg,rgba(78,124,248,0) 95deg,transparent 360deg);animation:radar-turn 5s linear infinite;pointer-events:none}
+.scan-page .radar-dot{position:absolute;width:13px;height:13px;border-radius:50%;z-index:2;box-shadow:0 0 15px #60dcdd22;animation:radar-blink 2.9s ease-in-out infinite}
+.scan-page .radar-dot.a{right:17%;top:35%;background:#43d5d5}
+.scan-page .radar-dot.b{left:17%;bottom:22%;background:#39d899;animation-delay:.8s}
+.scan-page .radar-dot.c{right:30%;bottom:8%;background:#587cfa;animation-delay:1.5s}
+.scan-page .radar-label{position:relative;z-index:4;min-width:142px;height:39px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:#5b79fa;color:#fff;font-size:14px;font-weight:800;box-shadow:0 3px 20px #203fb529}
+.scan-page .scan-progress-region{margin-top:51px;flex:0 0 auto}
+.scan-page .scan-meter{height:8px;border-radius:10px;background:#263954;overflow:hidden}
+.scan-page .scan-meter-fill{height:100%;display:block;width:0;background:#5e7cff;border-radius:10px;transition:width .12s linear}
+.scan-page .scan-percent{font-size:25px;font-weight:800;color:#eff3ff;margin:16px 0 0;line-height:1.2;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.scan-page .scan-phases{margin-top:49px;display:flex;flex-direction:column;gap:18px;align-items:flex-start;text-align:left}
+.scan-page .scan-phases span{font-size:12px;color:#879ab8;line-height:1.5;transition:color .2s}
+.scan-page .scan-phases span.active{color:#51d3dc}
+.scan-page .scan-footer{margin-top:auto;padding-top:32px;flex:0 0 auto}
+.scan-page .scan-footer .primary{width:100%;min-height:50px;border-radius:14px;font-size:15px;display:flex;align-items:center;justify-content:center;gap:15px}
+.scan-page .scan-disclaimer{font-size:9px;color:#627690;line-height:1.55;margin:13px 0 0}
+@keyframes radar-turn{to{transform:rotate(360deg)}}
+@keyframes radar-blink{0%,100%{opacity:.7;transform:scale(.88)}50%{opacity:1;transform:scale(1.08)}}
+@media(max-height:760px){.scan-page .scan-heading{margin-top:13px}.scan-page .radar-graphic{width:min(205px,58vw);margin-top:25px}.scan-page .scan-progress-region{margin-top:25px}.scan-page .scan-phases{margin-top:22px;gap:10px}.scan-page .scan-footer{padding-top:18px}}
+@media(prefers-reduced-motion:reduce){.scan-page .radar-pulse,.scan-page .radar-dot{animation:none}}
+
 /* A registered lost item appears on home only after a report. */
 .my-lost-section{margin-top:31px}.my-lost-section .section-row{margin:0 0 14px}.my-lost-section .section-row h2{font-size:19px}
 .my-lost-card{border:1px solid #4b67b5;border-radius:18px;background:linear-gradient(140deg,#1b2a49,#121e33);padding:18px;min-width:0}
@@ -300,9 +335,41 @@ function matchingCandidates(){
  var bestScore=Math.min(98,90+(String(r.note||'').trim()?6:0)+(r.datetime?1:0));
  return [{item:exampleMatchItem(r),score:bestScore}].concat(entries.slice(0,2));
 }
+
 function scanningView(){
- var report=state.lastReport||{};
- return status()+'<section class="page scan-page"><div class="page-bar"><button class="back" data-route="home">'+svg('chevron',18)+' 홈</button><strong>매칭 진행</strong><span style="color:#91a4cb;font-size:12px">2 / 2</span></div><div class="scan-stage"><span class="scan-kicker">LOST LINK / MATCHING</span><div class="scan-orbit"><div class="scan-core">'+svg('search',33)+'</div><i class="scan-ring one"></i><i class="scan-ring two"></i></div><h1>내 물건과 비슷한<br>습득물을 찾고 있어요.</h1><p>등록한 물건의 종류와 습득물 정보를 비교하고 있습니다.</p><div class="scan-track"><span></span></div><div class="scan-status"><span>등록 물건 · '+escapeHtml(report.type||state.type)+'</span><span>후보 확인 중</span></div><button class="primary" data-route="matches">매칭 결과 확인하기 '+svg('arrow',17)+'</button><p class="footnote">포트폴리오 프로토타입: 표시되는 매칭 수치는 예시이며 실제 AI 분석이나 서버 전송은 진행되지 않습니다.</p></div></section>'
+ return status()+("<section class=\"page scan-page\" aria-label=\"자동 매칭 진행\">"+
+"<div class=\"scan-page-head\"><button class=\"back\" data-route=\"home\">{{BACK}} 자동 매칭</button></div>"+
+"<div class=\"scan-content\">"+
+"<h1 class=\"scan-heading\">비슷한 습득물을 찾고 있습니다.</h1>"+
+"<p class=\"scan-description\">사진과 장소, 시간을 비교하고 있습니다.</p>"+
+"<div class=\"radar-graphic\" role=\"img\" aria-label=\"후보를 탐색하는 레이더\">"+
+"<span class=\"radar-axis h\"></span><span class=\"radar-axis v\"></span>"+
+"<span class=\"radar-pulse\"></span><span class=\"radar-dot a\"></span><span class=\"radar-dot b\"></span><span class=\"radar-dot c\"></span>"+
+"<span class=\"radar-label\">MATCHING</span></div>"+
+"<div class=\"scan-progress-region\"><div class=\"scan-meter\" role=\"progressbar\" aria-label=\"매칭 진행률\" aria-valuemin=\"0\" aria-valuemax=\"100\" aria-valuenow=\"0\" data-scan-meter><span class=\"scan-meter-fill\" data-scan-fill></span></div>"+
+"<div class=\"scan-percent\" data-scan-percent aria-live=\"off\">0%</div></div>"+
+"<div class=\"scan-phases\"><span data-scan-stage=\"image\">사진 정보 비교</span><span data-scan-stage=\"place\">장소 · 시간 비교</span></div>"+
+"<div class=\"scan-footer\"><button class=\"primary\" data-route=\"matches\">매칭 결과 보기 {{NEXT}}</button>"+
+"<p class=\"scan-disclaimer\">포트폴리오 시연 화면 · 진행률과 일치율은 예시 수치입니다.</p></div>"+
+"</div></section>").replace('{{BACK}}',svg('chevron',18)).replace('{{NEXT}}',svg('arrow',19));
+}
+function startScanProgress(){
+ var meter=screen.querySelector('[data-scan-meter]'),fill=screen.querySelector('[data-scan-fill]');
+ var percent=screen.querySelector('[data-scan-percent]');
+ var imageStage=screen.querySelector('[data-scan-stage="image"]'),placeStage=screen.querySelector('[data-scan-stage="place"]');
+ if(!meter||!fill||!percent)return;
+ var token=++scanAnimationToken,origin=performance.now(),duration=4200;
+ function tick(now){
+  if(token!==scanAnimationToken||state.page!=='scanning')return;
+  var t=Math.min(1,(now-origin)/duration);
+  var value=Math.min(100,Math.round(t*100));
+  meter.setAttribute('aria-valuenow',String(value));
+  fill.style.width=value+'%';percent.textContent=value+'%';
+  imageStage.classList.toggle('active',value<53);
+  placeStage.classList.toggle('active',value>=53);
+  if(t<1)requestAnimationFrame(tick);
+ }
+ requestAnimationFrame(tick);
 }
 function matchRankings(){
  var list=matchingCandidates();
@@ -330,7 +397,8 @@ function savedView(){return status()+'<section class="page"><div class="page-bar
 function verifiedView(){var d=getItem(state.verifiedId);if(!d)return matches();var air=d.id===0;return status()+'<section class="page verified-page"><div class="page-bar"><strong>LOST LINK</strong><button class="circle-btn" data-route="saved">'+svg('archive',18)+'</button></div><div class="verified-badge">MATCHED</div><h1 class="verified-heading">'+(d.demoCandidate?'일치 확인 시뮬레이션':'분실물을 찾았습니다.')+'</h1><p class="form-intro">등록 정보와 습득물 특징을 비교한 결과입니다.</p><div class="verified-card"><div class="verified-hero"><div><h2>'+escapeHtml(d.name)+'</h2><div class="verified-green">일치 확인 결과</div></div><div class="verified-score"><span>MATCH SCORE</span><strong>'+(d.demoCandidate?matchingCandidates()[0].score+'%':air?'93%':'일치')+'</strong></div></div><div class="verified-track"><span></span></div><p class="verified-caption">'+(d.demoCandidate?'등록 장소·특징 기준의 시연 결과':'높은 일치율 · 후보 정보 비교 완료')+'</p></div><h2 class="verified-section">일치한 정보</h2><div class="verified-metrics"><div><small>제품·형태</small><b>'+(air?'99%':'일치')+'</b></div><div><small>분실 위치</small><b>'+(air?'97%':'일치')+'</b></div><div><small>분실 시간</small><b>'+(air?'92%':'일치')+'</b></div></div><h2 class="verified-section">결정적 특징</h2><div class="verified-features"><b>확인된 물건 특징</b><p>'+escapeHtml(d.description)+'</p><span>'+escapeHtml(d.where)+'</span></div><div class="verified-actions"><button class="secondary" data-route="saved">보관함에서 확인</button><button class="primary" data-chat-confirmed="1">습득자와 채팅하기</button></div><p class="footnote">※ 실제 습득자의 응답·본인 인증이 아닌 시뮬레이션 결과입니다. 채팅은 데모입니다.</p></section>'}
 function syncHash(){var h=decodeURIComponent(location.hash.substring(1));if(h.indexOf('item-')===0){state.page='detail';var targetId=Number(h.slice(5))||0;state.id=(targetId===1000&&state.lastReport)?1000:Math.min(ALL_ITEMS.length-1,Math.max(0,targetId))}else if(h==='matches'){state.page='matches'}else if(h==='scanning'){state.page='scanning'}else if(h==='explore'){state.page='explore'}else if(h==='alerts'){state.page='alerts'}else if(h==='verified'){state.page=state.verifiedId!==null?'verified':'matches'}else if(h==='saved'){state.page='saved'}else if(h==='register-lost'){state.page='register';state.mode='lost'}else if(h==='register-found'){state.page='register';state.mode='found'}else{state.page='home'}}
 function route(page,id,replace){if(state.page==='home')state.homeScroll=screen.scrollTop;if(page==='verified'&&state.verifiedId===null)page='matches';state.page=page;if(typeof id==='number')state.id=id;if(page==='register')state.success=false;var h=page==='home'?'':page==='detail'?'item-'+state.id:page==='register'?'register-'+state.mode:page;var url=location.pathname+location.search+(h?'#'+h:'');if(replace)history.replaceState({},'',url);else history.pushState({},'',url);render()}
-function render(){var content=state.page==='detail'?detail(getItem(state.id)):state.page==='matches'?matches():state.page==='scanning'?scanningView():state.page==='explore'?explore():state.page==='alerts'?alerts():state.page==='verified'&&state.verifiedId!==null?verifiedView():state.page==='register'?register():state.page==='saved'?savedView():home();screen.innerHTML=content;nav();bindPhotos();screen.scrollTop=state.page==='home'?state.homeScroll:0}
+var scanAnimationToken=0;
+function render(){var content=state.page==='detail'?detail(getItem(state.id)):state.page==='matches'?matches():state.page==='scanning'?scanningView():state.page==='explore'?explore():state.page==='alerts'?alerts():state.page==='verified'&&state.verifiedId!==null?verifiedView():state.page==='register'?register():state.page==='saved'?savedView():home();screen.innerHTML=content;nav();bindPhotos();screen.scrollTop=state.page==='home'?state.homeScroll:0;bottom.style.display=state.page==='scanning'?'none':'';screen.style.bottom=state.page==='scanning'?'0':'';if(state.page==='scanning')startScanProgress();else scanAnimationToken++}
 function updateSaved(id){if(saved.has(id))saved.delete(id);else saved.add(id);try{localStorage.setItem('lostlink-saved-v1',JSON.stringify([...saved]))}catch(e){}render()}
 function sheet(id){state.pendingId=id;var d=getItem(id);overlay.innerHTML='<div class="sheet-wrap" data-dismiss="1"><div class="sheet" role="dialog" aria-modal="true" aria-label="확인 요청"><h3>확인 요청 보내기</h3><p><b>'+escapeHtml(d.name)+'</b>이(가) 내 물건이 맞나요?<br>장소·시간·특징을 확인해 주세요.<br><br>'+(d.demoCandidate?'등록 정보로 만든 시연 후보이며 실제 습득 신고가 아닙니다.<br>':'')+'본 기능은 프로토타입이며 실제 습득자에게 전송되지 않습니다.</p><button class="primary" data-confirm="1">확인 요청 보내기</button><button class="secondary" data-close="1">취소</button></div></div>'}
 function noticeToast(){overlay.innerHTML='<div class="sheet-wrap" data-dismiss="1"><div class="sheet"><h3>확인 요청을 보냈습니다 ✓</h3><p>습득자가 특징을 확인하고 일치함을 인정하기 전에는 채팅을 시작할 수 없습니다.</p><p class="demo-verification-note">실제 습득자의 응답은 연결되지 않습니다. 아래에서 일치 확인 이후의 화면을 확인할 수 있습니다.</p><button class="primary" data-demo-verify="1">일치 확인 결과 보기</button><button class="secondary" data-close="1">답변 기다리기</button></div></div>'}
@@ -373,7 +441,6 @@ document.addEventListener('submit',function(e){
    try{sessionStorage.setItem('lostlink:last-report',JSON.stringify(report))}catch(err){}
    state.success=false;
    route('scanning');
-   setTimeout(function(){if(state.page==='scanning')route('matches',undefined,true)},1750);
    return;
  }
  state.success=true;
