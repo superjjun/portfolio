@@ -65,6 +65,8 @@
   visibility.observe(works);
   frame.addEventListener('load',()=>{
     if(!mounted)return;
+    // The iframe is same-origin: remove legacy instructions even from a cached old document.
+    try{frame.contentDocument?.querySelectorAll('.instructions').forEach(el=>el.remove());}catch(_err){}
     const bounds=works.getBoundingClientRect();
     frame.contentWindow?.postMessage({type:'KJ_ATELIER_VISIBILITY',visible:bounds.bottom>0&&bounds.top<innerHeight},location.origin);
   });
