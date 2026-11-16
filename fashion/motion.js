@@ -205,11 +205,23 @@ function detailHTML(p){
   roundlab:{href:'https://www.figma.com/proto/Du9eyttPUlEndS0eOmXVkk?page-id=0%3A1&amp;node-id=86-3515&amp;starting-point-node-id=86%3A3515&amp;scaling=scale-down&amp;content-scaling=fixed',label:'상세페이지 체험하기',copy:'직접 제작한 Figma 원본 상세페이지를 스크롤하며 살펴보세요.',type:'FIGMA SCROLL PROTOTYPE'}
  };
  const e=experiences[p.id];
- const source='<details class="detail-poster" aria-label="'+safe(p.title)+' 디자인 전체 보기">'+
+ const roundlabArtworks=[
+  {file:'./assets/roundlab/original-01-product-main.png',width:345,height:625,alt:'제품 메인 이미지'},
+  {file:'./assets/roundlab/original-02-anti-photoaging.png',width:342,height:633,alt:'광·열노화 방어'},
+  {file:'./assets/roundlab/original-03-uv-blue-light.png',width:354,height:754,alt:'블루라이트와 자외선 차단'},
+  {file:'./assets/roundlab/original-04-moisture.png',width:357,height:504,alt:'수분감 소개'},
+  {file:'./assets/roundlab/original-05-hydration-ingredients.png',width:336,height:661,alt:'수분 전달 성분'},
+  {file:'./assets/roundlab/original-06-soothing-moisture.png',width:340,height:738,alt:'피부 보습과 진정'}
+ ];
+const source='<details class="detail-poster" aria-label="'+safe(p.title)+' 디자인 전체 보기">'+
  '<summary><span class="detail-poster-copy"><small>COMPLETE ARTWORK / '+p.n+' — 06</small>'+
  '<strong>'+safe(p.title)+' 작품 전체 보기</strong><em>전체 디자인을 원본 비율로 펼쳐서 확인할 수 있습니다.</em></span>'+
  '<span class="detail-poster-toggle" aria-hidden="true">↓</span></summary>'+
- '<div class="detail-original"><img src="'+p.img+'" data-fallback="'+p.fallback+'" loading="lazy" alt="'+safe(p.title)+' 전체 디자인 화면"><span>COMPLETE DESIGN / '+p.n+' — 06</span></div></details>';
+ (p.id==='roundlab'?
+ '<div class="detail-original roundlab-original"><div class="roundlab-artwork-stack" aria-label="라운드랩 자작나무 수분 선크림 실제 원본 상세페이지 6장">'+
+ roundlabArtworks.map((item,i)=>'<img src="'+item.file+'" width="'+item.width+'" height="'+item.height+'" alt="라운드랩 상세페이지 '+(i+1)+' / 6 · '+item.alt+'" loading="'+(i===0?'eager':'lazy')+'" decoding="async">').join('')+
+ '</div><span>COMPLETE DESIGN / '+p.n+' — 06</span></div></details>' :
+ '<div class="detail-original"><img src="'+p.img+'" data-fallback="'+p.fallback+'" loading="lazy" alt="'+safe(p.title)+' 전체 디자인 화면"><span>COMPLETE DESIGN / '+p.n+' — 06</span></div></details>');
  const experienceLink='<a class="detail-experience" href="'+e.href+'" target="_blank" rel="noopener noreferrer" aria-label="'+safe(p.title)+' '+e.label+' 새 창에서 열기">'+
  '<span class="detail-experience-copy"><small>'+e.type+' / '+safe(p.title)+'</small><strong>'+e.label+'</strong><em>'+e.copy+'</em></span>'+
  '<span class="detail-experience-arrow" aria-hidden="true">↗</span></a>';
