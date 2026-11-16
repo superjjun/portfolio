@@ -61,16 +61,42 @@ body.embedded header .brand{pointer-events:none}
 body.embedded .head-right a{display:none}
 body.embedded .detail{display:none!important}
 body.embedded .brand-word{color:#e7e2d9}
+
+/* Moving photographic canopy beneath real-time three-dimensional foliage. */
+#forest-backdrop{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+#forest-backdrop::before{
+ content:"";position:absolute;inset:-7%;
+ background:linear-gradient(90deg,rgba(7,24,15,.32),rgba(5,24,17,.025) 38%,rgba(5,24,17,.10) 100%),
+ url("https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2200&q=88") center/cover no-repeat;
+ will-change:transform;animation:forest-drift 17s ease-in-out infinite alternate;
+}
+@keyframes forest-drift{
+ from{transform:translate3d(calc(var(--forest-x,0px) - 2.1%),calc(var(--forest-y,0px) - .75%),0) scale(1.04)}
+ to{transform:translate3d(calc(var(--forest-x,0px) + 2.1%),calc(var(--forest-y,0px) + .75%),0) scale(1.09)}
+}
+#forest-backdrop::after{
+ content:"";position:absolute;inset:0;
+ background:radial-gradient(ellipse 34% 56% at 47% 17%,rgba(250,239,168,.12),transparent 78%),
+ linear-gradient(105deg,transparent 30%,rgba(248,236,175,.05) 45%,transparent 60%);
+ mix-blend-mode:screen;opacity:.4;animation:forest-light 8s ease-in-out infinite alternate;
+}
+@keyframes forest-light{to{opacity:.83;transform:translateX(1%)}}
+#scene{z-index:1}header{justify-content:flex-end!important}header .head-right{margin-left:auto}
+header .brand{display:none!important}
+.live-dot{animation:forest-alive 3.5s ease-in-out infinite}
+@keyframes forest-alive{50%{opacity:.4;box-shadow:0 0 13px rgba(224,250,157,.65)}}
+@media(prefers-reduced-motion:reduce){#forest-backdrop::before,#forest-backdrop::after,.live-dot{animation:none!important}}
 </style>
 </head>
 <body>
+<div id="forest-backdrop" aria-hidden="true"></div>
 <div id="scene" aria-label="실제 WebGL 3D 공간. 좌우 화살표, 마우스 드래그, 휠로 탐색하고 선택된 작품은 Enter로 열 수 있습니다." tabindex="0"></div>
 <div class="veil"></div>
 <button class="quick-art" id="quick-art" aria-label="선택한 프로젝트 상세 보기" type="button">
 <img id="quick-art-img" src="./assets/submitted/soundcloud-poster.webp" alt="SOUNDCLOUD 실제 디자인 작품 미리보기" fetchpriority="high" decoding="async">
 </button>
 <header>
- <a class="brand" href="./index.html" aria-label="기존 포트폴리오로 돌아가기"><span class="brand-mark">KJ.</span><span class="brand-word">KIM JUNSEO<br>DESIGN ATELIER</span></a>
+ 
  <div class="head-right"><span><i class="live-dot"></i>LIVE 3D / FOREST</span><a href="./index.html">ORIGINAL PORTFOLIO ↗</a></div>
 </header>
 <div class="head-rule"></div>
@@ -248,6 +274,77 @@ try{
  };
  requestHighRes(index);requestHighRes((index+1)%projects.length);
 
+
+ // An actual Three.js forest layer: animated leaves exist at different depths in 3D space.
+ // The photograph is preserved behind them to avoid artificial low-poly trees.
+ const leafCanvas=document.createElement("canvas");
+ leafCanvas.width=96;leafCanvas.height=192;
+ const leafCtx=leafCanvas.getContext("2d");
+ const green=leafCtx.createLinearGradient(0,0,90,192);
+ green.addColorStop(0,"#d2e5aa");green.addColorStop(.42,"#79ae6b");green.addColorStop(1,"#315b3c");
+ leafCtx.fillStyle=green;leafCtx.beginPath();leafCtx.moveTo(50,7);
+ leafCtx.bezierCurveTo(93,50,89,99,48,184);
+ leafCtx.bezierCurveTo(7,125,3,49,50,7);leafCtx.closePath();leafCtx.fill();
+ leafCtx.strokeStyle="rgba(236,248,191,.33)";leafCtx.lineWidth=2;
+ leafCtx.beginPath();leafCtx.moveTo(48,173);leafCtx.lineTo(50,25);leafCtx.stroke();
+ const leafTexture=new THREE.CanvasTexture(leafCanvas);leafTexture.colorSpace=THREE.SRGBColorSpace;
+ const leafMaterial=new THREE.MeshBasicMaterial({
+   map:leafTexture,transparent:true,side:THREE.DoubleSide,opacity:.65,alphaTest:.09,depthWrite:false
+ });
+ const narrowForest=innerWidth<720,leafCount=narrowForest?62:152;
+ const forestMesh=new THREE.InstancedMesh(new THREE.PlaneGeometry(.24,.51),leafMaterial,leafCount);
+ forestMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+ forestMesh.frustumCulled=false;scene.add(forestMesh);
+ let forestSeed=34151;
+ const rnd=()=>{forestSeed=(Math.imul(forestSeed,1664525)+1013904223)>>>0;return forestSeed/4294967296};
+ const leaves=[],dummyLeaf=new THREE.Object3D();
+ const leafColors=[0x91ab79,0xb4c28c,0x49774d,0xc1b884];
+ for(let i=0;i<leafCount;i++){
+   const side=i%2?-1:1,dist=(narrowForest?1.8:4.3)+rnd()*(narrowForest?3.8:5.5);
+   leaves.push({x:side*dist,y:-1.6+rnd()*8.4,z:-8+rnd()*10,
+     size:.55+rnd()*1.7,phase:rnd()*6.283,speed:.44+rnd()*.7,sway:.25+rnd()*.45,angle:(rnd()-.5)*2.2});
+   forestMesh.setColorAt(i,new THREE.Color(leafColors[Math.floor(rnd()*leafColors.length)]));
+ }
+ if(forestMesh.instanceColor)forestMesh.instanceColor.needsUpdate=true;
+ // Sunlight inside the same WebGL scene, behind the floating work panels.
+ const rayCanvas=document.createElement("canvas");
+ rayCanvas.width=128;rayCanvas.height=512;
+ const rayCtx=rayCanvas.getContext("2d");
+ const horizontal=rayCtx.createLinearGradient(0,0,128,0);
+ horizontal.addColorStop(0,"rgba(255,244,190,0)");
+ horizontal.addColorStop(.48,"rgba(255,247,197,.36)");
+ horizontal.addColorStop(1,"rgba(255,244,190,0)");
+ rayCtx.fillStyle=horizontal;rayCtx.fillRect(0,0,128,512);
+ rayCtx.globalCompositeOperation="destination-in";
+ const vertical=rayCtx.createLinearGradient(0,0,0,512);
+ vertical.addColorStop(0,"rgba(0,0,0,0)");vertical.addColorStop(.3,"rgba(0,0,0,1)");
+ vertical.addColorStop(.75,"rgba(0,0,0,.8)");vertical.addColorStop(1,"rgba(0,0,0,0)");
+ rayCtx.fillStyle=vertical;rayCtx.fillRect(0,0,128,512);
+ const rayTexture=new THREE.CanvasTexture(rayCanvas),sunbeams=[];
+ for(const [j,x] of [-7,-4.7,4.7,7].entries()){
+   const light=new THREE.Mesh(new THREE.PlaneGeometry(2.7,11.5),
+     new THREE.MeshBasicMaterial({map:rayTexture,transparent:true,opacity:.22,depthWrite:false,side:THREE.DoubleSide,blending:THREE.AdditiveBlending}));
+   light.position.set(x,1.5,-9);light.rotation.z=-.16+j*.055;scene.add(light);sunbeams.push(light);
+ }
+ const forestBackdrop=document.getElementById("forest-backdrop");
+ function animateForest(seconds){
+   const time=lowMotion?0:seconds;
+   for(let i=0;i<leaves.length;i++){
+     const l=leaves[i],w=time*l.speed+l.phase;
+     dummyLeaf.position.set(l.x+Math.sin(w)*l.sway,l.y+Math.cos(w*.7)*.17,l.z+Math.sin(w*.4)*.23);
+     dummyLeaf.rotation.set(Math.sin(w*.77)*.2,Math.cos(w*.6)*.55,l.angle+Math.sin(w)*.32);
+     dummyLeaf.scale.set(l.size,l.size,1);dummyLeaf.updateMatrix();
+     forestMesh.setMatrixAt(i,dummyLeaf.matrix);
+   }
+   forestMesh.instanceMatrix.needsUpdate=true;
+   sunbeams.forEach((beam,i)=>{beam.position.x=[-7,-4.7,4.7,7][i]+Math.sin(time*.22+i)*.35;
+     beam.material.opacity=.1+(.5+.5*Math.sin(time*.43+i))*.15;});
+   if(forestBackdrop&&!lowMotion){
+     forestBackdrop.style.setProperty("--forest-x",(-pointerX*11).toFixed(1)+"px");
+     forestBackdrop.style.setProperty("--forest-y",(-pointerY*6).toFixed(1)+"px");
+   }
+ }
+
  const raycaster=new THREE.Raycaster(),mouse2=new THREE.Vector2();
  let pointerX=0,pointerY=0,isDragging=false,startX=0,startY=0,lastX=0,dragBias=0,hovered=-1;
  const point=(e)=>{const rect=$("scene").getBoundingClientRect();mouse2.set((e.clientX-rect.left)/rect.width*2-1,-((e.clientY-rect.top)/rect.height*2-1));};
@@ -305,6 +402,7 @@ try{
   const now=performance.now(),interval=innerWidth<700?50:33;
   if(now-lastRender<interval)return;lastRender=now;
   const dt=Math.min(clock.getDelta(),.05),t=lowMotion?1:1-Math.exp(-dt*5.5);
+  animateForest(now*.001);
   artGroups.forEach((group,i)=>{
    const diff=i-index,focused=diff===0;
    const tx=diff*3.23+(detailOpen?-1.20:0);
@@ -319,8 +417,8 @@ try{
    const scale=interpolate(group.scale.x,sc,t);group.scale.setScalar(scale);
    group.visible=Math.abs(diff)<4;
   });
-  camera.position.x=interpolate(camera.position.x,(detailOpen?-.35:0)+pointerX*.11,t*.7);
-  camera.position.y=interpolate(camera.position.y,1.50-pointerY*.08,t*.7);
+  camera.position.x=interpolate(camera.position.x,(detailOpen?-.35:0)+pointerX*.28,t*.7);
+  camera.position.y=interpolate(camera.position.y,1.50-pointerY*.15,t*.7);
   camera.position.z=interpolate(camera.position.z,innerWidth<650?12.9:10.2,t*.7);
   camera.lookAt(detailOpen?-.5:0,1.30,0);
   renderer.render(scene,camera);
