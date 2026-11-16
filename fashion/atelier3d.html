@@ -61,6 +61,19 @@ body.embedded header .brand{pointer-events:none}
 body.embedded .head-right a{display:none}
 body.embedded .detail{display:none!important}
 body.embedded .brand-word{color:#e7e2d9}
+/* WebGL project push: animated vignette without obscuring panel. */
+.project-warp{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:0;transition:opacity .4s ease}
+.project-warp::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 30% 40% at 50% 49%,transparent 20%,rgba(2,10,6,.045) 44%,rgba(1,9,6,.58) 100%)}
+.project-warp::after{content:"";position:absolute;inset:-40%;opacity:0;transform:scale(.6);background:repeating-conic-gradient(from 8deg at 50% 50%,rgba(192,244,154,.055) 0deg,transparent 3deg,transparent 16deg);mix-blend-mode:screen;transition:opacity .45s,transform 1.05s cubic-bezier(.34,.01,.9,.7)}
+body.project-flyin .project-warp{opacity:1}
+body.project-flyin .project-warp::after{opacity:.55;transform:scale(1.6)}
+.copy,.foot,.head-right{transition:opacity .34s,transform .45s cubic-bezier(.2,.7,.2,1)}
+body.project-flyin .copy{opacity:0!important;transform:translateX(-35px)!important;pointer-events:none}
+body.project-flyin .foot{opacity:0!important;transform:translateY(25px)!important;pointer-events:none}
+body.project-flyin .head-right{opacity:0!important;pointer-events:none}
+body.project-flyin #scene{cursor:default!important}
+@media(prefers-reduced-motion:reduce){.project-warp,.project-warp::after,.copy,.foot,.head-right{transition:none!important}}
+
 
 /* Moving photographic canopy beneath real-time three-dimensional foliage. */
 #forest-backdrop{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
@@ -92,6 +105,7 @@ header .brand{display:none!important}
 <div id="forest-backdrop" aria-hidden="true"></div>
 <div id="scene" aria-label="실제 WebGL 3D 공간. 좌우 화살표, 마우스 드래그, 휠로 탐색하고 선택된 작품은 Enter로 열 수 있습니다." tabindex="0"></div>
 <div class="veil"></div>
+<div class="project-warp" aria-hidden="true"></div>
 <button class="quick-art" id="quick-art" aria-label="선택한 프로젝트 상세 보기" type="button">
 <img id="quick-art-img" src="./assets/submitted/soundcloud-poster.webp" alt="SOUNDCLOUD 실제 디자인 작품 미리보기" fetchpriority="high" decoding="async">
 </button>
@@ -133,7 +147,7 @@ const projects=[
 const $=id=>document.getElementById(id);
 const isEmbedded=new URLSearchParams(location.search).get("embed")==="1";
 if(isEmbedded)document.body.classList.add("embedded");
-let index=0,detailOpen=false;
+let index=0,detailOpen=false,isFlying=false,startFlight=null,stopFlight=null;
 const quickImg=$("quick-art-img"),quickArt=$("quick-art");
 const renderedPosters=new Set();
 function showQuickImage(){
@@ -157,15 +171,26 @@ function sync(){
  $("d-challenge").textContent=p.challenge;$("d-solution").textContent=p.solution;$("d-link").href="./index.html#work-"+p.id;showQuickImage();
 }
 let requestHighRes=()=>{};
-function setIndex(i){index=(i+projects.length)%projects.length;sync();requestHighRes(index);requestHighRes((index+1)%projects.length);}
-function openDetail(){detailOpen=true;sync();if(!isEmbedded)$("d-img").src=projects[index].img;
- if(isEmbedded){
-   // Allow the exhibition object to move closer before the original portfolio's full case study opens.
-   window.setTimeout(()=>window.parent.postMessage({type:"KJ_ATELIER_OPEN",project:projects[index].id},location.origin),330);
-   return;
+function setIndex(i){if(isFlying)return;index=(i+projects.length)%projects.length;sync();requestHighRes(index);requestHighRes((index+1)%projects.length);}
+// Physical 3D push precedes the modal, rather than a static poster transition.
+function finishProjectFlight(target){
+ stopFlight?.();isFlying=false;document.body.classList.remove("project-flyin");
+ const p=projects[target];if(!p)return;
+ if(isEmbedded){window.parent.postMessage({type:"KJ_ATELIER_OPEN",project:p.id},location.origin);return;}
+ index=target;detailOpen=true;sync();$("d-img").src=p.img;
+ document.body.classList.add("detail-open");$("detail").inert=false;$("close").focus({preventScroll:true});
+}
+function openDetail(){
+ if(detailOpen||isFlying)return;
+ const target=index;
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches||!startFlight||document.body.classList.contains("no3d")){
+  finishProjectFlight(target);return;
  }
- document.body.classList.add("detail-open");$("detail").inert=false;$("close").focus({preventScroll:true});}
-function closeDetail(){detailOpen=false;document.body.classList.remove("detail-open");$("detail").inert=true;$("scene").focus({preventScroll:true});}
+ isFlying=true;
+ if(!startFlight(target)){finishProjectFlight(target);return;}
+ window.setTimeout(()=>{if(isFlying)finishProjectFlight(target);},1500);
+}
+function closeDetail(){stopFlight?.();isFlying=false;document.body.classList.remove("project-flyin");detailOpen=false;document.body.classList.remove("detail-open");$("detail").inert=true;$("scene").focus({preventScroll:true});}
 $("prev").addEventListener("click",()=>{closeDetailIfNeeded();setIndex(index-1);});
 $("next").addEventListener("click",()=>{closeDetailIfNeeded();setIndex(index+1);});
 $("inspect").addEventListener("click",e=>{e.preventDefault();openDetail();});
@@ -173,7 +198,7 @@ $("close").addEventListener("click",closeDetail);
 function closeDetailIfNeeded(){if(detailOpen)closeDetail();}
 window.addEventListener("keydown",e=>{
  if(e.key==="Escape"&&detailOpen){closeDetail();return;}
- if(detailOpen)return;
+ if(detailOpen||isFlying)return;
  if(e.key==="ArrowLeft"){e.preventDefault();setIndex(index-1);}
  if(e.key==="ArrowRight"){e.preventDefault();setIndex(index+1);}
   if(isEmbedded&&["PageDown","PageUp","ArrowDown","ArrowUp"," "].includes(e.key)){
@@ -353,13 +378,15 @@ try{
   const hits=raycaster.intersectObjects(hitMeshes,false);
   return hits.length?hits[0].object.userData.index:-1;
  }
- $("scene").addEventListener("pointerdown",e=>{if(detailOpen)return;isDragging=true;startX=e.clientX;startY=e.clientY;lastX=e.clientX;dragBias=0;$("scene").classList.add("grabbing");$("scene").setPointerCapture(e.pointerId);});
+ $("scene").addEventListener("pointerdown",e=>{if(detailOpen||isFlying)return;isDragging=true;startX=e.clientX;startY=e.clientY;lastX=e.clientX;dragBias=0;$("scene").classList.add("grabbing");$("scene").setPointerCapture(e.pointerId);});
  $("scene").addEventListener("pointermove",e=>{
+  if(isFlying)return;
   pointerX=(e.clientX/innerWidth-.5)*2;pointerY=(e.clientY/innerHeight-.5)*2;
   if(isDragging){dragBias=Math.max(-1,Math.min(1,(e.clientX-startX)/180));lastX=e.clientX;}
   else if(!detailOpen){hovered=hit(e);$("scene").style.cursor=hovered>=0?"pointer":"grab";}
  });
  $("scene").addEventListener("pointerup",e=>{
+  if(isFlying){isDragging=false;return;}
   if(!isDragging)return;isDragging=false;$("scene").classList.remove("grabbing");
   const dx=e.clientX-startX,dy=e.clientY-startY;
   if(Math.abs(dx)>64 && Math.abs(dx)>Math.abs(dy)*1.2){setIndex(index+(dx<0?1:-1));}
@@ -395,6 +422,18 @@ try{
   if(!isEmbedded||event.origin!==location.origin||event.source!==window.parent)return;
   if(event.data?.type==="KJ_ATELIER_VISIBILITY")renderVisible=Boolean(event.data.visible);
  });
+ let flight=null;
+ const flyEase=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+ startFlight=target=>{
+  if(!artGroups[target]||renderer.getContext().isContextLost())return false;
+  flight={target,start:performance.now(),duration:1060,
+   from:artGroups.map(g=>({x:g.position.x,y:g.position.y,z:g.position.z,ry:g.rotation.y,s:g.scale.x})),
+   camFrom:camera.position.clone(),camTo:new THREE.Vector3(0,1.38,5.75)};
+  document.body.classList.add("project-flyin");
+  return true;
+ };
+ stopFlight=()=>{flight=null};
+
  const interpolate=(a,b,t)=>a+(b-a)*t;
  function tick(){
   requestAnimationFrame(tick);
@@ -403,7 +442,18 @@ try{
   if(now-lastRender<interval)return;lastRender=now;
   const dt=Math.min(clock.getDelta(),.05),t=lowMotion?1:1-Math.exp(-dt*5.5);
   animateForest(now*.001);
+  const fp=flight?Math.min(1,(now-flight.start)/flight.duration):0;
+  const e=flight?flyEase(fp):0;
   artGroups.forEach((group,i)=>{
+   if(flight){
+    const base=flight.from[i],diff=i-flight.target,focused=diff===0;
+    const destX=focused?0:(diff*4.7+Math.sign(diff)*1.25);
+    group.position.set(interpolate(base.x,destX,e),interpolate(base.y,focused?1.24:1.12,e),interpolate(base.z,focused?3.05:-5.4-Math.abs(diff)*1.25,e));
+    group.rotation.y=interpolate(base.ry,focused?0:-Math.sign(diff)*.38,e);
+    group.scale.setScalar(interpolate(base.s,focused?1.30:.68,e));
+    group.visible=Math.abs(diff)<4;
+    return;
+   }
    const diff=i-index,focused=diff===0;
    const tx=diff*3.23+(detailOpen?-1.20:0);
    const tz=-Math.abs(diff)*1.18+(focused&&detailOpen?1.68:0);
@@ -417,11 +467,17 @@ try{
    const scale=interpolate(group.scale.x,sc,t);group.scale.setScalar(scale);
    group.visible=Math.abs(diff)<4;
   });
-  camera.position.x=interpolate(camera.position.x,(detailOpen?-.35:0)+pointerX*.28,t*.7);
-  camera.position.y=interpolate(camera.position.y,1.50-pointerY*.15,t*.7);
-  camera.position.z=interpolate(camera.position.z,innerWidth<650?12.9:10.2,t*.7);
-  camera.lookAt(detailOpen?-.5:0,1.30,0);
+  if(flight){
+   camera.position.copy(flight.camFrom).lerp(flight.camTo,e);
+   camera.lookAt(0,1.28,2.48*e);
+  }else{
+   camera.position.x=interpolate(camera.position.x,(detailOpen?-.35:0)+pointerX*.28,t*.7);
+   camera.position.y=interpolate(camera.position.y,1.50-pointerY*.15,t*.7);
+   camera.position.z=interpolate(camera.position.z,innerWidth<650?12.9:10.2,t*.7);
+   camera.lookAt(detailOpen?-.5:0,1.30,0);
+  }
   renderer.render(scene,camera);
+  if(flight&&fp>=1)finishProjectFlight(flight.target);
  }
  tick();document.body.classList.add("ready");$("loading").removeAttribute("aria-busy");
  if(isEmbedded)window.parent.postMessage({type:"KJ_ATELIER_READY"},location.origin);

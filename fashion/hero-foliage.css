@@ -1,0 +1,8 @@
+/* Botanical foreground: translucent layered fern/grass textures, without blocking the headline or CTA. */
+#top .hero-foliage{position:absolute;z-index:2;inset:auto 0 -1px;width:100%;height:clamp(225px,37svh,410px);overflow:hidden;pointer-events:none;opacity:.82;mix-blend-mode:normal}
+#top .hero-foliage::before{content:"";position:absolute;inset:-7% -1% -4%;background:url("./assets/hero-botanicals.svg") center bottom / 103% 100% no-repeat;filter:blur(14px);opacity:.42;animation:forest-plants-back 15s ease-in-out infinite alternate;transform-origin:50% 100%}
+#top .hero-foliage img{display:block;position:relative;width:100%;height:100%;object-fit:fill;object-position:bottom;filter:drop-shadow(0 -3px 13px rgba(3,22,10,.19));animation:forest-plants-sway 11s ease-in-out infinite alternate;transform-origin:50% 100%;will-change:transform}
+@keyframes forest-plants-sway{from{transform:translate3d(-.5%,1%,0) skewX(-.55deg) scale(1.015)}to{transform:translate3d(.5%,0,0) skewX(.65deg) scale(1.025)}}
+@keyframes forest-plants-back{to{transform:translateX(1.4%) scale(1.035);opacity:.56}}
+@media(max-width:760px){#top .hero-foliage{height:clamp(190px,32svh,310px);opacity:.59}#top .hero-foliage::before{opacity:.23}}
+@media(prefers-reduced-motion:reduce){#top .hero-foliage img,#top .hero-foliage::before{animation:none!important;transform:none!important}}

@@ -262,6 +262,10 @@ function open(id,button){
   setTimeout(()=>{if(active===p&&video.readyState<2)note.textContent='로딩이 길어지고 있습니다. 잠시 뒤 재생을 눌러 주세요.';},6500);
  }
 
+ if(button.id==='showroom-proxy'){
+  // The gallery already flew into the work; show the case study without a second cover animation.
+  detail.classList.add('open');main.focus({preventScroll:true});return;
+ }
  if(reduce.matches){detail.classList.add('open');main.focus({preventScroll:true});return;}
  main.style.visibility='hidden';
  cover=document.createElement('div');cover.className='detail-cover';cover.style.setProperty('--theme',p.back);
