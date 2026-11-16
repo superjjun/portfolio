@@ -61,7 +61,7 @@ const artwork={
  voltup:['./assets/submitted/voltup-poster.webp','./assets/instagram/voltup-captured-1.jpg','./assets/instagram/voltup-captured-2.jpg','./assets/figma-original/voltup-figma.png'],
  junggonara:['./assets/submitted/junggonara-poster.webp','./assets/figma/junggonara-figma-cover.png','./assets/work-junggonara.png','./assets/figma-original/junggonara-figma-hires.png'],
  ppomppu:['./assets/submitted/ppomppu-poster.webp','./assets/figma/ppomppu-figma-cover.png','./assets/work-ppomppu.png','./assets/figma-original/ppomppu-figma.png'],
- roundlab:['./assets/submitted/roundlab-poster.webp','./assets/figma/roundlab-figma-cover.png','./assets/work-roundlab-screen.png','./assets/figma-original/roundlab-figma-hires.png']
+ roundlab:['./assets/submitted/roundlab-poster.webp','./assets/figma/roundlab-figma-cover.png','./assets/roundlab/original-03-uv-blue-light.png','./assets/roundlab/original-06-soothing-moisture.png']
 };
 // Add distinct, light CSS-native orbital art; the author's real project poster remains visible and clickable.
 document.querySelectorAll('.story-project').forEach((section,index)=>{
