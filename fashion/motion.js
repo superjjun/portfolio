@@ -228,7 +228,7 @@ const source='<details class="detail-poster" aria-label="'+safe(p.title)+' 디�
  return '<div class="detail-main" data-project-detail="'+safe(p.id)+'" role="dialog" aria-modal="true" aria-label="'+safe(p.title)+' 프로젝트 상세" tabindex="-1">'+
  '<div class="detail-top"><span>KIM JUNSEO / '+p.n+' / 06</span><button class="detail-close" data-close type="button">CLOSE <b>×</b></button></div>'+
  '<div class="detail-content"><div class="detail-headerline">'+p.kind+' / 2026</div><h2>'+p.title+'</h2><p class="detail-sub">'+safe(p.short)+'</p>'+
- clip+voltupGallery+voltupGallery2+source+experienceLink+
+ clip+voltupGallery+voltupGallery2+source+(p.id==='voltup'?'':experienceLink)+
  '<button class="detail-back" type="button" data-close>← BACK TO WORKS</button></div></div>';
 }
 function removeCover(){if(cover){cover.remove();cover=null;}}
