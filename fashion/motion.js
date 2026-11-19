@@ -90,26 +90,26 @@ function draw(t){if(entered){animationFrame=0;return;}if(glReady&&!document.hidd
 if(glReady){animationFrame=requestAnimationFrame(draw);if(reduce.matches){setTimeout(()=>cancelAnimationFrame(animationFrame),100);}}
 
 // No scroll before a deliberate entrance click. The iris animation is staged, not skipped.
-let entered=false,busy=false;
+let entered=false,busy=false,entryDestination='#works';
 root.classList.add('is-locked');
 if('scrollRestoration' in history)history.scrollRestoration='manual';
 try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
 scrollTo(0,0);
-function completeEntrance(){entered=true;body.classList.remove('is-locked','entering');root.classList.remove('is-locked');q('#about').scrollIntoView({behavior:'instant',block:'start'});try{history.replaceState(null,'',location.pathname+location.search+'#about');}catch(e){}}
-function enter(){
- if(entered||busy)return;busy=true;
+function completeEntrance(){entered=true;body.classList.remove('is-locked','entering');root.classList.remove('is-locked');const dest=q(entryDestination)||q('#works');dest?.scrollIntoView({behavior:'instant',block:'start'});try{history.replaceState(null,'',location.pathname+location.search+entryDestination);}catch(e){}}
+function enter(target='#works'){
+ if(entered||busy)return;busy=true;entryDestination=['#works','#about','#contact'].includes(target)?target:'#works';
  if(reduce.matches){completeEntrance();busy=false;return;}
  body.classList.add('entering');const overlay=q('#transition');overlay.classList.add('arming');overlay.offsetWidth;
  requestAnimationFrame(()=>overlay.classList.add('opening'));
  setTimeout(()=>{completeEntrance();overlay.classList.add('fading');},900);
  setTimeout(()=>{overlay.classList.remove('arming','opening','fading');busy=false;},1250);
 }
-q('#enter').addEventListener('click',enter);object.addEventListener('click',enter);
+q('#enter').addEventListener('click',()=>enter('#works'));object.addEventListener('click',()=>enter('#works'));
 q('#top').addEventListener('click',e=>{if(!entered&&!e.target.closest('a,button'))enter();});
 const prevent=e=>{if(!entered&&e.cancelable)e.preventDefault();};
 addEventListener('wheel',prevent,{passive:false});addEventListener('touchmove',prevent,{passive:false});
 document.addEventListener('keydown',e=>{if(!entered&&['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(e.key))e.preventDefault();});
-document.addEventListener('click',e=>{if(!entered&&e.target.closest('a[href^="#"]')){e.preventDefault();enter();}},true);
+document.addEventListener('click',e=>{if(!entered&&e.target.closest('a[href^="#"]')){const href=e.target.closest('a').getAttribute('href');e.preventDefault();enter(href);}},true);
 
 // One full chapter per work; each poster appears as the user scrolls into view.
 const works=q('#works'),stories=qa('.story-project'),reveals=qa('.reveal'),progress=q('#reading-progress');
@@ -234,7 +234,7 @@ const source='<details class="detail-poster" aria-label="'+safe(p.title)+' ë””ìž
 function removeCover(){if(cover){cover.remove();cover=null;}}
 function open(id,button){
  if(active)return;const p=projects.find(x=>x.id===id);if(!p)return;active=p;origin=button;
- const scene=button.closest('.story-picture')||button;const b=scene.getBoundingClientRect();
+ const scene=button.closest('.story-picture')||(button.closest('.archive-entry')&&q('.archive-preview'))||button;const b=scene.getBoundingClientRect();
  detail.innerHTML=detailHTML(p);detail.hidden=false;body.classList.add('detail-open');bindFallback(detail);
  const main=q('.detail-main',detail),video=q('video',detail);
  if(video){
